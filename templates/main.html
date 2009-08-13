@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Welcome!{% endblock %}
+
+{% block content %}
+<h1>Welcome to the app-engine-patch sample project</h1>
+<p>This site is a demonstration of <a href="http://code.google.com/p/app-engine-patch/">app-engine-patch</a> which is an <a href="http://code.google.com/appengine/">App Engine</a> port of the <a href="http://www.djangoproject.com/">Django</a> web framework.</p>
+
+<h2>Examples</h2>
+<p>
+You can visit Django's <a href="/admin/">admin interface</a>. If needed, you can <a href="{% url myapp.views.create_admin_user %}">generate an admin user</a> with the username and password "admin".
+</p>
+
+<p>
+Let's have a look at our
+<a href="{% url myapp.views.list_people %}">generic views sample</a>
+(a simple person list with file uploads).
+</p>
+
+<p>
+The CSS styling is done via <a href="http://www.blueprintcss.org/">Blueprint CSS</a>. We use a modified version which is adapted to the app-engine-patch <a href="http://code.google.com/p/app-engine-patch/wiki/MediaGenerator">media generator</a>.
+</p>
+
+<p>
+This sample project includes a port of <a href="http://www.bitbucket.org/ubernostrum/django-registration/wiki/Home">django-registration</a>. We maintain a list of other <a href="http://code.google.com/p/app-engine-patch/wiki/OpenSourceProjects">open-source projects</a> to get you started faster with App Engine development.
+</p>
+
+<p>
+Finally, we've integrated <a href="http://jquery.com/">jQuery</a> into the sample project:
+</p>
+
+<h3>jQuery example</h3>
+<p>
+<span id='clickme'>Click me!</span>
+</p>
+{% endblock %}

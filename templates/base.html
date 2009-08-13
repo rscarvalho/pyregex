@@ -1,0 +1,62 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}"
+    xml:lang="{% firstof LANGUAGE_CODE 'en' %}"
+    lang="{% firstof LANGUAGE_CODE 'en' %}">
+  <head>
+    <title>{% block title %}{% endblock %} - site name</title>
+    {% block css %}
+      <link rel="stylesheet" type="text/css"  media="screen, projection" href="{{ MEDIA_URL }}combined-{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}.css" />
+      <link rel="stylesheet" type="text/css"  media="print" href="{{ MEDIA_URL }}combined-print-{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}.css" />
+      <!--[if IE]>
+        <link rel="stylesheet" type="text/css" media="screen, projection" href="{{ MEDIA_URL }}ie.css">
+      <![endif]-->
+    {% endblock %}
+
+    {% block js %}
+      <script type="text/javascript" src="{{ MEDIA_URL }}combined-{{ LANGUAGE_CODE }}.js"></script>
+    {% endblock %}
+
+    {% block extra-head %}{% endblock %}
+  </head>
+
+  <body>
+    {% block header %}
+      <div id="header">
+        <div class="menu">
+          <a href="/"><img src="{{ MEDIA_URL }}global/logo.png" alt="" /></a>
+          <a href="{% url myapp.views.list_people %}">Generic views sample</a> |
+          <a href="/admin/">Admin interface</a> |
+          <a href="http://code.google.com/p/app-engine-patch/">Visit app-engine-patch</a> |
+          <a href="http://code.google.com/p/app-engine-patch/wiki/Documentation">Documentation</a>
+          --
+          {% if user.is_authenticated %}
+            Welcome, {{ user.username }}!
+            <a href="{% url django.contrib.auth.views.logout %}">Logout</a>
+          {% else %}
+            <a href="{% url django.contrib.auth.views.login %}">Login</a>
+            <a href="{% url registration.views.register %}">Register</a>
+          {% endif %}
+        </div>
+      </div>
+    {% endblock %}
+    <div id="content" class="column container">
+      {% block content-header %}
+        {% if error %}<div class="error">{{ error }}</div>{% endif %}
+        {% if info %}<div class="info">{{ info }}</div>{% endif %}
+        {% if messages %}
+          {% for message in messages %}
+            <div class="info">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+      {% endblock %}
+      {% block content %}{% endblock %}
+    </div>
+    <div id="footer">
+      <a href="http://code.google.com/p/app-engine-patch/"><img src="{{ MEDIA_URL }}global/powered-by-app-engine-patch.png" alt="powered by app-engine-patch" /></a>
+    </div>
+  </body>
+</html>

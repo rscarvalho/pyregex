@@ -5,11 +5,11 @@ api_version: 1
 
 handlers:
 - url: /media
-  static_dir: media
+  static_dir: _generated_media
   
-- url: /admin/.*
+- url: /gae_admin/.*
   script: $PYTHON_LIB/google/appengine/ext/admin
   login: admin
   
 - url: .*
-  script: main.py
+  script: common/appenginepatch/main.py
