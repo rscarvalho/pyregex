@@ -17,14 +17,22 @@
 
 # import wsgiref.handlers
 from google.appengine.ext import webapp
+from google.appengine.api import users
 from google.appengine.ext.webapp.util import run_wsgi_app
 
 
 class MainHandler(webapp.RequestHandler):
 
     def get(self):
-        self.response.headers['Content-type'] = 'text/plain'
-        self.response.out.write('Hello world! :D')
+        self.response.headers['Content-type'] = 'text/html'
+        if users.get_current_user():
+            url = users.create_logout_url(self.request.uri)
+            label = "Logout"
+        else:
+            url = users.create_login_url(self.request.uri)
+            label = "Login"
+        
+        self.response.out.write("<a href='%s'>%s</a>" % (url, label))
 
 
 application = webapp.WSGIApplication([('/', MainHandler)],
