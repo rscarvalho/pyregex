@@ -4,9 +4,15 @@ runtime: python
 api_version: 1
 
 handlers:
+<<<<<<< HEAD:app.yaml
+=======
+- url: /media
+  static_dir: media
+  
+>>>>>>> django-appengine:app.yaml
 - url: /gae_admin/.*
   script: $PYTHON_LIB/google/appengine/ext/admin
   login: admin
   
 - url: .*
-  script: main.py
+  script: common/appenginepatch/main.py

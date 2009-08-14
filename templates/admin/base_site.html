@@ -1,0 +1,17 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+
+{% block title %}{{ title }} | {% trans 'Django site admin' %}{% endblock %}
+
+{% block userlinks %}
+<a href="/">Back to sample project</a> /
+{% url django-admindocs-docroot as docsroot %}{% if docsroot %}<a href="{{ docsroot }}">{% trans 'Documentation' %}</a> / {% endif %}
+<a href="{{ root_path }}password_change/">{% trans 'Change password' %}</a> /
+<a href="{% url django.contrib.auth.views.logout %}">{% trans 'Log out' %}</a>
+{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">{% trans 'Django administration' %}</h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

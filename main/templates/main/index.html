@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}PyRegex{% endblock %}
+{% block extrahead %}
+  <script type="text/javascript" src="/media/base.js"></script>
+{% endblock %}
+
+{% block content %}
+  <h1>Python Regular Expressions Online Tester</h1>
+  <div class="form">
+    <form action="" method="post" onsubmit="submitForm(this); return false">
+      <table>{{ form }}</table>
+      <input type="submit" value="Test it!">
+    </form>
+  </div>
+  
+  <div id="result">
+  </div>
+{% endblock %}
