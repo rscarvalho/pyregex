@@ -23,6 +23,7 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import Http404, HttpResponse
+from django.template import loader, Context
 from main.forms import RegexForm
 import re
 
@@ -41,7 +42,7 @@ def check_regex(request):
     form = RegexForm(request.POST)
     
     if form.is_valid():
-        method = getattr(form.cleaned_data['regex'], form.cleaned_data['regex_method'])
+        method = getattr(form.regex_pattern, form.cleaned_data['regex_method'])
         match = method(form.cleaned_data['test_text'])
         
         if hasattr(match, 're'):
@@ -50,9 +51,10 @@ def check_regex(request):
             result_type = "array"
         else:
             result_type = None
-        ctx = {'match': match, 'result_type': result_type}
-        return render_to_response("main/result.html", ctx)
+
+        content = loader.get_template("main/result.html").render(Context(locals()))
     else:
-        errors = form.errors
-        return HttpResponse("Error: %s" % str(errors))
+        content ="Error: %s" % str(form.errors)
+        
+    return render_to_response("main/response.js", Context(locals()))
     

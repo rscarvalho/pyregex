@@ -39,16 +39,17 @@ input[type="text"], textarea, select{
 }
 
 .big-re{
-    font-size: 1.3em;
+    font-size: 1em;
     font-weight: bold;
     font-family: monospace;
     vertical-align: top;
 }
 
 .big-re input, .big-re select, .big-re textarea{
-    font-size: 1em;
+    font-size: 0.9em;
     font-family: monospace;
-    border: 1px solid #EFEFEF;
+    border: 1px solid #CCC;
+    background-color: #F0F0F0;
 }
 
 .big-re input, .big-re .re-string, .big-re textarea{

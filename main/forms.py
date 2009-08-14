@@ -20,9 +20,10 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-from django import forms
 import re
 import sre_constants
+from django import forms
+from main.widgets import PipedMultiCheckboxField
 
 REGEX_METHODS = (
     ("match", "match",),
@@ -31,24 +32,42 @@ REGEX_METHODS = (
 )
 
 REGEX_FLAGS = (
-    (re.I, "I (Ignore Case)"),
-    (re.L, "L (Locale)"),
-    (re.M, "M (Multiline)"),
-    (re.S, "S (Dot All)"),
-    (re.U, "U (Unicode)"),
-    (re.X, "X (Verbose)"),
+    (re.I, "re.I"),
+    (re.L, "re.L"),
+    (re.M, "re.M"),
+    (re.S, "re.S"),
+    (re.U, "re.U"),
+    (re.X, "re.X"),
 )
 
 class RegexForm(forms.Form):
-    regex = forms.CharField(label="Pattern", required=True)
+    regex = forms.CharField(label="Pattern", required=True,
+                            widget=forms.TextInput(attrs={'size': 70}))
     regex_method = forms.ChoiceField(label="Method", choices=REGEX_METHODS)
-    test_text = forms.CharField(widget=forms.Textarea, required=False)
+    test_text = forms.CharField(required=False,
+                                widget=forms.Textarea(attrs={'cols': 65, 'rows': 15}))
+    regex_flags = forms.MultipleChoiceField(choices=REGEX_FLAGS, required=False,
+                                            widget=PipedMultiCheckboxField)
     
     def clean_regex(self):
+        cdata = self.cleaned_data
         try:
-            # If regex is None, force compile to faile
-            regex = re.compile(self.cleaned_data.get('regex', '(Invalid Regex'))
+            # If regex is None, force a compile failure
+            regex = re.compile(cdata['regex'])
         except sre_constants.error, e:
             raise forms.ValidationError("Invalid Regexp")
         
-        return regex
+        return cdata['regex']
+
+    def clean_regex_flags(self):
+        rflags = self.cleaned_data['regex_flags']
+        flags = 0
+        if rflags:
+            for flag in rflags:
+                flags |= int(flag)
+            return flags
+        return flags
+        
+    @property
+    def regex_pattern(self):
+        return re.compile(self.cleaned_data['regex'], self.cleaned_data['regex_flags'])
