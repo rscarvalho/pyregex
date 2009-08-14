@@ -1,0 +1,39 @@
+table th, table td {
+  border: none;
+}
+
+input[type="text"], textarea, select{
+  border-style: solid;
+  border-color: #303030;
+  border-width: 1px;
+}
+
+.clear{
+  clear: both;
+}
+
+.clear-left{
+  clear: left;
+}
+
+.clear-right{
+  clear: right;
+}
+
+.float-left{
+  float: left;
+}
+
+.float-right{
+  float: right;
+}
+
+#result{
+  border: 1px solid #CCC;
+  width: 300px;
+  padding: 10px;
+}
+
+.nomatch{
+  color: red;
+}

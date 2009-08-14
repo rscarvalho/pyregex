@@ -1,4 +1,6 @@
+{% if match %}
 <h3>Results:</h3>
+{% ifequal result_type "match" %}
 <ul>
   <li>
     <dl>
@@ -19,3 +21,16 @@
   </li>
   {% endif %}
 </ul>
+{% endifequal %}
+
+{% ifequal result_type "array" %}
+<ul>
+  {% for m in match %}
+  <li>{{ m }}</li>
+  {% endfor %}
+</ul>
+{% endifequal %}
+
+{% else %}
+<div class="nomatch">No Matches</div>
+{% endif %}

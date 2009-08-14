@@ -1,13 +1,48 @@
 <html>
   <head>
     <title>{% block title %}{% endblock %}</title>
+    <!--Include YUI Loader: --> 
+    <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/yuiloader/yuiloader-min.js"></script> 
+
+    <!--Use YUI Loader to bring in your other dependencies: --> 
+    <script type="text/javascript"> 
+    // Instantiate and configure YUI Loader: 
+    (function() { 
+        var loader = new YAHOO.util.YUILoader({ 
+            base: "", 
+            require: ["base","fonts","grids","reset"], 
+            loadOptional: false, 
+            combine: true, 
+            filter: "MIN", 
+            allowRollup: true, 
+            onSuccess: function() { 
+                //you can make use of all requested YUI modules 
+                //here. 
+            } 
+        }); 
+
+    // Load the files using the insert() method. 
+    loader.insert(); 
+    })(); 
+    </script>
+    
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>
     <script type="text/javascript">
       google.load('jquery', '1.3.2');
     </script>
+    <link rel="stylesheet" href="/media/css/base.css" type="text/css"/>
     {% block extrahead %}{% endblock %}
   </head>
   <body>
-    {% block content %}{% endblock %}
+    <div id="doc2">
+      <div id="hd"></div>
+      <div id="bd">
+      {% block content %}{% endblock %}
+      <div class="clear"></div>
+      </div>
+      <div id="ft">
+      {% block prefooter %}{% endblock %}
+      </div>
+    </div>
   </body>
 </html>

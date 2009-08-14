@@ -2,18 +2,26 @@
 
 {% block title %}PyRegex{% endblock %}
 {% block extrahead %}
-  <script type="text/javascript" src="/media/base.js"></script>
+  <script type="text/javascript" src="/media/js/base.js"></script>
 {% endblock %}
 
 {% block content %}
   <h1>Python Regular Expressions Online Tester</h1>
-  <div class="form">
+  <div id="result" class="float-right"></div>
+  <div class="form" class="float-left">
     <form action="" method="post" onsubmit="submitForm(this); return false">
       <table>{{ form }}</table>
       <input type="submit" value="Test it!">
     </form>
   </div>
-  
-  <div id="result">
-  </div>
+{% endblock %}
+
+{% block prefooter %}
+<div class="help">
+  To find more information about Python Regular expression's approach, please
+  see <a href="http://docs.python.org/library/re.html" target="_blank" 
+         title="Python re module docs">
+    the documentation.
+  </a>
+</div>
 {% endblock %}

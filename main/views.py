@@ -41,8 +41,17 @@ def check_regex(request):
     form = RegexForm(request.POST)
     
     if form.is_valid():
-        match = form.cleaned_data['regex'].match(form.cleaned_data['test_text'])
-        return render_to_response("main/result.html", {'match': match})
+        method = getattr(form.cleaned_data['regex'], form.cleaned_data['regex_method'])
+        match = method(form.cleaned_data['test_text'])
+        
+        if hasattr(match, 'dictgroup'):
+            result_type = "match"
+        elif match is not None:
+            result_type = "array"
+        else:
+            result_type = None
+        ctx = {'match': match, 'result_type': result_type}
+        return render_to_response("main/result.html", ctx)
     else:
         errors = form.errors
         return HttpResponse("Error: %s" % str(errors))

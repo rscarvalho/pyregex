@@ -24,8 +24,24 @@ from django import forms
 import re
 import sre_constants
 
+REGEX_METHODS = (
+    ("match", "Match",),
+    ("findall", "Find All",),
+    ("search", "Search",)
+)
+
+REGEX_FLAGS = (
+    (re.I, "I (Ignore Case)"),
+    (re.L, "L (Locale)"),
+    (re.M, "M (Multiline)"),
+    (re.S, "S (Dot All)"),
+    (re.U, "U (Unicode)"),
+    (re.X, "X (Verbose)"),
+)
+
 class RegexForm(forms.Form):
-    regex = forms.CharField(required=True)
+    regex = forms.CharField(label="Pattern", required=True)
+    regex_method = forms.ChoiceField(label="Method", choices=REGEX_METHODS)
     test_text = forms.CharField(widget=forms.Textarea, required=False)
     
     def clean_regex(self):
