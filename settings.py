@@ -29,7 +29,7 @@ if on_production_server:
     SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '1234567890'
+SECRET_KEY = '`=elW&YK!Q6\'Xn:BZ})+g\\nUG[~CaFYaMS\nM\\c6\x0c9>;-V%\'<-.,~\\J:_x]n^>t/v"+C1Bi.J>l>M\x0bq6+1\tM\r f3/r]8U`kYcTkj%}7#cR>qGf\nw=y(=g2rB`Jc^&C%!^TU/&~\x0b{&Ajx^yNDO%7H(pA<,]Yn<oXh.)V3E9(^?wMZ#Hx\x0c)\'o\x0c{$S}%3tE(|\\9(l 5L_Z4[\r;{{0t3{$ia:0<G~F/\x0cr6.4tyGB5"\t=z\n(o#!.q#:rlqYDYHT6\x0c2N#I@'
 
 #ENABLE_PROFILER = True
 #ONLY_FORCED_PROFILE = True
@@ -103,6 +103,7 @@ INSTALLED_APPS = (
     'ragendja',
     # 'registration',
     'mediautils',
+    'main',
 )
 
 # List apps which should be left out from app settings and urlsauto loading
