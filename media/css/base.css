@@ -37,3 +37,24 @@ input[type="text"], textarea, select{
 .nomatch{
   color: red;
 }
+
+.big-re{
+    font-size: 1.3em;
+    font-weight: bold;
+    font-family: monospace;
+    vertical-align: top;
+}
+
+.big-re input, .big-re select, .big-re textarea{
+    font-size: 1em;
+    font-family: monospace;
+    border: 1px solid #EFEFEF;
+}
+
+.big-re input, .big-re .re-string, .big-re textarea{
+    color: #40994E;
+}
+
+.big-re .r{
+    color: #9E7235;
+}

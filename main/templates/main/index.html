@@ -10,7 +10,11 @@
   <div id="result" class="float-right"></div>
   <div class="form" class="float-left">
     <form action="" method="post" onsubmit="submitForm(this); return false">
-      <table>{{ form }}</table>
+      <div class="big-re">>>> regex = <span class="r">r</span><span class="re-string">"{{ form.regex }}"</span></div>
+      <div class="big-re">>>> test_string = <span class="re-string">"""<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.test_text }}<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"""</span></div>
+      <div class="big-re">>>> re.compile(regex).{{ form.regex_method }}(test_string)</div>
       <input type="submit" value="Test it!">
     </form>
   </div>

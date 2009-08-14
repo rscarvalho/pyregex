@@ -25,9 +25,9 @@ import re
 import sre_constants
 
 REGEX_METHODS = (
-    ("match", "Match",),
-    ("findall", "Find All",),
-    ("search", "Search",)
+    ("match", "match",),
+    ("findall", "findall",),
+    ("search", "search",)
 )
 
 REGEX_FLAGS = (

@@ -44,7 +44,7 @@ def check_regex(request):
         method = getattr(form.cleaned_data['regex'], form.cleaned_data['regex_method'])
         match = method(form.cleaned_data['test_text'])
         
-        if hasattr(match, 'dictgroup'):
+        if hasattr(match, 're'):
             result_type = "match"
         elif match is not None:
             result_type = "array"
