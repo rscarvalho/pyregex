@@ -102,7 +102,7 @@ INSTALLED_APPS = (
     'appenginepatcher',
     'ragendja',
     # 'registration',
-    'mediautils',
+    # 'mediautils',
     'main',
 )
 

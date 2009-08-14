@@ -1,9 +1,11 @@
 <html>
   <head>
     <title>{% block title %}{% endblock %}</title>
-    {% block extrahead %}
-      
-    {% endblock %}
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load('jquery', '1.3.2');
+    </script>
+    {% block extrahead %}{% endblock %}
   </head>
   <body>
     {% block content %}{% endblock %}

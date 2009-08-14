@@ -9,5 +9,5 @@ admin.autodiscover()
 handler500 = 'ragendja.views.server_error'
 
 urlpatterns = auth_patterns + patterns('',
-    (r'', include('main.urls'))
+    (r'', include('main.urls')),
 ) + urlpatterns
