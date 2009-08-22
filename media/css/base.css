@@ -1,5 +1,18 @@
+html, body{
+  background: #ECE9D8;
+  font-family: Tahoma, Arial, sans-serif;
+}
+
+#doc2{
+  width: 920px;
+}
+
 table th, table td {
   border: none;
+}
+
+a{
+  outline: none;
 }
 
 input[type="text"], textarea, select{
@@ -26,6 +39,14 @@ input[type="text"], textarea, select{
 
 .float-right{
   float: right;
+}
+
+.align-center{
+  text-align: center;
+}
+
+img{
+  vertical-align: middle;
 }
 
 #result{
@@ -58,4 +79,38 @@ input[type="text"], textarea, select{
 
 .big-re .r{
     color: #9E7235;
+}
+
+.main-menu{
+  background: url("../images/bg-menu.gif") no-repeat transparent;
+  vertical-align: middle;
+  display: table-cell;
+  height: 38px;
+  padding-left: 25px;
+  padding-right: 5px;
+  width: 890px;
+}
+
+.main-menu ul{
+  margin: 0;
+  padding: 0;
+}
+
+.main-menu ul li{
+  display: inline;
+  list-style: none;
+  margin:0;
+  padding: 0;
+  margin-right: 10px;
+}
+
+.main-menu ul li a{
+  color: white;
+  text-decoration: none;
+}
+
+.form, #result{
+  background-color: white;
+  border: solid 1px #CCC;
+  padding: 10px;
 }

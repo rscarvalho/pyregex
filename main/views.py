@@ -23,7 +23,7 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import Http404, HttpResponse
-from django.template import loader, Context
+from django.template import loader, Context, RequestContext
 from main.forms import RegexForm
 import re
 
@@ -32,7 +32,7 @@ def index(request):
         form = RegexForm(request.POST)
     else:
         form = RegexForm()
-    return render_to_response("main/index.html", {'form': form})
+    return render_to_response("main/index.html", RequestContext(request, {'form': form}))
 
 
 def check_regex(request):

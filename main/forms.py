@@ -40,24 +40,46 @@ REGEX_FLAGS = (
     (re.X, "re.X"),
 )
 
+REGEX_FLAGS_LABELS = (
+    "Ignore Case", 
+    "Make \\w, \\W, \\b, \\B, \\s and \\S dependent on the current locale.",
+    "Multi-line Regular Expression",
+    "Make the '.' special character match any character at all, including a newline",
+    "Make \\w, \\W, \\b, \\B, \\d, \\D, \\s and \\S dependent on the Unicode character properties database.",
+    "Verbose"
+)
+
 class RegexForm(forms.Form):
-    regex = forms.CharField(label="Pattern", required=True,
-                            widget=forms.TextInput(attrs={'size': 70}))
+    regex = forms.CharField(label="Pattern", required=False,
+                            widget=forms.TextInput(attrs={'size': 58}))
+    regex_line2 = forms.CharField(label="Pattern", required=False,
+                                  widget=forms.Textarea(attrs={'cols': 65, 'rows': 15}))
     regex_method = forms.ChoiceField(label="Method", choices=REGEX_METHODS)
     test_text = forms.CharField(required=False,
                                 widget=forms.Textarea(attrs={'cols': 65, 'rows': 15}))
     regex_flags = forms.MultipleChoiceField(choices=REGEX_FLAGS, required=False,
-                                            widget=PipedMultiCheckboxField)
+                                            widget=PipedMultiCheckboxField(labels=REGEX_FLAGS_LABELS))
     
-    def clean_regex(self):
+    def clean_regex_line2(self):
         cdata = self.cleaned_data
+        print self.cleaned_data
+        if cdata['regex']:
+            regex = cdata['regex']
+        else:
+            regex = cdata['regex_line2']
+            
+        self.cleaned_data['regex'] = regex
+        
+        if not regex:
+            raise forms.ValidationError("Please specify a valid regular expression.")
+            
         try:
             # If regex is None, force a compile failure
-            regex = re.compile(cdata['regex'])
+            regex = re.compile(regex)
         except sre_constants.error, e:
             raise forms.ValidationError("Invalid Regexp")
         
-        return cdata['regex']
+        return regex
 
     def clean_regex_flags(self):
         rflags = self.cleaned_data['regex_flags']

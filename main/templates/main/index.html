@@ -3,31 +3,34 @@
 {% block title %}PyRegex{% endblock %}
 {% block extrahead %}
   <script type="text/javascript" src="/media/js/base.js"></script>
+  <link rel="stylesheet" href="/media/css/index.css"/>
 {% endblock %}
 
 {% block content %}
-  <h1>Python Regular Expressions Online Tester</h1>
-  <div id="result" class="float-right"></div>
-  <div class="form" class="float-left">
-    <form action="" method="post" onsubmit="submitForm(this); return false">
+  <br/>
+  <div id="result" class="float-right" style="display:none"></div>
+  <div class="form float-left">
+    <form action="" method="post" onsubmit="submitForm(this); return false" id="regexForm">
       <div class="big-re">>>> import re</div>
-      <div class="big-re">>>> regex = <span class="r">r</span><span class="re-string">"{{ form.regex }}"</span></div>
+      <div class="big-re regex">>>> regex = <span class="r">r</span><span class="re-string">"{{ form.regex }}"</span></div>
+      <div class="big-re regex" style="display:none">>>> regex = <span class="r">r</span><span class="re-string">"""<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.regex_line2 }}<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"""</span></div>
       <div class="big-re">>>> test_string = <span class="re-string">"""<br/>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.test_text }}<br/>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"""</span></div>
-      <div class="big-re">>>> flags = 0 | {{ form.regex_flags }}</div>
-      <div class="big-re">>>> re.compile(regex, flags).{{ form.regex_method }}(test_string)</div>
-      <input type="submit" value="Test it!">
+      <div class="big-re">>>> flags = 0 {{ form.regex_flags }}</div>
+      <div class="big-re">>>> re.compile(regex, flags).{{ form.regex_method }}(test_string)</div><br/>
+      <div class="align-center valign-middle">
+        <a href="javascript:submitForm($('#regexForm')[0]);void(0)"><img src="/media/images/submit-button.png"/></a>
+        <img src="/media/images/ajax-loader.gif" style="" id="loading"/>
+      </div>
     </form>
   </div>
 {% endblock %}
 
 {% block prefooter %}
 <div class="help">
-  To find more information about Python Regular expression's approach, please
-  see <a href="http://docs.python.org/library/re.html" target="_blank" 
-         title="Python re module docs">
-    the documentation.
-  </a>
+  Copyright&copy; 2009. Rodolfo Carvalho.
 </div>
 {% endblock %}

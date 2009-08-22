@@ -6,6 +6,14 @@ from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
 
 class PipedMultiCheckboxField(forms.CheckboxSelectMultiple):
+    def __init__(self, *args, **kwargs):
+        if kwargs.has_key("labels"):
+            self.labels = kwargs.pop("labels")
+        else:
+            self.labels = []
+            
+        super(PipedMultiCheckboxField, self).__init__(*args, **kwargs)
+    
     def render(self, name, value, attrs=None, choices=()):
         if value is None: value = []
         has_id = attrs and 'id' in attrs
@@ -16,6 +24,9 @@ class PipedMultiCheckboxField(forms.CheckboxSelectMultiple):
             if has_id:
                 final_attrs = dict(final_attrs, id="%s_%s" % (attrs['id'], i))
                 label_for = u' for="%s"' % final_attrs['id']
+                if i < len(self.labels):
+                    final_attrs['title'] = self.labels[i]
+                    label_for += u' title="%s"' % self.labels[i]
             else:
                 label_for = u''
             
