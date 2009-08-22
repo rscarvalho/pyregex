@@ -13,4 +13,6 @@ $(function(){
   $("#id_regex_flags_5").click(function(){
     $(".regex").toggle(300);
   });
+  
+  $("textarea").autoResize({animate:true, extraSpace:0, animateDuration: 300});
 });

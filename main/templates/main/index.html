@@ -3,6 +3,7 @@
 {% block title %}PyRegex{% endblock %}
 {% block extrahead %}
   <script type="text/javascript" src="/media/js/base.js"></script>
+  <script type="text/javascript" src="/media/js/autoresize.jquery.min.js"></script>
   <link rel="stylesheet" href="/media/css/index.css"/>
 {% endblock %}
 
@@ -23,7 +24,7 @@
       <div class="big-re">>>> re.compile(regex, flags).{{ form.regex_method }}(test_string)</div><br/>
       <div class="align-center valign-middle">
         <a href="javascript:submitForm($('#regexForm')[0]);void(0)"><img src="/media/images/submit-button.png"/></a>
-        <img src="/media/images/ajax-loader.gif" style="" id="loading"/>
+        <img src="/media/images/ajax-loader.gif" style="display:none" id="loading"/>
       </div>
     </form>
   </div>

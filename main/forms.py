@@ -53,10 +53,10 @@ class RegexForm(forms.Form):
     regex = forms.CharField(label="Pattern", required=False,
                             widget=forms.TextInput(attrs={'size': 58}))
     regex_line2 = forms.CharField(label="Pattern", required=False,
-                                  widget=forms.Textarea(attrs={'cols': 65, 'rows': 15}))
+                                  widget=forms.Textarea(attrs={'cols': 65, 'rows': 4}))
     regex_method = forms.ChoiceField(label="Method", choices=REGEX_METHODS)
     test_text = forms.CharField(required=False,
-                                widget=forms.Textarea(attrs={'cols': 65, 'rows': 15}))
+                                widget=forms.Textarea(attrs={'cols': 65, 'rows': 4}))
     regex_flags = forms.MultipleChoiceField(choices=REGEX_FLAGS, required=False,
                                             widget=PipedMultiCheckboxField(labels=REGEX_FLAGS_LABELS))
     
