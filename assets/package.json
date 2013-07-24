@@ -15,6 +15,6 @@
     "grunt-notify": "~0.2.4",
     "grunt-coffeelint": "0.0.7",
     "grunt-contrib-clean": "~0.5.0",
-    "grunt-contrib-sass": "~0.4.1"
+    "grunt-contrib-sass": "~0.3.0"
   }
 }
