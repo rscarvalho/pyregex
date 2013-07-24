@@ -1,8 +1,9 @@
 "use strict"
 
-app = angular.module('pyregex', [])
+app = angular.module('pyregex', ['ui.select2', 'ngResource'])
 
 l = location
-app.value('apiUrl', "#{l.protocol}//#{l.hostname}:#{location.port}/api")
+app.value('apiUrl', '/api')
+app.factory '_', -> window._
 
-@PyRegex = app
+@PyRegex = -> angular.module('pyregex')

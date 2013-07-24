@@ -1,0 +1,22 @@
+div.regex-parser-container {
+    input[type='text'], label, span.quotes {
+        font-family: monospace;
+    } 
+
+    span.quotes {
+        color: rgb(25, 197, 25);
+    }
+
+    span.reserved {
+        color: #bc8600;
+    }
+
+    textarea {
+        width: 560px;
+        max-width: 480px;
+        min-width: 480px;
+
+        height: 120px;
+        min-height: 120px;
+    }
+}

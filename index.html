@@ -40,8 +40,42 @@
 		</div><!-- /.navbar -->
 
 		<div class="container">
-			<h1>Bootstrap starter template</h1>
-			<p>Use this document as a way to quick start any new project.</p>
+			<h1>Your Python Regular Expression's Best Buddy</h1>
+
+            <div ng-controller="RegexParser" class="regex-parser-container">
+                <div class="form-inline">
+                    <label for="regex">&gt;&gt;&gt; regex = 
+                        <span class="reserved">r</span><span class="quotes">"</span>
+                    </label>
+                    <input id="regex" ng-model="re.source" type="text" class="input-large span5" placeholder="^type[ ]here$" autofocus>
+                    <span class="quotes">"</span>
+                </div>
+                <div class="form">
+                    <label for="test-string">&gt;&gt;&gt; test_string = <span class="quotes">"""</span></label>
+                    <textarea id="test-string" ng-model="re.testString"></textarea>
+                    <label><span class="quotes">"""</span></label>
+                </div>
+                <div class="form-inline">
+                    <label>&gt;&gt;&gt; flags = 0 | </label>
+                    <label class="checkbox" title="{{description}}" 
+                           ng-repeat="(flagLabel, description) in allFlags">
+                        <input type="checkbox" title="{{description}}"
+                               ng-model="reFlags[$index]"
+                               ng-click="calculateFlags()"> re.{{flagLabel}} <span ng-hide="$last">|</span>
+                    </label>
+                </div>
+                <div class="form-inline">
+                    <label>&gt;&gt;&gt; re.compile(regex, flags).
+                        <select ng-model="re.matchType" ui-select2>
+                            <option>match</option>
+                            <option>findall</option>
+                            <option>search</option>
+                        </select>
+                        (test_string)
+                    </label>
+                    <a href="javascript:void(0)" class="btn btn-primary btn-small" ng-click="getResults()">Run!</a>
+                </div>
+			</div>
 		</div>
 	</body>
 </html>
