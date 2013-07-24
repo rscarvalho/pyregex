@@ -7,12 +7,12 @@ branches:
     - ng
 
 before_script:
-- wget https://googleappengine.googlecode.com/files/google_appengine_1.8.2.zip -nv
-- unzip -q google_appengine_1.8.2.zip
+- "wget https://googleappengine.googlecode.com/files/google_appengine_${APPENGINE_SDK_VERSION}.zip -nv"
+- "unzip -q google_appengine_${APPENGINE_SDK_VERSION}.zip"
 
 env:
-- PYTHONPATH="$(pwd)/google_appengine:$PYTHONPATH"
+- APPENGINE_SDK_VERSION=1.8.2
 
 install: pip install -r requirements.txt
 
-script: nosetests --with-gae --rednose
+script: PYTHONPATH=".:google_appengine" nosetests --with-gae --rednose

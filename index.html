@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html ng-app='pyregex'>
+	<head>
+		<meta charset="utf-8">
+		<title>PyRegex</title>
+        <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,700' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" rel="stylesheet" href="/assets/screen.css" media="screen">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script type="text/javascript" src="/assets/application.js"></script>
+	</head>
+	<body>
+        <div class="wrap">
+    		<div class="navbar navbar-fixed-top">
+    			<div class="navbar-inner">
+    				<div class="container">
+    					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+    						<span class="icon-bar"></span>
+    						<span class="icon-bar"></span>
+    						<!-- <span class="icon-bar"></span> -->
+    					</button>
+    					<a class="brand" href="/">PyRegex</a>
+    					<div class="nav-collapse collapse">
+    						<ul class="nav">
+    							<li class="active">
+    								<a href="#/">Home</a>
+    							</li>
+                                <li>
+                                    <a href="http://docs.python.org/library/re.html" target="_blank">
+                                        Documentation
+                                    </a>
+                                </li>
+    							<!-- <li>
+    								<a href="#">About</a>
+    							</li>
+    							<li>
+    								<a href="#">Contact</a>
+    							</li> -->
+    						</ul>
+    					</div><!--/ .nav-collapse -->
+    				</div>
+    			</div>
+    		</div><!-- /.navbar -->
+
+    		<div class="container" ng-view>
+                
+    		</div>
+            <div class="push">&nbsp;</div>
+        </div>
+
+        <footer class="main">&nbsp;
+            <div class="container">
+                <p>
+                    Made by <a href="http://www.github.com/rscarvalho" target="_blank">Rodolfo Carvalho</a>
+                    (<a href="http://www.github.com/rscarvalho" target="_blank">@rscarvalho</a>) &#9679; 
+                    Inspired by <a href="http://rubular.com" target="_blank">Rubular</a><br/>
+                    Code licensed under the <a href="http://www.gnu.org/licenses/gpl-2.0.html#SEC1" target="_blank">GNU General Public License version 2</a>
+                <p>
+                    <a href="https://developers.google.com/appengine" title="Google AppEngine" target="_blank">
+                        <img src="https://developers.google.com/appengine/images/appengine-silver-120x30.gif" 
+alt="Powered by Google App Engine" />
+                    </a> 
+                    &nbsp;&nbsp;&#9679;&nbsp;&nbsp;
+                    <a href="https://travis-ci.org/rscarvalho/pyregex" title="Tested with Travis CI" target="_blank">
+                        <img src="https://travis-ci.org/rscarvalho/pyregex.png?branch=master">
+                    </a>
+                    &nbsp;&nbsp;&#9679;&nbsp;&nbsp;
+                    <a href="http://www.python.org" title="Python Powered" target="_blank">
+                        <img src="http://www.python.org/community/logos/python-powered-w-70x28.png">
+                    </a>
+                </p>
+            </div>
+        </footer>
+	</body>
+</html>

@@ -1,15 +1,20 @@
 application: pyregex
-version: 1
-runtime: python
+version: 2
+runtime: python27
+threadsafe: true
 api_version: 1
 
-handlers:
-- url: /media
-  static_dir: media
+libraries:
+- name: webapp2
+  version: latest
 
-- url: /gae_admin/.*
-  script: $PYTHON_LIB/google/appengine/ext/admin
-  login: admin
-  
+handlers:
+- url: /assets
+  static_dir: assets/dist
+
+- url: /
+  static_files: index.html
+  upload: index.html
+
 - url: .*
-  script: common/appenginepatch/main.py
+  script: pyregex.webapp.application
