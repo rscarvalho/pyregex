@@ -4,7 +4,7 @@ import json
 from .decorators import handle_json
 import sys
 import logging
-import re
+import re, sre_constants
 
 
 class ApiBaseResource(webapp2.RequestHandler):
@@ -16,7 +16,7 @@ class ApiBaseResource(webapp2.RequestHandler):
 class RegexResource(ApiBaseResource):
     __urls__ = ('regex/', 'regex/<key>', 'regex/test/')
 
-    VALID_MATCH_TYPES = ('findall',)
+    VALID_MATCH_TYPES = ('findall', 'match', 'search',)
 
     @handle_json
     def get(self):
@@ -36,7 +36,30 @@ class RegexResource(ApiBaseResource):
 
         r = dict(result_type=match_type)
 
-        if match_type == 'findall':
-            r['result'] = re.compile(regex, flags).findall(test_string)
+        try:
+            regex = re.compile(regex, flags)
+        except sre_constants.error, error:
+            self.response.set_status(400)
+            return self.api_error('Invalid regular expression: %s', regex)
+
+        cb = getattr(regex, match_type)
+        r['result'] = self.dict_from_object(cb(test_string))
 
         return r
+
+    def dict_from_object(self, obj):
+        if obj and hasattr(obj, 'groupdict') and callable(getattr(obj, 'groupdict')):
+            return dict(
+                group=obj.group(),
+                groups=obj.groups(),
+                group_dict=obj.groupdict(),
+                end=obj.end(), start=obj.start(), pos=obj.pos,
+                span=obj.span(),
+                regs=obj.regs,
+                last_group=obj.lastgroup,
+                last_index=obj.lastindex
+            )
+        elif not obj:
+            return None
+        return obj
+

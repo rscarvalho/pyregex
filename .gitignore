@@ -2,3 +2,5 @@
 *~
 .DS_Store
 assets/.sass-cache
+.coverage
+coverage/
