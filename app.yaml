@@ -7,8 +7,6 @@ api_version: 1
 libraries:
 - name: webapp2
   version: latest
-- name: jinja2
-  version: latest
 
 handlers:
 - url: /assets
@@ -19,4 +17,4 @@ handlers:
   upload: index.html
 
 - url: .*
-  script: main.application
+  script: pyregex.webapp.application
