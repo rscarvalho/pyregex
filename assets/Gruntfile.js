@@ -28,7 +28,6 @@ module.exports = function(grunt) {
                 files: [
                     bowerComponent('normalize-css', 'normalize.css'),
                     bowerComponent('select2', ['select2.js', 'select2.css']),
-                    bowerComponent('bootstrap-css/css', 'bootstrap.css'),
                     {expand: true, cwd: 'lib/css', src: ['**.css'], dest: 'build/'},
                     {expand: true, cwd: 'src/css/', src: ['**.css'], dest: 'build/'},
                 ]
@@ -39,12 +38,19 @@ module.exports = function(grunt) {
                     bowerComponent('jquery', 'jquery.js'),
                     bowerComponent('angular', 'angular.js'),
                     bowerComponent('angular-ui-select2', 'src/select2.js'),
+                    bowerComponent('select2', 'select2.js'),
                     bowerComponent('bootstrap-css/js', 'bootstrap.js'),
                     bowerComponent('underscore', 'underscore.js'),
                     bowerComponent('angular-resource', 'angular-resource.js'),
                     {expand: true, cwd: 'lib/js', src: ['**.js'], dest: 'build/'},
-                    {expand: true, cwd: 'src/', src: ['*.html'], dest: 'dist/'},
                     {expand: true, cwd: 'src/js/', src:['**'], dest: 'build/'},
+                ]
+            },
+
+            html: {
+                files: [
+                    {expand: true, cwd: 'src/', src: ['*.html'], dest: 'dist/'},
+                    {expand: true, cwd: 'src/html/', src: ['*.html', '**/*.html'], dest: 'dist/'},
                 ]
             },
 
@@ -74,6 +80,7 @@ module.exports = function(grunt) {
                 src: [
                     'build/jquery.js',
                     'build/angular.js',
+                    'build/select2.js',
                     'build/src/select2.js',
                     'build/main.js',
                     'build/**.js',
@@ -130,10 +137,23 @@ module.exports = function(grunt) {
 
         watch: {
             coffee: {
-                files: ['src/coffee/*.coffee', 'src/coffee/**/*.coffee', 'lib/**', 'src/sass/**.scss'],
-                tasks: ['coffeelint', 'build'],
+                files: ['src/coffee/*.coffee', 'src/coffee/**/*.coffee'],
+                tasks: ['coffeelint', 'coffee', 'copy:js', 'concat:application_js'],
                 options: {
-                    // spawn: false,
+                    atBegin: true,
+                }
+            },
+            sass: {
+                files: ['src/sass/*.scss', 'src/sass/**/*.scss'],
+                tasks: ['sass', 'copy:css', 'concat:screen_css'],
+                options: {
+                    atBegin: true,
+                }
+            },
+            html: {
+                files: ['src/*.html', 'src/**/*.html'],
+                tasks: ['copy:html', 'copy:images'],
+                options: {
                     atBegin: true,
                 }
             }

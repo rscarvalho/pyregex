@@ -8,7 +8,6 @@ import re, sre_constants
 
 
 class ApiBaseResource(webapp2.RequestHandler):
-
     def api_error(self, message, *args):
         return dict(result_type='error', message=message % args)
 
@@ -33,6 +32,10 @@ class RegexResource(ApiBaseResource):
         if match_type not in self.VALID_MATCH_TYPES:
             self.response.set_status(400)
             return self.api_error('Match Type must be one of the following: %s', str(self.VALID_MATCH_TYPES))
+
+        if not regex:
+            self.response.set_status(400)
+            return self.api_error('Regex string must not be empty')
 
         r = dict(result_type=match_type)
 
