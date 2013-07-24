@@ -10,6 +10,9 @@ before_script:
 - wget https://googleappengine.googlecode.com/files/google_appengine_1.8.2.zip -nv
 - unzip -q google_appengine_1.8.2.zip
 
+env:
+- PYTHONPATH="$(pwd)/google_appengine:$PYTHONPATH"
+
 install: pip install -r requirements.txt
 
 script: nosetests --with-gae --rednose
