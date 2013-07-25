@@ -1,4 +1,4 @@
-application: pyregex
+application: pyregex-hrd
 version: 2
 runtime: python27
 threadsafe: true
@@ -18,3 +18,16 @@ handlers:
 
 - url: .*
   script: pyregex.webapp.application
+
+skip_files:
+- ^(.*/)?#.*#
+- ^(.*/)?.*~
+- ^(.*/)?.*\.py[co]
+- ^(.*/)?\..*
+- ^assets/node_modules/.*
+- ^assets/components/.*
+- ^assets/src/.*
+- ^assets/build/.*
+- ^assets/Gruntfile\.js
+- ^assets/(component|package)\.json
+- ^lib/.*
