@@ -1,11 +1,11 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 deploy_branch='stable'
 current_branch=$(git branch | grep '*' | sed -e 's/^\* *//')
 
 # Only deploy from the stable branch
 if [[ "$current_branch" != "$deploy_branch" ]]; then
-    echo "You cannot deploy from branch $current_branch." >&2
+    echo "You cannot deploy from branch \"$current_branch\"." >&2
     exit 0
 fi
 
@@ -21,6 +21,7 @@ if [[ -z "$APPENGINE_PASSWORD" || -z "$APPENGINE_EMAIL" ]]; then
     exit -1
 fi
 
+sudo ntpdate ntp.ubuntu.com
 echo $APPENGINE_PASSWORD | $APPENGINE_SDK_PATH/appcfg.py update . -e $APPENGINE_EMAIL --passin
 
 exit $?
