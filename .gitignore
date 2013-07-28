@@ -4,3 +4,4 @@
 assets/.sass-cache
 .coverage
 coverage/
+node_modules/

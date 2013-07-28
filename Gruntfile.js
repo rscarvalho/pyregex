@@ -1,7 +1,19 @@
 module.exports = function(grunt) {
+    var assetPath = function(path) {
+        return "assets/" + path;
+    };
+
     var bowerComponent = function(name, src) {
-        return {expand: true, cwd: 'components/' + name, src: src, dest: 'build/'}
-    }
+        return {expand: true, cwd: assetPath('bower_components/' + name), src: src, dest: assetPath('build/')}
+    };
+
+    Array.prototype.flatten = function() {
+        return [].concat.apply([], this);
+    };
+
+    var coffeePaths = ['tests/client', 'src/coffee'].map(function(e) { 
+        return [e + '/*.coffee', e + '/**/*.coffee'];
+    }).flatten();
 
     // Configuration
     grunt.initConfig({
@@ -11,11 +23,10 @@ module.exports = function(grunt) {
         coffee: {
             app: {
                 src: [
-                    'src/coffee/main.coffee',
-                    'src/coffee/*.coffee',
-                    'src/coffee/**/*.coffee'
-                ],
-                dest: 'build/',
+                    assetPath('src/coffee/*.coffee'),
+                    assetPath('src/coffee/**/*.coffee')
+                ].flatten(),
+                dest: assetPath('build/'),
                 expand: true,
                 flatten: true,
                 ext: '.js'
@@ -28,8 +39,8 @@ module.exports = function(grunt) {
                 files: [
                     bowerComponent('normalize-css', 'normalize.css'),
                     bowerComponent('select2', ['select2.js', 'select2.css']),
-                    {expand: true, cwd: 'lib/css', src: ['**.css'], dest: 'build/'},
-                    {expand: true, cwd: 'src/css/', src: ['**.css'], dest: 'build/'},
+                    {expand: true, cwd: assetPath('lib/css'), src: ['**.css'], dest: assetPath('build/')},
+                    {expand: true, cwd: assetPath('src/css/'), src: ['**.css'], dest: assetPath('build/')},
                 ]
             },
 
@@ -41,24 +52,23 @@ module.exports = function(grunt) {
                     bowerComponent('select2', 'select2.js'),
                     bowerComponent('bootstrap-css/js', 'bootstrap.js'),
                     bowerComponent('underscore', 'underscore.js'),
-                    bowerComponent('angular-resource', 'angular-resource.js'),
-                    {expand: true, cwd: 'lib/js', src: ['**.js'], dest: 'build/'},
-                    {expand: true, cwd: 'src/js/', src:['**'], dest: 'build/'},
+                    {expand: true, cwd: assetPath('lib/js'), src: ['**.js'], dest: assetPath('build/')},
+                    {expand: true, cwd: assetPath('src/js/'), src:['**'], dest: assetPath('build/')},
                 ]
             },
 
             html: {
                 files: [
-                    {expand: true, cwd: 'src/', src: ['*.html'], dest: 'dist/'},
-                    {expand: true, cwd: 'src/html/', src: ['*.html', '**/*.html'], dest: 'dist/'},
+                    {expand: true, cwd: assetPath('src/'), src: ['*.html'], dest: assetPath('dist/')},
+                    {expand: true, cwd: assetPath('src/html/'), src: ['*.html', '**/*.html'], dest: assetPath('dist/')},
                 ]
             },
 
             images: {
                 files: [
-                    {expand: true, cwd: 'components/bootstrap-css/img', src: '*.png', dest: 'dist/'},
-                    {expand: true, cwd: 'components/select2', src: ['*.png', '*.gif'], dest: 'dist/'},
-                    {expand: true, cwd: 'lib/images', src: ['**.png', '**.jpg', '**.gif', '**.webp'], dest: 'dist/'},
+                    {expand: true, cwd: assetPath('bower_components/bootstrap-css/img'), src: '*.png', dest: assetPath('dist/')},
+                    {expand: true, cwd: assetPath('bower_components/select2'), src: ['*.png', '*.gif'], dest: assetPath('dist/')},
+                    {expand: true, cwd: assetPath('lib/images'), src: ['**.png', '**.jpg', '**.gif', '**.webp'], dest: assetPath('dist/')},
                 ]
             }
         },
@@ -69,24 +79,24 @@ module.exports = function(grunt) {
             },
             screen_css: {
                 src: [
-                    'build/normalize.css', 
-                    'build/bootstrap.css',
-                    'build/select2.css',
-                    'build/**.css'
+                    assetPath('build/normalize.css'), 
+                    assetPath('build/bootstrap.css'),
+                    assetPath('build/select2.css'),
+                    assetPath('build/**.css')
                 ],
-                dest: 'dist/screen.css'
+                dest: assetPath('dist/screen.css')
             },
             application_js: {
                 src: [
-                    'build/jquery.js',
-                    'build/angular.js',
-                    'build/select2.js',
-                    'build/src/select2.js',
-                    'build/main.js',
-                    'build/**.js',
-                    'build/**/*.js',
+                    assetPath('build/jquery.js'),
+                    assetPath('build/angular.js'),
+                    assetPath('build/select2.js'),
+                    assetPath('build/src/select2.js'),
+                    assetPath('build/main.js'),
+                    assetPath('build/**.js'),
+                    assetPath('build/**/*.js'),
                 ],
-                dest: 'dist/application.js'
+                dest: assetPath('dist/application.js')
             }
         },
 
@@ -111,7 +121,7 @@ module.exports = function(grunt) {
             },
             files: [
                 'Gruntfile.js',
-                'build/**.js'
+                assetPath('build/**.js')
             ]
         },
 
@@ -125,11 +135,11 @@ module.exports = function(grunt) {
             },
             app: {
                 files: {
-                    'dist/application.js': [
-                        'build/jquery-1.10.2.js',
-                        'build/angular.js',
-                        'build/main.js',
-                        'build/**.js'
+                    'assets/dist/application.js': [
+                        assetPath('build/jquery-1.10.2.js'),
+                        assetPath('build/angular.js'),
+                        assetPath('build/main.js'),
+                        assetPath('build/**.js')
                     ]
                 }
             }
@@ -137,21 +147,21 @@ module.exports = function(grunt) {
 
         watch: {
             coffee: {
-                files: ['src/coffee/*.coffee', 'src/coffee/**/*.coffee'],
-                tasks: ['coffeelint', 'coffee', 'copy:js', 'concat:application_js'],
+                files: coffeePaths,
+                tasks: ['coffeelint', 'coffee', 'copy:js', 'concat:application_js', 'karma'],
                 options: {
                     atBegin: true,
                 }
             },
             sass: {
-                files: ['src/sass/*.scss', 'src/sass/**/*.scss'],
+                files: [assetPath('src/sass/*.scss'), assetPath('src/sass/**/*.scss')],
                 tasks: ['sass', 'copy:css', 'concat:screen_css'],
                 options: {
                     atBegin: true,
                 }
             },
             html: {
-                files: ['src/*.html', 'src/**/*.html'],
+                files: [assetPath('src/*.html'), assetPath('src/**/*.html')],
                 tasks: ['copy:html', 'copy:images'],
                 options: {
                     atBegin: true,
@@ -160,12 +170,12 @@ module.exports = function(grunt) {
         },
 
         coffeelint: {
-            app: ['src/coffee/*.coffee', 'src/coffee/**/*.coffee']
+            app: coffeePaths
         },
 
         clean: {
-            build: ['build/**'],
-            dist: ['dist/**']
+            build: [assetPath('build/**')],
+            dist: [assetPath('dist/**')]
         },
 
         sass: {
@@ -175,11 +185,17 @@ module.exports = function(grunt) {
                 },
                 files: [{
                     expand: true,
-                    cwd: 'src/sass',
+                    cwd: assetPath('src/sass'),
                     src: ['**.scss'],
-                    dest: 'build',
+                    dest: assetPath('build'),
                     ext: '.css'
                 }]
+            }
+        },
+
+        karma: {
+            unit: {
+                configFile: 'tests/client/karma.conf.js'
             }
         }
     });
@@ -196,12 +212,13 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-coffeelint');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-karma');
 
     grunt.event.on('watch', function(action, filepath, target) {
       grunt.log.writeln(target + ': ' + filepath + ' has ' + action);
     });
 
     // Custom tasks
-    grunt.registerTask('build', ['coffee', 'sass', 'copy', 'concat']);
+    grunt.registerTask('build', ['coffee', 'sass', 'copy', 'concat', 'karma']);
     grunt.registerTask('default', ['watch']);
 };

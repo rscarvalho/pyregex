@@ -32,11 +32,7 @@ The code is licensed under the [GNU General Public License v2](LICENSE)
 * **Grunt**: `npm install -g grunt`
 * **Bower**: `npm install -g bower`
 * **Nose** and its companions: `pip install -r requirements.txt` (May require `sudo` or `su`)
-* Assets dependencies:
-    * `cd $PYREGEX_ROOT/assets`
-    * `npm install`
-    * `bower install`
-    * `grunt build` (to generate the assets that will be served on the web app)
+* Assets dependencies: `./install_assets_deps.sh`
 
 
 ### Running the application

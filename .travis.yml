@@ -1,6 +1,12 @@
 language: python
 python:
-    - "2.7"
+- "2.7"
+
+node_js:
+- "0.10.13"
+
+ruby:
+- 1.9.3-p429
 
 before_script:
 - "wget https://googleappengine.googlecode.com/files/google_appengine_${APPENGINE_SDK_VERSION}.zip -nv"
@@ -9,6 +15,11 @@ before_script:
 env:
 - APPENGINE_SDK_VERSION=1.8.2
 
-install: pip install -r requirements.txt
+install: 
+- pip install -r requirements.txt
+- gem install sass
+- ./install_assets_deps.sh
 
-script: PYTHONPATH=".:google_appengine" nosetests --with-gae --rednose
+script:
+- PYTHONPATH=".:google_appengine" nosetests --with-gae --rednose
+- grunt build
