@@ -1,5 +1,4 @@
-ctrl = ($log, _, RegexResource, $scope, $rootScope) ->
-  $scope.reFlags = [false, false, false, false, false, false]
+ctrl = (_, RegexResource, RegexBuilder, $scope) ->
   $scope.allFlags =
     I: 'Ignore Case'
     L: 'Make \\w, \\W, \\b, \\B, \\s and \\S dependent on the current locale.'
@@ -14,31 +13,12 @@ ctrl = ($log, _, RegexResource, $scope, $rootScope) ->
   $scope.currentResult = {result_type: null}
   $scope.processing = false
 
-  $scope.re =
-    flag: 0
-    source: ""
-    testString: ""
-    matchType: "match"
-
-  $scope.calculateFlags = ->
-    mapList = _.map($scope.reFlags, (x, i) ->
-      if x
-        Math.pow(2, i + 1)
-      else
-        false
-    )
-    $scope.re.flag = _.reduce(_.filter(mapList, (x) -> x),
-      (memo, value) -> memo | value
-    , 0)
+  $scope.re = RegexBuilder.clean()
 
   $scope.getResults = ->
     $scope.processing = true
 
-    data =
-      flags: $scope.re.flag
-      regex: $scope.re.source
-      test_string: $scope.re.testString
-      match_type: $scope.re.matchType
+    data = $scope.re.data()
 
     RegexResource.test(data).then (result) ->
       $scope.processing = false
@@ -56,7 +36,7 @@ ctrl = ($log, _, RegexResource, $scope, $rootScope) ->
     $scope.currentResult.result != null
 
   checkResultType = (type) ->
-    $scope.isResult() and $scope.currentResult.result_type == type
+    $scope.isResult() and $scope.currentResult.match_type == type
 
   $scope.isError = ->
     $scope.currentResult != null and
@@ -67,4 +47,4 @@ ctrl = ($log, _, RegexResource, $scope, $rootScope) ->
   $scope.isSearch = -> checkResultType('search')
   $scope.isMatch = -> checkResultType('match')
 
-@PyRegex().controller('RegexParser', ctrl)
+@PyRegex().controller('RegexParserController', ctrl)

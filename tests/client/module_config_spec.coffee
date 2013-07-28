@@ -11,6 +11,9 @@ describe "App Configuration", ->
     it "should reflect underscore (_) global object", inject (_) ->
       expect(_).toBe(window._)
 
+    it "should reflect global window object", inject (_window_) ->
+      expect(_window_).toBe(window)
+
   describe "filters", ->
     it "should return the number of elements of a given array or object",
        inject (lengthFilter) ->
