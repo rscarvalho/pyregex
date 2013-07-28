@@ -219,6 +219,8 @@ module.exports = function(grunt) {
     });
 
     // Custom tasks
-    grunt.registerTask('build', ['coffee', 'sass', 'copy', 'concat', 'karma']);
+    grunt.registerTask('build', ['coffee', 'sass', 'copy', 'concat']);
+    grunt.registerTask('test', ['karma']);
+
     grunt.registerTask('default', ['watch']);
 };

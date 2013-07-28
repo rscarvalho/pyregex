@@ -19,7 +19,8 @@ install:
 - pip install -r requirements.txt
 - gem install sass
 - ./install_assets_deps.sh
+- grunt build
 
 script:
 - PYTHONPATH=".:google_appengine" nosetests --with-gae --rednose
-- grunt build
+- grunt test

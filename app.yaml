@@ -25,7 +25,7 @@ skip_files:
 - ^(.*/)?.*\.py[co]
 - ^(.*/)?\..*
 - ^node_modules/.*
-- ^assets/components/.*
+- ^assets/bower_components/.*
 - ^assets/src/.*
 - ^assets/build/.*
 - ^Gruntfile\.js
