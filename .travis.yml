@@ -1,26 +1,27 @@
 language: python
 python:
-- "2.7"
-
+- '2.7'
 node_js:
-- "0.10.13"
-
+- 0.10.13
 ruby:
 - 1.9.3-p429
-
-before_script:
-- "wget https://googleappengine.googlecode.com/files/google_appengine_${APPENGINE_SDK_VERSION}.zip -nv"
-- "unzip -q google_appengine_${APPENGINE_SDK_VERSION}.zip"
-
 env:
-- APPENGINE_SDK_VERSION=1.8.2
-
-install: 
+  matrix:
+  - APPENGINE_SDK_VERSION=1.8.2
+  - APPENGINE_SDK_PATH=./google_appengine
+  global:
+    secure: NZpAQCwWfn5TqIGRA74mAdk6HrmUxtu6bFx8zbdLsBHOWnaipgR2DLUNRxqcOI2KeuKhbfJrVejcfGOHLp0tk34WlTxhBBcHpFH+XbjYQ
+install:ROOPcZNokeg9MdlhTIniu4OAlIB0RXfRVbkLeHLpUqPI/cdHT8BhcI1Z9hDx+KvUGI=
 - pip install -r requirements.txt
 - gem install sass
 - ./install_assets_deps.sh
 - grunt build
-
+before_script:
+- wget https://googleappengine.googlecode.com/files/google_appengine_${APPENGINE_SDK_VERSION}.zip
+  -nv
+- unzip -q google_appengine_${APPENGINE_SDK_VERSION}.zip
 script:
-- PYTHONPATH=".:google_appengine" nosetests --with-gae --rednose
+- PYTHONPATH=".:$APPENGINE_SDK_PATH" nosetests --with-gae --rednose
 - grunt test
+
+after_success: ./deploy.sh
