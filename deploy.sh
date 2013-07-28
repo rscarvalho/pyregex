@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 deploy_branch='stable'
-current_branch=$(git branch | grep '*' | sed -e 's/^\* *//')
+current_branch=$TRAVIS_BRANCH
 
 # Only deploy from the stable branch
 if [[ "$current_branch" != "$deploy_branch" ]]; then
