@@ -19,8 +19,8 @@
             <label class="checkbox" title="{{description}}" 
                    ng-repeat="(flagLabel, description) in allFlags">
                 <input type="checkbox" title="{{description}}"
-                       ng-model="reFlags[$index]"
-                       ng-click="calculateFlags()"> re.{{flagLabel}} <span ng-hide="$last">|</span>
+                       ng-model="re.flags[flagLabel]"
+                       ng-click="getResults()"> re.{{flagLabel}} <span ng-hide="$last">|</span>
             </label>
         </div>
         <div class="form-inline">
