@@ -15,7 +15,17 @@ ctrl = (_, RegexResource, RegexBuilder, $scope) ->
 
   $scope.re = RegexBuilder.clean()
 
+  regexIsValid = (regex) ->
+    regex.source is null ||
+    regex.testString is null ||
+    regex.source is '' ||
+    regex.testString is ''
+
   $scope.getResults = ->
+    if regexIsValid(@re)
+      $scope.currentResult.result = null
+      return
+
     $scope.processing = true
 
     data = $scope.re.data()
