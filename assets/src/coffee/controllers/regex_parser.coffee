@@ -26,12 +26,10 @@ ctrl = (_, RegexResource, RegexBuilder, templateUrl, $scope) ->
 
   $scope.getResults = ->
     return if $scope.processing
-    console.log("Get Results!")
+
     if regexIsValid(@re)
       $scope.currentResult.result = null
       return
-
-    console.log("Get Results! 2")
 
     $scope.processing = true
     pickTemplate('start')
