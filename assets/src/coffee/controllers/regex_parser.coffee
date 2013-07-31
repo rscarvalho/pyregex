@@ -1,4 +1,4 @@
-ctrl = (_, RegexResource, RegexBuilder, $scope) ->
+ctrl = (_, RegexResource, RegexBuilder, templateUrl, $scope) ->
   $scope.allFlags =
     I: 'Ignore Case'
     L: 'Make \\w, \\W, \\b, \\B, \\s and \\S dependent on the current locale.'
@@ -9,7 +9,10 @@ ctrl = (_, RegexResource, RegexBuilder, $scope) ->
        'Unicode character properties database.'
     X: 'Verbose'
 
-  $scope.resultTemplateUrl = '/assets/templates/regex/start.html'
+  pickTemplate = (name) ->
+    $scope.resultTemplateUrl = templateUrl("regex/#{name}.html")
+
+  pickTemplate('start')
   $scope.currentResult = {result_type: null}
   $scope.processing = false
 
@@ -22,23 +25,28 @@ ctrl = (_, RegexResource, RegexBuilder, $scope) ->
     regex.testString is ''
 
   $scope.getResults = ->
+    return if $scope.processing
+    console.log("Get Results!")
     if regexIsValid(@re)
       $scope.currentResult.result = null
       return
 
+    console.log("Get Results! 2")
+
     $scope.processing = true
+    pickTemplate('start')
 
     data = $scope.re.data()
 
     RegexResource.test(data).then (result) ->
       $scope.processing = false
       $scope.currentResult = result.data
-      $scope.resultTemplateUrl = '/assets/templates/regex/result.html'
+      pickTemplate('result')
 
     , (result) ->
       $scope.processing = false
       $scope.currentResult = result.data
-      $scope.resultTemplateUrl = '/assets/templates/regex/error.html'
+      pickTemplate('error')
 
   $scope.hasResult = ->
     $scope.isResult() and

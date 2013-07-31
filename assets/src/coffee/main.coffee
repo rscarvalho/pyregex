@@ -15,5 +15,6 @@ app.value('apiUrl', '/api')
 app.factory '_', -> window._
 app.factory 'jQuery', -> window.jQuery
 app.factory 'window', -> window
+app.factory 'templateUrl', -> (name) -> "/assets/templates/#{name}"
 
 @PyRegex = -> angular.module('pyregex')

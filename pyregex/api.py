@@ -5,6 +5,7 @@ from .decorators import handle_json
 import sys
 import logging
 import re, sre_constants
+import time
 
 
 class ApiBaseResource(webapp2.RequestHandler):
@@ -47,7 +48,7 @@ class RegexResource(ApiBaseResource):
 
         cb = getattr(regex, match_type)
         r['result'] = self.dict_from_object(cb(test_string))
-
+        time.sleep(5)
         return r
 
     def dict_from_object(self, obj):

@@ -4,7 +4,7 @@
       @clean()
 
     getFlag: =>
-      flagValue = (f) -> 
+      flagValue = (f) ->
         switch f
           when 'I' then 2
           when 'L' then 4

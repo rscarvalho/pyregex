@@ -1,1 +1,6 @@
-<span class="label label-info">Info</span> Your results will appear here.
+<div ng-hide="processing">
+    <span class="label label-info">Info</span> Your results will appear here.
+</div>
+<div ng-show="processing">
+    <span class="label label-success">Running</span> <i class="icon-spin icon-refresh"></i>
+</div>
