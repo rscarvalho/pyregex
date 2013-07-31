@@ -3,30 +3,32 @@ describe "RegexParserController", ->
   $controller = null
 
   beforeEach module('pyregex')
-  beforeEach inject ($rootScope, _, _$controller_, RegexBuilder, RegexResource) ->
-    $scope = $rootScope.$new()
-    $controller = _$controller_('RegexParserController', 
-      _: _
-      RegexResource: RegexResource
-      $scope: $scope
-      RegexBuilder: RegexBuilder
-    )
+  beforeEach(
+    inject ($rootScope, _, _$controller_, RegexBuilder, RegexResource) ->
+      $scope = $rootScope.$new()
+      $controller = _$controller_('RegexParserController',
+        _: _
+        RegexResource: RegexResource
+        $scope: $scope
+        RegexBuilder: RegexBuilder
+      )
+  )
 
   describe "$scope", ->
     it "should contain valid scope variables after initialization", ->
       inject ($rootScope, _, $controller, RegexBuilder) ->
         $scope = $rootScope.$new()
-        $controller('RegexParserController', 
+        $controller('RegexParserController',
           _: _
           RegexResource: {}
           $scope: $scope
           RegexBuilder: RegexBuilder
         )
-
+        templateUrl = '/assets/templates/regex/start.html'
         expect($scope.reFlags).toBe(undefined)
         expect($scope.re).toBe(RegexBuilder)
         expect($scope.re.matchType).toBe('match')
-        expect($scope.resultTemplateUrl).toBe('/assets/templates/regex/start.html')
+        expect($scope.resultTemplateUrl).toBe(templateUrl)
         expect($scope.currentResult).toEqual(result_type: null)
         expect($scope.processing).toBe(false)
         expect($scope.re.getFlag()).toBe(0)
@@ -57,8 +59,8 @@ describe "RegexParserController", ->
         expect(result.result_type).toBe 'success'
         expect(result.match_type).toBe 'search'
 
-        $httpBackend.verifyNoOutstandingExpectation();
-        $httpBackend.verifyNoOutstandingRequest();
+        $httpBackend.verifyNoOutstandingExpectation()
+        $httpBackend.verifyNoOutstandingRequest()
 
       it "should have correct values for status functions", ->
         result = $scope.currentResult

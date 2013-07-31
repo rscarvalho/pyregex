@@ -11,7 +11,7 @@ module.exports = function(grunt) {
         return [].concat.apply([], this);
     };
 
-    var coffeePaths = ['tests/client', 'src/coffee'].map(function(e) { 
+    var coffeePaths = ['tests/client', 'src/coffee', 'assets/src/coffee'].map(function(e) {
         return [e + '/*.coffee', e + '/**/*.coffee'];
     }).flatten();
 
@@ -79,7 +79,7 @@ module.exports = function(grunt) {
             },
             screen_css: {
                 src: [
-                    assetPath('build/normalize.css'), 
+                    assetPath('build/normalize.css'),
                     assetPath('build/bootstrap.css'),
                     assetPath('build/select2.css'),
                     assetPath('build/**.css')
@@ -199,7 +199,7 @@ module.exports = function(grunt) {
             }
         }
     });
-    
+
     // Load plugins
     grunt.loadNpmTasks('grunt-contrib');
     grunt.loadNpmTasks('grunt-contrib-copy');
