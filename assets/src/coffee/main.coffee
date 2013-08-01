@@ -17,4 +17,8 @@ app.factory 'jQuery', -> window.jQuery
 app.factory 'window', -> window
 app.factory 'templateUrl', -> (name) -> "/assets/templates/#{name}"
 
+# Base64 encode/decode functions
+app.factory 'atob', -> window.atob
+app.factory 'btoa', -> window.btoa
+
 @PyRegex = -> angular.module('pyregex')

@@ -52,6 +52,7 @@ module.exports = function(grunt) {
                     bowerComponent('select2', 'select2.js'),
                     bowerComponent('bootstrap-css/js', 'bootstrap.js'),
                     bowerComponent('underscore', 'underscore.js'),
+                    bowerComponent('base64', 'base64.js'),
                     {expand: true, cwd: assetPath('lib/js'), src: ['**.js'], dest: assetPath('build/')},
                     {expand: true, cwd: assetPath('src/js/'), src:['**'], dest: assetPath('build/')},
                 ]
@@ -92,6 +93,7 @@ module.exports = function(grunt) {
                     assetPath('build/angular.js'),
                     assetPath('build/select2.js'),
                     assetPath('build/src/select2.js'),
+                    assetPath('build/base64.js'),
                     assetPath('build/main.js'),
                     assetPath('build/**.js'),
                     assetPath('build/**/*.js'),
@@ -222,5 +224,5 @@ module.exports = function(grunt) {
     grunt.registerTask('build', ['coffee', 'sass', 'copy', 'concat']);
     grunt.registerTask('test', ['karma']);
 
-    grunt.registerTask('default', ['watch']);
+    grunt.registerTask('default', ['clean', 'watch']);
 };
