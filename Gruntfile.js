@@ -53,6 +53,7 @@ module.exports = function(grunt) {
                     bowerComponent('bootstrap-css/js', 'bootstrap.js'),
                     bowerComponent('underscore', 'underscore.js'),
                     bowerComponent('base64', 'base64.js'),
+                    bowerComponent('modernizr', 'modernizr.js'),
                     {expand: true, cwd: assetPath('lib/js'), src: ['**.js'], dest: assetPath('build/')},
                     {expand: true, cwd: assetPath('src/js/'), src:['**'], dest: assetPath('build/')},
                 ]
@@ -95,6 +96,7 @@ module.exports = function(grunt) {
                     assetPath('build/src/select2.js'),
                     assetPath('build/base64.js'),
                     assetPath('build/main.js'),
+                    assetPath('build/modernizr.js'),
                     assetPath('build/**.js'),
                     assetPath('build/**/*.js'),
                 ],
