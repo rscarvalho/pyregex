@@ -1,4 +1,8 @@
-ctrl = (_, RegexResource, RegexBuilder, templateUrl, $scope) ->
+ctrl = (_, $log, RegexResource, RegexBuilder,
+        templateUrl, $scope, $routeParams, $rootScope) ->
+  $log.info "PARAMS: "
+  $log.info $routeParams
+
   $scope.allFlags =
     I: 'Ignore Case'
     L: 'Make \\w, \\W, \\b, \\B, \\s and \\S dependent on the current locale.'
@@ -15,10 +19,11 @@ ctrl = (_, RegexResource, RegexBuilder, templateUrl, $scope) ->
   pickTemplate('start')
   $scope.currentResult = {result_type: null}
   $scope.processing = false
+  $scope.permalinkUrl = null
 
   $scope.re = RegexBuilder.clean()
 
-  regexIsValid = (regex) ->
+  regexIsInValid = (regex) ->
     regex.source is null ||
     regex.testString is null ||
     regex.source is '' ||
@@ -27,7 +32,7 @@ ctrl = (_, RegexResource, RegexBuilder, templateUrl, $scope) ->
   $scope.getResults = ->
     return if $scope.processing
 
-    if regexIsValid(@re)
+    if regexIsInValid(@re)
       $scope.currentResult.result = null
       return
 
@@ -39,11 +44,16 @@ ctrl = (_, RegexResource, RegexBuilder, templateUrl, $scope) ->
     RegexResource.test(data).then (result) ->
       $scope.processing = false
       $scope.currentResult = result.data
+      if $scope.isError()
+        $scope.permalinkUrl = null
+      else
+        $scope.permalinkUrl = "/?id=#{$scope.re.encodedData()}"
       pickTemplate('result')
 
     , (result) ->
       $scope.processing = false
       $scope.currentResult = result.data
+      $scope.permalinkUrl = null
       pickTemplate('error')
 
   $scope.hasResult = ->
@@ -62,5 +72,9 @@ ctrl = (_, RegexResource, RegexBuilder, templateUrl, $scope) ->
   $scope.isFindall = -> checkResultType('findall')
   $scope.isSearch = -> checkResultType('search')
   $scope.isMatch = -> checkResultType('match')
+
+  if $routeParams.id
+    $scope.re.fromData $routeParams.id
+    $scope.getResults()
 
 @PyRegex().controller('RegexParserController', ctrl)

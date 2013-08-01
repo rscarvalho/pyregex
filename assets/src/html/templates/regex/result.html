@@ -1,5 +1,5 @@
 <p ng-show="hasResult()">
-    <span class="label label-success">Success!</span> Check your results below:
+    <span class="label label-success">Success!</span> Check your results below: 
 </p>
 
 <div ng-show="isFindall() &amp;&amp; hasResult()">
@@ -31,6 +31,10 @@
         </ul>
     </div>
 </div>
+
+<p ng-show="hasResult()">
+    <a href="{{permalinkUrl}}" target="_blank" class="btn btn-small btn-primary">Link to this Regex</a>
+</p>
 
 <div ng-show="isResult() &amp;&amp; !hasResult()">
     <span class="label label-info">Notice</span> No results found.
