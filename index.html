@@ -38,9 +38,96 @@
     			</div>
     		</div><!-- /.navbar -->
 
-    		<div class="container" ng-view>
-                
+    		<div class="container">
+                <div class="row" ng-view>
+                </div>
+
+                <div class="cheat-sheet row">
+                    <h5>
+                        Python Regular Expression's Cheat Sheet 
+                        <small>(borrowed from <a href="http://www.pythex.org" target="_blank">pythex</a>)</small>
+                    </h5>
+
+                    <div class="row">
+                        <div class="span6">
+                            <h6>Special Characters</h6>
+                            <div class="well">
+                                <ul>
+                                    <li><code>\</code> escape special characters</li>
+                                    <li><code>.</code> matches any character</li>
+                                    <li><code>^</code> matches beginning of string</li>
+                                    <li><code>$</code> matches end of string</li>
+                                    <li><code>[5b-d]</code> matches any chars '5', 'b', 'c' or 'd'</li>
+                                    <li><code>[^a-c6]</code> matches any char except 'a', 'b', 'c' or '6'</li>
+                                    <li><code>R|S</code> matches either regex R or regex S</li>
+                                    <li><code>()</code> creates a capture group and indicates precedence</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="span6">
+                            <h6>Quantifiers</h6>
+                            <div class="well">
+                                <ul>
+                                    <li><code>*</code> 0 or more (append ? for non-greedy)</li>
+                                    <li><code>+</code> 1 or more (append ? for non-greedy)</li>
+                                    <li><code>?</code> 0 or 1 (append ? for non-greedy)</li>
+                                    <li><code>{m}</code> exactly mm occurrences</li>
+                                    <li><code>{m, n}</code>  from m to n. m defaults to 0, n to infinity</li>
+                                    <li><code>{m, n}?</code> from m to n, as few as possible</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="span6">
+                            <h6>Special sequences</h6>
+                            <div class="well">
+                                <ul>
+                                    <li><code>\A</code> start of string</li>
+                                    <li>
+                                        <code>\b</code> matches empty string at word boundary 
+                                        (between <code>\w</code> and <code>\W</code>)
+                                    </li>
+                                    <li><code>\B</code> matches empty string not at word boundary</li>
+                                    <li><code>\d</code> digit</li>
+                                    <li><code>\D</code> non-digit</li>
+                                    <li><code>\s</code> whitespace: <code>[ \t\n\r\f\v]</code></li>
+                                    <li><code>\S</code> non-whitespace</li>
+                                    <li><code>\w</code> alphanumeric: <code>[0-9a-zA-Z_]</code></li>
+                                    <li><code>\W</code> non-alphanumeric</li>
+                                    <li><code>\Z</code> end of string</li>
+                                    <li><code>\g&lt;id&gt;</code> matches a previously defined group</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="span6">
+                            <h6>Extensions</h6>
+                            <div class="well">
+                                <ul>
+                                    <li><code>(?iLmsux)</code> Matches empty string, sets re.X flags</li>
+                                    <li><code>(?:...)</code> Non-capturing version of regular parentheses</li>
+                                    <li><code>(?P&lt;name&gt;...)</code> Creates a named capturing group.</li>
+                                    <li><code>(?P=name)</code> Matches whatever matched previously named group</li>
+                                    <li><code>(?#...)</code> A comment; ignored.</li>
+                                    <li><code>(?=...)</code> Lookahead assertion: Matches without consuming</li>
+                                    <li><code>(?!...)</code> Negative lookahead assertion</li>
+                                    <li><code>(?&lt;=...)</code> Lookbehind assertion: Matches if preceded</li>
+                                    <li><code>(?&lt;!...)</code> Negative lookbehind assertion</li>
+                                    <li><code>(?(id)yes|no)</code> Match 'yes' if group 'id' matched, else 'no'</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <p>For a complete guide on regular expressions and the python <code>re</code> module, please
+                            visit the 
+                            <a href="http://docs.python.org/library/re.html" target="_blank">official documentation</a>.
+                        </p>
+                    </div>
+                </div>
     		</div>
+            
             <div class="push">&nbsp;</div>
         </div>
 
