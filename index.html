@@ -11,44 +11,35 @@
 	</head>
 	<body>
         <div class="wrap">
-    		<div class="navbar navbar-fixed-top">
+    		<div class="navbar navbar-fixed-top" ng-controller="MenuController">
     			<div class="navbar-inner">
     				<div class="container">
     					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-    						<span class="icon-bar"></span>
-    						<span class="icon-bar"></span>
+    						<span class="icon-bar" ng-repeat="item in menuItems"></span>
     					</button>
     					<a class="brand" href="/">PyRegex</a>
     					<div class="nav-collapse collapse">
     						<ul class="nav">
-    							<li class="active">
-    								<a href="#/">Home</a>
+    							<li ng-repeat="item in menuItems" ng-class="{active: $index == 0}">
+    								<a href="{{ item.href }}">{{ item.title }}</a>
     							</li>
-                                <li>
-                                    <a href="http://docs.python.org/library/re.html" target="_blank">
-                                        Documentation
-                                    </a>
-                                </li>
-    							<!-- <li>
-    								<a href="#">Contact</a>
-    							</li> -->
     						</ul>
-    					</div><!--/ .nav-collapse -->
+    					</div><!-- /.nav-collapse -->
     				</div>
     			</div>
     		</div><!-- /.navbar -->
 
     		<div class="container">
-                <div class="row" ng-view>
+                <div class="row-fluid" ng-view>
                 </div>
 
-                <div class="cheat-sheet row">
+                <div class="cheat-sheet row-fluid">
                     <h5>
                         Python Regular Expression's Cheat Sheet 
                         <small>(borrowed from <a href="http://www.pythex.org" target="_blank">pythex</a>)</small>
                     </h5>
 
-                    <div class="row">
+                    <div class="row-fluid">
                         <div class="span6">
                             <h6>Special Characters</h6>
                             <div class="well">
@@ -78,7 +69,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row-fluid">
                         <div class="span6">
                             <h6>Special sequences</h6>
                             <div class="well">
@@ -119,7 +110,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row-fluid">
                         <p>For a complete guide on regular expressions and the python <code>re</code> module, please
                             visit the 
                             <a href="http://docs.python.org/library/re.html" target="_blank">official documentation</a>.

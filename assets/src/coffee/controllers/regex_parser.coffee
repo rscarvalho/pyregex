@@ -1,7 +1,5 @@
 ctrl = (_, $log, RegexResource, RegexBuilder,
         templateUrl, $scope, $routeParams, $rootScope) ->
-  $log.info "PARAMS: "
-  $log.info $routeParams
 
   $scope.allFlags =
     I: 'Ignore Case'
