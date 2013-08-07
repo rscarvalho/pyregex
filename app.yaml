@@ -40,3 +40,4 @@ skip_files:
 - ^requirements\.txt
 - ^README\.md
 - ^LICENSE
+- ^dependencies/.*

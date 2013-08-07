@@ -20,8 +20,7 @@ install:
 - grunt build
 
 before_script:
-- "wget https://googleappengine.googlecode.com/files/google_appengine_${APPENGINE_SDK_VERSION}.zip -nv"
-- unzip -q google_appengine_${APPENGINE_SDK_VERSION}.zip
+- unzip -q dependencies/google_appengine_${APPENGINE_SDK_VERSION}.zip
 
 script:
 - PYTHONPATH=".:$APPENGINE_SDK_PATH" nosetests --with-gae --rednose
