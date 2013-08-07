@@ -82,7 +82,7 @@ module.exports = function(grunt) {
             screen_css: {
                 src: [
                     assetPath('build/normalize.css'),
-                    assetPath('build/bootstrap.css'),
+                    assetPath('build/bootstrap-responsive.css'),
                     assetPath('build/select2.css'),
                     assetPath('build/**.css')
                 ],
