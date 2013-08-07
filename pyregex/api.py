@@ -15,13 +15,16 @@ class ApiBaseResource(webapp2.RequestHandler):
 class RegexResource(ApiBaseResource):
     __urls__ = ('regex/', 'regex/<key>', 'regex/test/')
 
+
     VALID_MATCH_TYPES = ('findall', 'match', 'search',)
+
 
     @handle_json
     def get(self):
         if self.request.path_info.endswith('/test/'):
             return self.test_regex()
         raise HTTPNotFound('Not Implemented Yet')
+
 
     def test_regex(self):
         match_type = self.request.get('match_type')
@@ -48,6 +51,7 @@ class RegexResource(ApiBaseResource):
         cb = getattr(regex, match_type)
         r['result'] = self.dict_from_object(cb(test_string))
         return r
+
 
     def dict_from_object(self, obj):
         if obj and hasattr(obj, 'groupdict') and callable(getattr(obj, 'groupdict')):
