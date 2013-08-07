@@ -4,6 +4,14 @@ html, body {
     height: 100%;
 }
 
+div.navbar {
+    h1 {
+        margin: 0;
+        padding: 0;
+        line-height: 0.45em;
+    }
+}
+
 div.regex-parser-container {
     input[type='text'], label, span.quotes {
         font-family: monospace;

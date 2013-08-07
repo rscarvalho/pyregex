@@ -16,6 +16,10 @@ handlers:
   static_files: index.html
   upload: index.html
 
+- url: /sitemap.xml
+  static_files: sitemap.xml
+  upload: sitemap.xml
+
 - url: .*
   script: pyregex.webapp.application
 
