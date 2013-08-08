@@ -39,7 +39,11 @@ The code is licensed under the [GNU General Public License v2](LICENSE)
 
 Just run `dev_appserver.py app.yaml`
 
-If you want to contribute with client-side scripting (writing some CoffeeScript/JS and/or SASS/CSS), I recomend you to keep another terminal open at the `assets` folder and run: `grunt watch`. This will watch the filesystem for changes and regenerate the source files as needed.
+If you want to contribute with client-side scripting (writing some CoffeeScript/JS and/or SASS/CSS), I recomend you to keep another terminal open at the `assets` folder and run: `grunt`. This will watch the filesystem for changes and regenerate the source files as needed.
+
+### Testing the application
+
+To test the application, run `nosetests -c nose.cfg` from a terminal window.
 
 ## Contributing
 
