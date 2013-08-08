@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-if [ -f "bin/install_nodejs" ]; then
-    chmod +x bin/install_nodejs
-    bin/install_nodejs
-fi
-
-npm install -g bower grunt

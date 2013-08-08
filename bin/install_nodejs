@@ -1,5 +1,6 @@
-#!/usr/bin/env bash -x
+#!/usr/bin/env bash
 # set -eo pipefail
+set -eo pipefail
 
 NODE_VERSION=0.8.12
 NODE_BASENAME=node-v${NODE_VERSION}-linux-x64

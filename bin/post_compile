@@ -1,6 +1,20 @@
 #!/usr/bin/env bash
+set -eo verbose pipefail
 
-npm install
+. bin/support.sh
+
+if [ -f "bin/install_nodejs" ]; then
+    chmod +x bin/install_nodejs
+    bin/install_nodejs
+fi
+
+install_cache_dirs
+export PATH=$(npm config get prefix):$PATH
+
+npm install -sg bower grunt
+npm -s install
 bower install
 
 grunt clean build
+
+echo "-----> Post-compile Done"
