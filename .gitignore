@@ -5,3 +5,5 @@ assets/.sass-cache
 .coverage
 coverage/
 node_modules/
+*.sublime-project
+*.sublime-workspace

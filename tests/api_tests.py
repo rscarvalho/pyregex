@@ -123,7 +123,8 @@ class RegexHandlerTest(unittest.TestCase):
 
         json_body = self.get_json_response(response, 400)
         self.assertEqual('error', json_body['result_type'])
-        self.assertTrue(json_body['message'].startswith('Match Type must be one of the following:'))
+        expected = r'Invalid value for match_type: "not_really_sure_about_it"\. Acceptable values are .+$'
+        self.assertRegexpMatches(json_body['message'], expected)
 
     def test_regexTestMultilineFindallNoFlags(self):
         params = regex_params(r"\w+\n\d+", "Hi 2013", match_type="findall")
