@@ -1,5 +1,6 @@
 import re, sre_constants
 import exceptions
+from .util import Value
 
 class InvalidRegexError(exceptions.Exception):
     def __init__(self, error=None, *args, **kwargs):
@@ -11,7 +12,7 @@ class UnprocessibleRegex(exceptions.Exception):
     pass
 
 
-class RegexService(object):
+class RegexService(Value):
     VALID_MATCH_TYPES = ('findall', 'match', 'search',)
     REGEX_TIMEOUT = 5 # seconds
 
@@ -26,14 +27,16 @@ class RegexService(object):
             raise ValueError('flags', flags)
 
         try:
-            super(RegexService, self).__setattr__('regex', re.compile(regex, flags))
+            re.compile(regex, flags)
         except sre_constants.error, error:
             raise InvalidRegexError(error)
 
-        super(RegexService, self).__setattr__('match_type', match_type)
+        super(RegexService, self).__init__(pattern=regex, match_type=match_type, flags=flags)
+
 
     def test(self, test_string):
-        cb = getattr(self.regex, self.match_type)
+        regex = re.compile(self.pattern, self.flags)
+        cb = getattr(regex, self.match_type)
         
         return self.dict_from_object(cb(test_string))
 
@@ -54,7 +57,3 @@ class RegexService(object):
             return None
         return obj
 
-    def __setattr__(self, *args):
-        raise TypeError("can't modify immutable instance")
-
-    __delattr__ = __setattr__
