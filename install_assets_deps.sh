@@ -27,10 +27,8 @@ run_with_retry() {
     fi
 }
 
-run_with_retry 3 npm install -g karma bower grunt-cli
+run_with_retry 3 npm install -gs karma bower grunt-cli
 
-run_with_retry 3 npm install
+run_with_retry 3 npm install -s
 
-pushd assets
-run_with_retry 3 bower install
-popd
+run_with_retry 3 bower install -q
