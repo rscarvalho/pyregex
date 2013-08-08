@@ -15,7 +15,18 @@
     "grunt-notify": "~0.2.4",
     "grunt-coffeelint": "0.0.7",
     "grunt-contrib-clean": "~0.5.0",
-    "grunt-contrib-sass": "~0.3.0",
-    "grunt-karma": "~0.4.5"
-  }  
+    "grunt-contrib-sass": "~0.3.0"
+  },
+  "optionalDependencies": {
+    "karma-script-launcher": "~0.1.0",
+    "karma-chrome-launcher": "~0.1.0",
+    "karma-firefox-launcher": "~0.1.0",
+    "karma-html2js-preprocessor": "~0.1.0",
+    "karma-jasmine": "~0.1.0",
+    "karma-requirejs": "~0.1.0",
+    "karma-coffee-preprocessor": "~0.1.0",
+    "karma-phantomjs-launcher": "~0.1.0",
+    "karma": "~0.10.1",
+    "grunt-karma": "~0.6.1"
+  }
 }
