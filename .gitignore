@@ -7,3 +7,4 @@ coverage/
 node_modules/
 *.sublime-project
 *.sublime-workspace
+venv
