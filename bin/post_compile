@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -eo pipefail
+
+# . bin/support.sh
+
+if [ -f "bin/install_nodejs" ]; then
+    chmod +x bin/install_nodejs
+    bin/install_nodejs
+fi
+
+# install_cache_dirs
+export GEM_HOME=$BUILD_DIR/.gem
+
+export PATH=$GEM_HOME/bin:$(npm config get prefix)/bin:$PATH
+
+npm install -sg bower grunt-cli
+
+if [[ ! -f "$GEM_HOME/bin/sass" ]]; then
+    gem install sass
+fi
+
+npm -s install --production
+bower install
+
+grunt clean build
+
+echo "-----> Post-compile Done"
