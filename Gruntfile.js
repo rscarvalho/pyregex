@@ -3,6 +3,10 @@ module.exports = function(grunt) {
         return "assets/" + path;
     };
 
+    var publicPath = function(path) {
+        return "public/" + path;
+    };
+
     var bowerComponent = function(name, src) {
         return {expand: true, cwd: assetPath('bower_components/' + name), src: src, dest: assetPath('build/')}
     };
@@ -61,16 +65,16 @@ module.exports = function(grunt) {
 
             html: {
                 files: [
-                    {expand: true, cwd: assetPath('src/'), src: ['*.html'], dest: assetPath('dist/')},
-                    {expand: true, cwd: assetPath('src/html/'), src: ['*.html', '**/*.html'], dest: assetPath('dist/')},
+                    {expand: true, cwd: assetPath('src/'), src: ['*.html'], dest: publicPath('assets/')},
+                    {expand: true, cwd: assetPath('src/html/'), src: ['*.html', '**/*.html'], dest: publicPath('assets/')},
                 ]
             },
 
             images: {
                 files: [
-                    {expand: true, cwd: assetPath('bower_components/bootstrap-css/img'), src: '*.png', dest: assetPath('dist/')},
-                    {expand: true, cwd: assetPath('bower_components/select2'), src: ['*.png', '*.gif'], dest: assetPath('dist/')},
-                    {expand: true, cwd: assetPath('lib/images'), src: ['**.png', '**.jpg', '**.gif', '**.webp'], dest: assetPath('dist/')},
+                    {expand: true, cwd: assetPath('bower_components/bootstrap-css/img'), src: '*.png', dest: publicPath('assets/')},
+                    {expand: true, cwd: assetPath('bower_components/select2'), src: ['*.png', '*.gif'], dest: publicPath('assets/')},
+                    {expand: true, cwd: assetPath('lib/images'), src: ['**.png', '**.jpg', '**.gif', '**.webp'], dest: publicPath('assets/')},
                 ]
             }
         },
@@ -86,7 +90,7 @@ module.exports = function(grunt) {
                     assetPath('build/select2.css'),
                     assetPath('build/**.css')
                 ],
-                dest: assetPath('dist/screen.css')
+                dest: publicPath('assets/screen.css')
             },
             application_js: {
                 src: [
@@ -100,7 +104,7 @@ module.exports = function(grunt) {
                     assetPath('build/**.js'),
                     assetPath('build/**/*.js'),
                 ],
-                dest: assetPath('dist/application.js')
+                dest: publicPath('assets/application.js')
             }
         },
 
@@ -132,14 +136,13 @@ module.exports = function(grunt) {
         uglify: {
             options: {
                 mangle: false,
-                // sourceMap: 'dist/source-map.js',
                 beautify: false,
                 banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
                         '<%= grunt.template.today("yyyy-mm-dd") %> */'
             },
             app: {
                 files: {
-                    'assets/dist/application.js': [
+                    'public/assets/application.js': [
                         assetPath('build/jquery-1.10.2.js'),
                         assetPath('build/angular.js'),
                         assetPath('build/main.js'),
@@ -179,7 +182,7 @@ module.exports = function(grunt) {
 
         clean: {
             build: [assetPath('build/**')],
-            dist: [assetPath('dist/**')]
+            dist: [publicPath('assets/**')]
         },
 
         sass: {

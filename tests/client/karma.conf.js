@@ -10,8 +10,8 @@ basePath = '../..';
 files = [
   JASMINE,
   JASMINE_ADAPTER,
-  'assets/dist/*.js',
-  'assets/dist/**/*.js',
+  'public/assets/*.js',
+  'public/assets/**/*.js',
   'assets/bower_components/angular-mocks/angular-mocks.js',
   'tests/client/**/*_spec.coffee',
 ];
