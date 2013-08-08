@@ -1,6 +1,5 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-npm install -g bower grunt
 npm install
 bower install
 
