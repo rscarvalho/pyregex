@@ -1,0 +1,4 @@
+nose==1.3.0
+python-termstyle==0.1.10
+rednose==0.3
+honcho==0.4.2

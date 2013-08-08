@@ -13,11 +13,11 @@ The code is licensed under the [GNU General Public License v2](LICENSE)
 ### Requirements
 
 * Server-side language
-    * [Google AppEngine SDK](https://developers.google.com/appengine/)
+    * [Python](http://www.python.org)
+    * [Pip](http://www.pip-installer.org)
 
 * Testing (all of them installable via [pip](http://www.pip-installer.org/))
     * [nose](https://nose.readthedocs.org/en/latest/)
-    * [nose-gae](http://code.google.com/p/nose-gae/)
     * I also use [rednose](https://pypi.python.org/pypi/rednose) but this one is optional
 
 * Assets management / generation
@@ -28,18 +28,19 @@ The code is licensed under the [GNU General Public License v2](LICENSE)
 
 ### Dependency Installation
 
-* **Google AppEngine SDK**, **Node.js** and **Npm** - See their websites ([1](https://developers.google.com/appengine/), [2](http://nodejs.org/) and [3](http://npmjs.org)) about how to get them installed in your platform
-* **Grunt**: `npm install -g grunt`
+* **Node.js** and **Npm** - See their websites ([2](http://nodejs.org/) and [3](http://npmjs.org)) about how to get them installed in your platform
+* **Grunt**: `npm install -g grunt-cli`
 * **Bower**: `npm install -g bower`
 * **Nose** and its companions: `pip install -r requirements.txt` (May require `sudo` or `su`)
+    * For development, please install **also** `pip install -r requirements-dev.txt`
 * Assets dependencies: `./install_assets_deps.sh`
 
 
 ### Running the application
 
-Just run `dev_appserver.py app.yaml`
+Just run `honcho start`
 
-If you want to contribute with client-side scripting (writing some CoffeeScript/JS and/or SASS/CSS), I recomend you to keep another terminal open at the `assets` folder and run: `grunt`. This will watch the filesystem for changes and regenerate the source files as needed.
+It will start both uWSGI server and grunt. This will watch the filesystem for changes in the source folders and regenerate the client-side target files as needed.
 
 ### Testing the application
 
