@@ -1,18 +1,25 @@
 #!/usr/bin/env bash
-set -eo verbose pipefail
+set -eo pipefail
 
-. bin/support.sh
+# . bin/support.sh
 
 if [ -f "bin/install_nodejs" ]; then
     chmod +x bin/install_nodejs
     bin/install_nodejs
 fi
 
-install_cache_dirs
-export PATH=$(npm config get prefix):$PATH
+# install_cache_dirs
+export GEM_HOME=$BUILD_DIR/.gem
 
-npm install -sg bower grunt
-npm -s install
+export PATH=$GEM_HOME/bin:$(npm config get prefix)/bin:$PATH
+
+npm install -sg bower grunt-cli
+
+if [[ ! -f "$GEM_HOME/bin/sass" ]]; then
+    gem install sass
+fi
+
+npm -s install --production
 bower install
 
 grunt clean build

@@ -2,22 +2,18 @@
   "name": "pyregex-assets",
   "version": "0.0.0",
   "author": "Rodolfo Carvalho",
-  "devDependencies": {
+  "dependencies": {
     "grunt": "~0.4.0",
-    "grunt-contrib": "~0.7.0",
     "grunt-contrib-coffee": "~0.7.0",
-    "grunt-contrib-compress": "~0.5.2",
-    "grunt-contrib-jshint": "~0.6.0",
     "grunt-contrib-copy": "~0.4.1",
-    "grunt-contrib-uglify": "~0.2.2",
     "grunt-contrib-watch": "~0.5.1",
     "grunt-contrib-concat": "~0.3.0",
-    "grunt-notify": "~0.2.4",
     "grunt-coffeelint": "0.0.7",
     "grunt-contrib-clean": "~0.5.0",
     "grunt-contrib-sass": "~0.3.0"
   },
-  "optionalDependencies": {
+  "devDependencies": {
+    "grunt-notify": "~0.2.4",
     "karma-script-launcher": "~0.1.0",
     "karma-chrome-launcher": "~0.1.0",
     "karma-firefox-launcher": "~0.1.0",
@@ -27,6 +23,7 @@
     "karma-coffee-preprocessor": "~0.1.0",
     "karma-phantomjs-launcher": "~0.1.0",
     "karma": "~0.10.1",
-    "grunt-karma": "~0.6.1"
+    "grunt-karma": "~0.6.1",
+    "karma-growl-reporter": "~0.1.0"
   }
 }
