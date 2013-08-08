@@ -1,8 +1,10 @@
 language: python
 python:
 - '2.7'
+
 node_js:
 - 0.10.13
+
 ruby:
 - 1.9.3-p429
 
@@ -16,3 +18,10 @@ install:
 script:
 - nosetests -c nose.cfg
 - grunt test
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: GgLR9intIuyXgixva617hQMaiB5QOzwBNKFYYGoKU3cWwV0MZKKnIhnKfGnsV/5fjtW/EGlLV4U9YtHIg1S3ohVTceaGPMo2t4ko7HIies8U/6NadwrTduXOcDsT3FdCB4TGjhvQOHPutRfH83ShHQz/oJEzSC8u8V/q5Dpfhj8=
+  app: pyregex
+  on: master
