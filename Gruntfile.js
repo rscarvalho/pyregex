@@ -160,9 +160,9 @@ module.exports = function(grunt) {
                     atBegin: true,
                 }
             },
-            sass: {
-                files: [assetPath('src/sass/*.scss'), assetPath('src/sass/**/*.scss')],
-                tasks: ['sass', 'copy:css', 'concat:screen_css'],
+            less: {
+                files: [assetPath('src/less/*.less'), assetPath('src/less/**/*.less')],
+                tasks: ['less', 'copy:css', 'concat:screen_css'],
                 options: {
                     atBegin: true,
                 }
@@ -185,15 +185,17 @@ module.exports = function(grunt) {
             dist: [publicPath('assets/**')]
         },
 
-        sass: {
+        less: {
             dist: {
                 options: {
-                    lineNumbers: true
+                    dumpLineNumbers: true,
+                    yuicompress: true,
+                    paths: ['assets/src/less']
                 },
                 files: [{
                     expand: true,
-                    cwd: assetPath('src/sass'),
-                    src: ['**.scss'],
+                    cwd: assetPath('src/less'),
+                    src: ['**.less'],
                     dest: assetPath('build'),
                     ext: '.css'
                 }]
@@ -234,7 +236,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-notify');
     grunt.loadNpmTasks('grunt-coffeelint');
     grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-contrib-connect');
 
@@ -250,8 +252,8 @@ module.exports = function(grunt) {
     });
 
     // Custom tasks
-    grunt.registerTask('build', ['coffee', 'sass', 'copy', 'gen_api:development', 'concat']);
-    grunt.registerTask('build_prod', ['coffee', 'sass', 'copy', 'gen_api:production', 'concat']);
+    grunt.registerTask('build', ['coffee', 'less', 'copy', 'gen_api:development', 'concat']);
+    grunt.registerTask('build_prod', ['coffee', 'less', 'copy', 'gen_api:production', 'concat']);
     grunt.registerTask('test', ['karma']);
 
     grunt.registerTask('default', ['clean', 'watch']);

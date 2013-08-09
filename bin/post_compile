@@ -7,16 +7,9 @@ if [ -f "bin/install_nodejs" ]; then
 fi
 
 # install_cache_dirs
-export GEM_HOME=$BUILD_DIR/.gem
 export NODE_ENV=production
 
-export PATH=$GEM_HOME/bin:$(npm config get prefix)/bin:$PATH
-
 npm install -sg bower grunt-cli
-
-if [[ ! -f "$GEM_HOME/bin/sass" ]]; then
-    gem install sass
-fi
 
 ./install_assets_deps.sh
 

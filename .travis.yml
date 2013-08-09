@@ -11,7 +11,6 @@ ruby:
 install:
 - pip install -r requirements.txt
 - pip install -r requirements-dev.txt
-- gem install sass
 - ./install_assets_deps.sh
 - grunt clean build
 
