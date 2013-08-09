@@ -11,7 +11,9 @@ def regex_params(regex, test_string, flags=0, match_type='match'):
 def build_request(url, query_dict=None, *args, **kwargs):
     if query_dict:
         url = "%s?%s" % (url, urllib.urlencode(query_dict))
-    return webapp2.Request.blank(url, *args, **kwargs)
+    r = webapp2.Request.blank(url, *args, **kwargs)
+    r.headers['Accept'] = '*/*'
+    return r
 
 
 class RegexHandlerTest(unittest.TestCase):
