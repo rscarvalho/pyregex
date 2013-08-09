@@ -168,7 +168,7 @@ module.exports = function(grunt) {
 
         gen_api: {
             production: {
-                endpoint: 'http://pyregex.com/api'
+                endpoint: 'http://api.pyregex.com/api'
             },
             development: {
                 endpoint: 'http://localhost:5000/api'
