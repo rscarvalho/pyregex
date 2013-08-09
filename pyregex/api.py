@@ -15,7 +15,6 @@ class RegexResource(ApiBaseResource):
     __urls__ = ('regex/', 'regex/<key>', 'regex/test/')
 
 
-    @handle_json
     def get(self):
         if self.request.path_info.endswith('/test/'):
             return self.test_regex()

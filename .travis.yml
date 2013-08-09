@@ -16,7 +16,7 @@ install:
 - grunt clean build
 
 script:
-- nosetests -c nose.cfg
+- nosetests -c nose.cfg --verbosity=1
 - grunt test
 
 deploy:

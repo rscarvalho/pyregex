@@ -11,7 +11,7 @@ config = ($locationProvider, $routeProvider) ->
 app = angular.module('pyregex', ['ui.select2']).config(config)
 
 l = location
-app.value('apiUrl', '/api')
+# app.value('apiUrl', '/api')
 app.factory '_', -> window._
 app.factory 'jQuery', -> window.jQuery
 app.factory 'window', -> window

@@ -204,6 +204,25 @@ module.exports = function(grunt) {
             unit: {
                 configFile: 'tests/client/karma.conf.js'
             }
+        },
+
+        connect: {
+            server: {
+                options: {
+                    base: 'public/',
+                    port: 8082,
+                    keepalive: true
+                }
+            }
+        },
+
+        gen_api: {
+            production: {
+                endpoint: 'http://pyregex.com/api'
+            },
+            development: {
+                endpoint: '/api'
+            }
         }
     });
 
@@ -217,14 +236,24 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-contrib-connect');
 
     grunt.event.on('watch', function(action, filepath, target) {
       grunt.log.writeln(target + ': ' + filepath + ' has ' + action);
     });
 
+    grunt.registerMultiTask('gen_api', 'Generate server name for api', function(){
+        grunt.log.writeln(this.target + ': ' + this.data.endpoint);
+        var contents = '(function(){\n\tthis.PyRegex().value("apiUrl", "' + this.data.endpoint + '");\n}).call(this);\n';
+        var fs = require('fs');
+        fs.writeFileSync('assets/build/api.js', contents);
+    });
+
     // Custom tasks
-    grunt.registerTask('build', ['coffee', 'sass', 'copy', 'concat']);
+    grunt.registerTask('build', ['coffee', 'sass', 'copy', 'gen_api:development', 'concat']);
+    grunt.registerTask('build_prod', ['coffee', 'sass', 'copy', 'gen_api:production', 'concat']);
     grunt.registerTask('test', ['karma']);
 
     grunt.registerTask('default', ['clean', 'watch']);
+    grunt.registerTask('server', ['build', 'connect']);
 };
