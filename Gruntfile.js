@@ -108,50 +108,6 @@ module.exports = function(grunt) {
             }
         },
 
-        // Som typical JSHint options and globals
-        jshint: {
-            options: {
-                curly: true,
-                eqeqeq: true,
-                immed: true,
-                latedef: true,
-                newcap: true,
-                noarg: true,
-                sub: true,
-                undef: true,
-                boss: true,
-                eqnull: true,
-                browser: true
-            },
-            globals: {
-                jQuery: true,
-                angular: true
-            },
-            files: [
-                'Gruntfile.js',
-                assetPath('build/**.js')
-            ]
-        },
-
-        uglify: {
-            options: {
-                mangle: false,
-                beautify: false,
-                banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
-                        '<%= grunt.template.today("yyyy-mm-dd") %> */'
-            },
-            app: {
-                files: {
-                    'public/assets/application.js': [
-                        assetPath('build/jquery-1.10.2.js'),
-                        assetPath('build/angular.js'),
-                        assetPath('build/main.js'),
-                        assetPath('build/**.js')
-                    ]
-                }
-            }
-        },
-
         watch: {
             coffee: {
                 files: coffeePaths,
