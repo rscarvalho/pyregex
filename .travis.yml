@@ -20,6 +20,7 @@ script:
 
 deploy:
   provider: heroku
+  buildpack: python
   api_key:
     secure: GgLR9intIuyXgixva617hQMaiB5QOzwBNKFYYGoKU3cWwV0MZKKnIhnKfGnsV/5fjtW/EGlLV4U9YtHIg1S3ohVTceaGPMo2t4ko7HIies8U/6NadwrTduXOcDsT3FdCB4TGjhvQOHPutRfH83ShHQz/oJEzSC8u8V/q5Dpfhj8=
   app: pyregex
