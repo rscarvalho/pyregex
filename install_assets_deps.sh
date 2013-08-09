@@ -27,14 +27,9 @@ run_with_retry() {
     fi
 }
 
-NPM_ARGS="-s"
-if [[ "${NODE_ENV}" == "production" ]]; then
-    NPM_ARGS="${NPM_ARGS} --production"
-fi
+run_with_retry 3 npm install -gs karma bower grunt-cli &&
 
-run_with_retry 3 npm install -g ${NPM_ARGS} karma bower grunt-cli &&
-
-run_with_retry 3 npm install ${NPM_ARGS} &&
+run_with_retry 3 npm install -s &&
 
 run_with_retry 3 bower install -q
 

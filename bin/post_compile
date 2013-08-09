@@ -8,6 +8,7 @@ fi
 
 # install_cache_dirs
 export NODE_ENV=production
+npm config set production true -global
 
 npm install -sg bower grunt-cli
 
