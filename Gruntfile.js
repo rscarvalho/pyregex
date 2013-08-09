@@ -22,6 +22,7 @@ module.exports = function(grunt) {
     // Configuration
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        aws: grunt.file.readJSON('aws_credentials.json'),
 
         // Coffee to JS compilation
         coffee: {
@@ -181,6 +182,34 @@ module.exports = function(grunt) {
             development: {
                 endpoint: '/api'
             }
+        },
+
+        "s3-sync": {
+            options: {
+                key: '<%= aws.key %>',
+                secret: '<%= aws.secret %>',
+                bucket: '<%= aws.bucket %>',
+                access: 'public-read',
+                concurrency: 20,
+                gzip: false
+            },
+
+            dist: {
+                files: [
+                    {
+                        root: 'public/',
+                        src: ['public/*.html', 'public/**/*.html', 'public/**/*.css', 'public/**/*.js', 'public/**.xml'],
+                        dest: '/',
+                        gzip: true
+                    },
+                    {
+                        root: 'public/',
+                        src: ['public/**/**.gif', 'public/**/*.png', 'public/**/*.jpg', 'public/**/*.webp'],
+                        dest: '/',
+                        gzip: false
+                    }
+                ]
+            }
         }
     });
 
@@ -195,6 +224,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-s3-sync')
 
     grunt.event.on('watch', function(action, filepath, target) {
       grunt.log.writeln(target + ': ' + filepath + ' has ' + action);
@@ -210,6 +240,7 @@ module.exports = function(grunt) {
     // Custom tasks
     grunt.registerTask('build', ['coffee', 'less', 'copy', 'gen_api:development', 'concat']);
     grunt.registerTask('build_prod', ['coffee', 'less', 'copy', 'gen_api:production', 'concat']);
+    grunt.registerTask('deploy', ['clean', 'build_prod', 's3-sync'])
     grunt.registerTask('test', ['karma']);
 
     grunt.registerTask('default', ['clean', 'watch']);
