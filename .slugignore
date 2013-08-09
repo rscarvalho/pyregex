@@ -1,0 +1,11 @@
+assets
+node_modules
+public
+tests
+.bowerrc
+nose.cfg
+.travis.yml
+bower.json
+deploy.sh
+Gruntfile.js
+*.sh
