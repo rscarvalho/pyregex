@@ -1,12 +1,15 @@
 "use strict"
 
-config = ($locationProvider, $routeProvider) ->
+config = ($locationProvider, $routeProvider, $httpProvider) ->
   $locationProvider.html5Mode(true)
 
   $routeProvider.when('/',
     templateUrl: '/assets/templates/index.html'
     controller: 'RegexParserController').
   otherwise(redirectTo: '/')
+
+  $httpProvider.defaults.useXDomain = true
+  delete $httpProvider.defaults.headers.common['X-Requested-With']
 
 app = angular.module('pyregex', ['ui.select2']).config(config)
 

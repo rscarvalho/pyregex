@@ -112,24 +112,15 @@ module.exports = function(grunt) {
         watch: {
             coffee: {
                 files: coffeePaths,
-                tasks: ['coffeelint', 'coffee', 'copy:js', 'concat:application_js', 'karma'],
-                options: {
-                    atBegin: true,
-                }
+                tasks: ['coffeelint', 'coffee', 'copy:js', 'concat:application_js', 'karma']
             },
             less: {
                 files: [assetPath('src/less/*.less'), assetPath('src/less/**/*.less')],
-                tasks: ['less', 'copy:css', 'concat:screen_css'],
-                options: {
-                    atBegin: true,
-                }
+                tasks: ['less', 'copy:css', 'concat:screen_css']
             },
             html: {
                 files: [assetPath('src/*.html'), assetPath('src/**/*.html')],
-                tasks: ['copy:html', 'copy:images'],
-                options: {
-                    atBegin: true,
-                }
+                tasks: ['copy:html', 'copy:images']
             }
         },
 
@@ -180,7 +171,7 @@ module.exports = function(grunt) {
                 endpoint: 'http://pyregex.com/api'
             },
             development: {
-                endpoint: '/api'
+                endpoint: 'http://localhost:5000/api'
             }
         },
 
@@ -224,7 +215,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-contrib-connect');
-    grunt.loadNpmTasks('grunt-s3-sync')
+    grunt.loadNpmTasks('grunt-s3-sync');
 
     grunt.event.on('watch', function(action, filepath, target) {
       grunt.log.writeln(target + ': ' + filepath + ' has ' + action);
@@ -243,6 +234,6 @@ module.exports = function(grunt) {
     grunt.registerTask('deploy', ['clean', 'build_prod', 's3-sync'])
     grunt.registerTask('test', ['karma']);
 
-    grunt.registerTask('default', ['clean', 'watch']);
+    grunt.registerTask('default', ['clean', 'build', 'watch']);
     grunt.registerTask('server', ['build', 'connect']);
 };

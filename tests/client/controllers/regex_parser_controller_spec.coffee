@@ -45,7 +45,8 @@ describe "RegexParserController", ->
 
         inject (_$httpBackend_) ->
           $httpBackend = _$httpBackend_
-          $httpBackend.expectGET('/api/regex/test/?' + data).
+          baseUrl = 'http://localhost:5000/api'
+          $httpBackend.expectGET(baseUrl + '/regex/test/?' + data).
             respond(result_type: 'success', match_type: 'search')
 
         expect($scope.processing).toBe false

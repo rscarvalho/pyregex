@@ -23,7 +23,6 @@ def route_dispatcher(router, request, response):
         rv = webapp2.Response(*rv)
 
     rv.headers['Access-Control-Allow-Origin'] = "*"
-    rv.headers['Access-Control-Allow-Methods'] = "GET"
     return rv
 
 application = webapp2.WSGIApplication(routes, debug=True)

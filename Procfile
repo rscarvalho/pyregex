@@ -1,2 +1,3 @@
 web: uwsgi uwsgi.ini
-grunt: grunt
+grunt_watch: grunt
+grunt_server: grunt connect

@@ -10,6 +10,11 @@ class ApiBaseResource(webapp2.RequestHandler):
     def api_error(self, message, *args):
         return dict(result_type='error', message=message % args)
 
+    def options(self):
+        self.response.headers['Access-Control-Allow-Origin'] = "*"
+        self.response.headers['Access-Control-Allow-Method'] = "GET"
+        return self.response
+
 
 class RegexResource(ApiBaseResource):
     __urls__ = ('regex/', 'regex/<key>', 'regex/test/')

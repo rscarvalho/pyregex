@@ -2,7 +2,7 @@ describe "App Configuration", ->
   beforeEach module('pyregex')
 
   it "should have a value for API endpoint", inject (apiUrl) ->
-    expect(apiUrl).toBe('/api')
+    expect(apiUrl).toBe('http://localhost:5000/api')
 
   describe "factories", ->
     it "should reflect jQuery global object", inject (jQuery) ->
