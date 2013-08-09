@@ -19,10 +19,21 @@ module.exports = function(grunt) {
         return [e + '/*.coffee', e + '/**/*.coffee'];
     }).flatten();
 
+    var aws_credentials;
+    try {
+        aws_credentials = grunt.file.readJSON('aws_credentials.json');
+    } catch (e) { 
+        aws_credentials = {
+            key: '',
+            secret: '',
+            bucket: ''
+        };
+    }
+
     // Configuration
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        aws: grunt.file.readJSON('aws_credentials.json'),
+        aws: aws_credentials,
 
         // Coffee to JS compilation
         coffee: {
