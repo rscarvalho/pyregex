@@ -1,6 +1,7 @@
 import re, sre_constants
 import exceptions
 from .util import Value
+import signal
 
 class InvalidRegexError(exceptions.Exception):
     def __init__(self, error=None, *args, **kwargs):
@@ -9,12 +10,14 @@ class InvalidRegexError(exceptions.Exception):
 
 
 class UnprocessibleRegex(exceptions.Exception):
-    pass
+    @classmethod
+    def cb(cls, signum, frame):
+        raise cls()
 
 
 class RegexService(Value):
     VALID_MATCH_TYPES = ('findall', 'match', 'search',)
-    REGEX_TIMEOUT = 5 # seconds
+    REGEX_TIMEOUT = 2 # seconds
 
     def __init__(self, regex, match_type, flags):
         if regex is None:
@@ -37,8 +40,14 @@ class RegexService(Value):
     def test(self, test_string):
         regex = re.compile(self.pattern, self.flags)
         cb = getattr(regex, self.match_type)
-        
-        return self.dict_from_object(cb(test_string))
+
+        old_handler = signal.signal(signal.SIGALRM, UnprocessibleRegex.cb)
+        signal.alarm(self.REGEX_TIMEOUT)
+        try:
+            return self.dict_from_object(cb(test_string))
+        finally:
+            signal.alarm(0)
+            signal.signal(signal.SIGALRM, old_handler)
 
 
     def dict_from_object(self, obj):

@@ -1,11 +1,14 @@
 import unittest
 import re
 from pyregex.service import RegexService, InvalidRegexError, UnprocessibleRegex
+import signal
+
+class TimeoutException(Exception):
+    pass
 
 class ServiceTests(unittest.TestCase):
     def test_initialize(self):
         svc = RegexService(r'\d+', 'match', re.I)
-
 
     def test_invalidArgs(self):
         self.assertRaises(ValueError, lambda: RegexService(None, 'match', 2))
@@ -47,13 +50,25 @@ class ServiceTests(unittest.TestCase):
         self.assertIsNotNone(result)
         self.assertEqual(result['group'], "1984")
 
-    @unittest.skip("Not supported by GoogleAppEngine edition")
     def test_catastrophicBacktrace(self):
         input = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" + \
                 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-        svc = RegexService(r'(a?a)+b', 'match', 0)
-        with self.assertRaises(UnprocessibleRegex):
-            svc.test(input)
+        
+        def timeout_cb(signum, frame):
+            raise TimeoutException("Timeout!")
+
+        old_handler = signal.signal(signal.SIGALRM, timeout_cb)
+        signal.alarm(5)
+
+        try:
+            svc = RegexService(r'(a?a)+b', 'match', 0)
+            with self.assertRaises(UnprocessibleRegex):
+                svc.test(input)
+        except TimeoutException, e:
+            self.fail("Response took more than 5 seconds to execute")
+        finally:
+            signal.alarm(0)
+            signal.signal(signal.SIGALRM, old_handler)
 
 
 

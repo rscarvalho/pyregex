@@ -11,3 +11,4 @@ public/assets
 vendor
 .bundle
 aws_credentials.json
+.*.swp
