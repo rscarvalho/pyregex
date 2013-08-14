@@ -4,6 +4,7 @@ import urllib
 from pyregex.webapp import application as app
 import re
 import json
+import signal
 
 def regex_params(regex, test_string, flags=0, match_type='match'):
     return dict(flags=flags, regex=regex, test_string=test_string, match_type=match_type)
@@ -115,7 +116,6 @@ class RegexHandlerTest(unittest.TestCase):
         self.assertEqual('error', json_body['result_type'])
         self.assertEqual('Invalid regular expression: %s' % params['regex'], json_body['message'])
 
-
     def test_regexTestUnknown(self):
         params = regex_params(r'\w+', 'Hello, World!',
                             re.I | re.M, 'not_really_sure_about_it')
@@ -154,7 +154,32 @@ class RegexHandlerTest(unittest.TestCase):
         self.assertEqual('findall', json_body['result_type'])
         self.assertEqual(['Hi.2013'], json_body['result'])
 
+    def test_testRegexCatastrophicBacktrace(self):
+        test_string = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" + \
+                      "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        regex = r"(a?a)+b"
 
+        params = regex_params(regex, test_string)
+
+        TimeoutException = type('TimeoutException', (Exception,), {})
+
+        def timeout_cb(signum, frame):
+            raise TimeoutException()
+
+        old_handler = signal.signal(signal.SIGALRM, timeout_cb)
+        signal.alarm(5)
+
+        try:
+            request = build_request('/api/regex/test/', params)
+            response = request.get_response(app)
+            json_body = self.get_json_response(response, 422)
+            self.assertEqual('error', json_body['result_type'])
+            self.assertEqual('This regular expression is unprocessible', json_body['message'])
+        except TimeoutException, e:
+            self.fail("Response took more than 5 seconds to execute")
+        finally:
+            signal.alarm(0)
+            signal.signal(signal.SIGALRM, old_handler)
 
     def get_json_response(self, response, *acceptable_statuses):
         if not acceptable_statuses:

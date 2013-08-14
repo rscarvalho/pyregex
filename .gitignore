@@ -12,3 +12,4 @@ vendor
 .bundle
 aws_credentials.json
 .*.swp
+tmp

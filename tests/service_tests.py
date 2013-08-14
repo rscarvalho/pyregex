@@ -1,6 +1,6 @@
 import unittest
 import re
-from pyregex.service import RegexService, InvalidRegexError, UnprocessibleRegex
+from pyregex.service import RegexService, InvalidRegexError, UnprocessibleRegexError
 import signal
 
 class TimeoutException(Exception):
@@ -62,7 +62,7 @@ class ServiceTests(unittest.TestCase):
 
         try:
             svc = RegexService(r'(a?a)+b', 'match', 0)
-            with self.assertRaises(UnprocessibleRegex):
+            with self.assertRaises(UnprocessibleRegexError):
                 svc.test(input)
         except TimeoutException, e:
             self.fail("Response took more than 5 seconds to execute")

@@ -2,12 +2,15 @@ import webapp2
 from webob.exc import HTTPNotFound
 import json
 from .decorators import handle_json
-from .service import RegexService, InvalidRegexError
+from .service import RegexService, InvalidRegexError, UnprocessibleRegexError
 import logging
 
-
 class ApiBaseResource(webapp2.RequestHandler):
-    def api_error(self, message, *args):
+    def api_error(self, message, *args, **kwargs):
+        if 'status' in kwargs:
+            self.response.set_status(kwargs['status'])
+        else:
+            self.response.set_status(400)
         return dict(result_type='error', message=message % args)
 
     def options(self):
@@ -23,6 +26,7 @@ class RegexResource(ApiBaseResource):
     def get(self):
         if self.request.path_info.endswith('/test/'):
             return self.test_regex()
+        logging.error("URL Not Found.")
         raise HTTPNotFound('Not Implemented Yet')
 
 
@@ -35,7 +39,6 @@ class RegexResource(ApiBaseResource):
         try:
             service = RegexService(regex, match_type, flags)
         except ValueError, e:
-            self.response.set_status(400)
             fmt = "Invalid value for {}: \"{}\""
             if len(e.args) > 2:
                 fmt += ". Acceptable values are {}"
@@ -43,11 +46,11 @@ class RegexResource(ApiBaseResource):
             args = [", ".join(a) if type(a) is tuple else a for a in e.args]
             return self.api_error(fmt.format(*args))
         except InvalidRegexError:
-            self.response.set_status(400)
             return self.api_error('Invalid regular expression: %s', regex)
 
-        return {
-            'result_type': match_type,
-            'result': service.test(test_string)
-        }
+        try:
+            result = service.test(test_string)
+        except UnprocessibleRegexError:
+            return self.api_error('This regular expression is unprocessible', status=422)
+        return dict(result_type=match_type, result=result)
 

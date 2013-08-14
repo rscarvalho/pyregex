@@ -1,7 +1,9 @@
 import re, sre_constants
 import exceptions
-from .util import Value
+from .util import Value, dict_from_object
 import signal
+import logging
+from multiprocessing import Process, Queue
 
 class InvalidRegexError(exceptions.Exception):
     def __init__(self, error=None, *args, **kwargs):
@@ -9,10 +11,10 @@ class InvalidRegexError(exceptions.Exception):
         self.error = error
 
 
-class UnprocessibleRegex(exceptions.Exception):
-    @classmethod
-    def cb(cls, signum, frame):
-        raise cls()
+class UnprocessibleRegexError(exceptions.Exception):
+    def __init__(self, error=None, *args, **kwargs):
+        super(UnprocessibleRegexError, self).__init__(*args, **kwargs)
+        self.error = error
 
 
 class RegexService(Value):
@@ -38,31 +40,18 @@ class RegexService(Value):
 
 
     def test(self, test_string):
-        regex = re.compile(self.pattern, self.flags)
-        cb = getattr(regex, self.match_type)
+        def x(pattern, match_type, flags, test_string, q):
+            regex = re.compile(self.pattern, self.flags)
+            cb = getattr(regex, match_type)
+            q.put(dict_from_object(cb(test_string)))
 
-        old_handler = signal.signal(signal.SIGALRM, UnprocessibleRegex.cb)
-        signal.alarm(self.REGEX_TIMEOUT)
-        try:
-            return self.dict_from_object(cb(test_string))
-        finally:
-            signal.alarm(0)
-            signal.signal(signal.SIGALRM, old_handler)
-
-
-    def dict_from_object(self, obj):
-        if obj and hasattr(obj, 'groupdict') and callable(getattr(obj, 'groupdict')):
-            return dict(
-                group=obj.group(),
-                groups=obj.groups(),
-                group_dict=obj.groupdict(),
-                end=obj.end(), start=obj.start(), pos=obj.pos,
-                span=obj.span(),
-                regs=obj.regs,
-                last_group=obj.lastgroup,
-                last_index=obj.lastindex
-            )
-        elif not obj:
-            return None
-        return obj
+        queue = Queue()
+        args = (self.pattern, self.match_type, self.flags, test_string, queue)
+        p = Process(target=x, args=args)
+        p.start()
+        p.join(self.REGEX_TIMEOUT)
+        if p.is_alive():
+            p.terminate()
+            raise UnprocessibleRegexError()
+        return queue.get()
 

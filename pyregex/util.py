@@ -27,3 +27,20 @@ class Value(object):
     def __init__(self, **kwargs):
         for key in kwargs:
             setattr(self, key, kwargs[key])
+
+
+def dict_from_object(obj):
+    if obj and hasattr(obj, 'groupdict') and callable(getattr(obj, 'groupdict')):
+        return dict(
+            group=obj.group(),
+            groups=obj.groups(),
+            group_dict=obj.groupdict(),
+            end=obj.end(), start=obj.start(), pos=obj.pos,
+            span=obj.span(),
+            regs=obj.regs,
+            last_group=obj.lastgroup,
+            last_index=obj.lastindex
+        )
+    elif not obj:
+        return None
+    return obj
