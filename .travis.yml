@@ -16,8 +16,8 @@ before_install:
 - sudo ln -s /run/shm /dev/shm
 
 install:
-- pip install -r requirements.txt
-- pip install -r requirements-dev.txt
+- pip install -qr requirements.txt
+- pip install -qr requirements-dev.txt
 - ./install_assets_deps.sh
 - grunt clean build
 
