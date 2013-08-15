@@ -48,6 +48,14 @@ module.exports = (grunt) ->
         flatten: true
         ext: ".js"
 
+    markdown:
+      all:
+        files: [
+          src: 'CHANGELOG.md'
+          dest: 'public/assets/templates/changelog.html'
+        ],
+      options:
+        template: 'grunt/templates/default_md.jst'
     
     # Move other files to dist folder
     copy:
@@ -164,6 +172,10 @@ module.exports = (grunt) ->
         files: [assetPath("src/*.html"), assetPath("src/**/*.html")]
         tasks: ["copy:html", "copy:images"]
 
+      markdown:
+        files: [assetPath("*.md"), assetPath("**/*.md"), 'grunt/templates/**']
+        tasks: ['markdown']
+
     coffeelint:
       app: [coffeePaths, 'Gruntfile.coffee'].flatten()
 
@@ -251,7 +263,7 @@ module.exports = (grunt) ->
  
   # Custom tasks
   
-  common = ["coffeelint", "coffee", "less", "copy", "concat"]
+  common = ["coffeelint", "coffee", "less", "copy", "concat", "markdown"]
   c = (k, args...) -> common.clone().insertAfter(k, args...)
   grunt.registerTask "build", c("copy", "gen_api:development")
   grunt.registerTask "build:production", c("copy", "gen_api:production")

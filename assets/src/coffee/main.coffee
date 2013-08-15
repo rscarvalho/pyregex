@@ -6,6 +6,8 @@ config = ($locationProvider, $routeProvider, $httpProvider) ->
   $routeProvider.when('/',
     templateUrl: '/assets/templates/index.html'
     controller: 'RegexParserController').
+  when('/changelog',
+    templateUrl: '/assets/templates/changelog.html').
   otherwise(redirectTo: '/')
 
   $httpProvider.defaults.useXDomain = true
