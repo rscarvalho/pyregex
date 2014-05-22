@@ -77,7 +77,7 @@ module.exports = (grunt) ->
 
       js:
         files: [
-          bowerComponent("jquery", "jquery.js"),
+          bowerComponent("jquery/dist", "jquery.js"),
           bowerComponent("angular", "angular.js"),
           bowerComponent("angular-ui-select2", "src/select2.js"),
           bowerComponent("select2", "select2.js"),
