@@ -1,31 +1,31 @@
 <!DOCTYPE html>
 <html ng-app='pyregex' lang="en-us">
-	<head>
-		<meta charset="utf-8">
+    <head>
+        <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <meta name="keywords" content="python, regex, regexp, regular expression, regular expressions, text, linguistic, text analyzer">
         <meta name="description" content="PyRegex is a online regular expression tester to check validity of regular expressions in the Python language regex subset.">
         <meta name="author" content="Rodolfo Carvalho (rodolfo@infweb.net)">
 
-		<title>PyRegex</title>
-		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+        <title>PyRegex</title>
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
         <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,700' rel='stylesheet' type='text/css'>
-		<link rel="stylesheet" rel="stylesheet" href="/assets/screen.css" media="screen">
+        <link rel="stylesheet" href="/assets/screen.css" media="screen">
         <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
         <script type="text/javascript" src="/assets/application.js"></script>
-	</head>
-	<body>
+    </head>
+    <body>
         <div class="wrap">
-    		<div class="navbar navbar-fixed-top" ng-controller="MenuController">
-    			<div class="navbar-inner">
-    				<div class="container">
-    					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-    						<span class="icon-bar" ng-repeat="item in menuItems"></span>
-    					</button>
-    					<h1><a class="brand" href="/">PyRegex</a></h1>
-    					<div class="nav-collapse collapse">
-    						<ul class="nav">
+            <div class="navbar navbar-fixed-top" ng-controller="MenuController">
+                <div class="navbar-inner">
+                    <div class="container">
+                        <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                            <span class="icon-bar" ng-repeat="item in menuItems"></span>
+                        </button>
+                        <h1><a class="brand" href="/">PyRegex</a></h1>
+                        <div class="nav-collapse collapse">
+                            <ul class="nav">
                                 <li ng-repeat="item in menuItems" ng-class="{active: item.href == currentUrl, dropdown: hasLinks(item)}">
                                 <a href="{{ item.href }}" ng-class="{'dropdown-toggle': hasLinks(item)}" data-toggle="dropdown" ng-click="menuChanged(item)">
                                     {{ item.title }}
@@ -33,23 +33,23 @@
                                 </a>
                                 <ul ng-show="hasLinks(item)" class="dropdown-menu">
                                     <li ng-repeat="subItem in item.links">
-                                        <a href="{{ subItem.href }}" ng-click="menuChanged(subItem)">{{subItem.title}}</a>
+                                    <a href="{{ subItem.href }}" ng-click="menuChanged(subItem)">{{subItem.title}}</a>
                                     </li>
                                 </ul>
-    							</li>
-    						</ul>
-    					</div><!-- /.nav-collapse -->
-    				</div>
-    			</div>
-    		</div><!-- /.navbar -->
+                                </li>
+                            </ul>
+                        </div><!-- /.nav-collapse -->
+                    </div>
+                </div>
+            </div><!-- /.navbar -->
 
-    		<div class="container">
+            <div class="container">
                 <div class="row-fluid" ng-view>
                 </div>
 
                 <div class="cheat-sheet row-fluid">
                     <h5>
-                        Python Regular Expression's Cheat Sheet 
+                        Python Regular Expression's Cheat Sheet
                         <small>(borrowed from <a href="http://www.pythex.org">pythex</a>)</small>
                     </h5>
 
@@ -90,8 +90,8 @@
                                 <ul>
                                     <li><code>\A</code> start of string</li>
                                     <li>
-                                        <code>\b</code> matches empty string at word boundary 
-                                        (between <code>\w</code> and <code>\W</code>)
+                                    <code>\b</code> matches empty string at word boundary
+                                    (between <code>\w</code> and <code>\W</code>)
                                     </li>
                                     <li><code>\B</code> matches empty string not at word boundary</li>
                                     <li><code>\d</code> digit</li>
@@ -126,47 +126,47 @@
 
                     <div class="row-fluid">
                         <p>For a complete guide on regular expressions and the python <code>re</code> module, please
-                            visit the 
-                            <a href="http://docs.python.org/library/re.html">official documentation</a>.
+                        visit the
+                        <a href="http://docs.python.org/library/re.html">official documentation</a>.
                         </p>
                     </div>
                 </div>
-    		</div>
-            
+            </div>
+
             <div class="push">&nbsp;</div>
         </div>
 
         <footer class="main">&nbsp;
             <div class="container">
                 <p>
-                    Made by <a href="http://www.github.com/rscarvalho">Rodolfo Carvalho</a>
-                    (<a href="http://www.github.com/rscarvalho">@rscarvalho</a>) &#9679; 
-                    Inspired by <a href="http://rubular.com">Rubular</a><br/>
-                    Code licensed under the <a href="http://www.gnu.org/licenses/gpl-2.0.html#SEC1">GNU General Public License version 2</a>
+                Made by <a href="http://www.github.com/rscarvalho">Rodolfo Carvalho</a>
+                (<a href="http://www.github.com/rscarvalho">@rscarvalho</a>) &#9679;
+                Inspired by <a href="http://rubular.com">Rubular</a><br/>
+                Code licensed under the <a href="http://www.gnu.org/licenses/gpl-2.0.html#SEC1">GNU General Public License version 2</a>
                 <p>
-                    <a href="https://www.heroku.com" title="Hosted by Heroku">
-                        <img src="https://logos.heroku.com/images/heroku-logo-light-88x31.png" alt="Hosted by Heroku" />
-                    </a> 
-                    &nbsp;&nbsp;&#9679;&nbsp;&nbsp;
-                    <a href="https://travis-ci.org/rscarvalho/pyregex" title="Tested with Travis CI">
-                        <img src="https://travis-ci.org/rscarvalho/pyregex.png?branch=master">
-                    </a>
-                    &nbsp;&nbsp;&#9679;&nbsp;&nbsp;
-                    <a href="http://www.python.org" title="Python Powered">
-                        <img src="http://www.python.org/community/logos/python-powered-w-70x28.png">
-                    </a>
+                <a href="https://www.heroku.com" title="Hosted by Heroku">
+                    <img src="https://logos.heroku.com/images/heroku-logo-light-88x31.png" alt="Hosted by Heroku" />
+                </a>
+                &nbsp;&nbsp;&#9679;&nbsp;&nbsp;
+                <a href="https://travis-ci.org/rscarvalho/pyregex" title="Tested with Travis CI">
+                    <img src="https://travis-ci.org/rscarvalho/pyregex.png?branch=master" alt="Travis CI Status">
+                </a>
+                &nbsp;&nbsp;&#9679;&nbsp;&nbsp;
+                <a href="http://www.python.org" title="Python Powered">
+                    <img src="https://www.python.org/static/community_logos/python-powered-w-70x28.png" alt="Python Powered">
+                </a>
                 </p>
             </div>
         </footer>
         <a href="https://github.com/rscarvalho/pyregex"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 999999" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
         <script>
-          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+ })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-          ga('create', 'UA-31056501-5', 'pyregex.com');
-          ga('send', 'pageview');
+ga('create', 'UA-31056501-5', 'pyregex.com');
+ga('send', 'pageview');
         </script>
-	</body>
+    </body>
 </html>
