@@ -2,7 +2,7 @@
 <svg width="256" height="256" xmlns="http://www.w3.org/2000/svg">
  <g>
   <title>Layer 1</title>
-  <rect fill="#d44413" stroke="#000000" stroke-width="0" stroke-linejoin="null" stroke-linecap="null" x="3" y="3" width="250" height="250" id="svg_4" rx="50" ry="50"/>
-  <text fill="#ffffff" stroke="#000000" stroke-width="0" stroke-linejoin="null" stroke-linecap="null" x="128" y="217.5" id="svg_6" font-size="240" font-family="Ubuntu" text-anchor="middle" xml:space="preserve">.*</text>
+  <rect fill="#d44413" stroke="#000000" stroke-width="0" stroke-linejoin="inherit" stroke-linecap="inherit" x="3" y="3" width="250" height="250" id="svg_4" rx="50" ry="50"/>
+  <text fill="#ffffff" stroke="#000000" stroke-width="0" stroke-linejoin="inherit" stroke-linecap="inherit" x="128" y="217.5" id="svg_6" font-size="240" font-family="Ubuntu" text-anchor="middle" xml:space="preserve">.*</text>
  </g>
 </svg>
