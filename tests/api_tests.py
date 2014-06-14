@@ -1,10 +1,10 @@
 import unittest
-import webapp2
 import urllib
-from pyregex.webapp import application as app
+from pyregex.api import app
 import re
 import json
 import signal
+from webob import Request
 
 def regex_params(regex, test_string, flags=0, match_type='match'):
     return dict(flags=flags, regex=regex, test_string=test_string, match_type=match_type)
@@ -12,20 +12,20 @@ def regex_params(regex, test_string, flags=0, match_type='match'):
 def build_request(url, query_dict=None, *args, **kwargs):
     if query_dict:
         url = "%s?%s" % (url, urllib.urlencode(query_dict))
-    r = webapp2.Request.blank(url, *args, **kwargs)
+    r = Request.blank(url, *args, **kwargs)
     r.headers['Accept'] = '*/*'
     return r
 
 
 class RegexHandlerTest(unittest.TestCase):
     def test_index(self):
-        request = webapp2.Request.blank('/api/regex/')
+        request = Request.blank('/api/regex/')
         response = request.get_response(app)
         self.assertEqual(404, response.status_int)
 
 
     def test_regexTestFindall(self):
-        params = regex_params(r'\w+', u'Hello, World!', 
+        params = regex_params(r'\w+', u'Hello, World!',
             re.I | re.M, 'findall')
         request = build_request('/api/regex/test/', params)
         response = request.get_response(app)
@@ -36,14 +36,14 @@ class RegexHandlerTest(unittest.TestCase):
 
 
     def test_regexTestFindallNotAMatch(self):
-        params = regex_params(r'\d+', u'Hello, World!', 
+        params = regex_params(r'\d+', u'Hello, World!',
             re.I | re.M, 'findall')
         request = build_request('/api/regex/test/', params)
         response = request.get_response(app)
 
         json_body = self.get_json_response(response)
         self.assertEqual('findall', json_body['result_type'])
-        self.assertEqual(None, json_body['result'])    
+        self.assertEqual(None, json_body['result'])
 
 
     def test_regexTestMatch(self):
@@ -75,7 +75,7 @@ class RegexHandlerTest(unittest.TestCase):
 
         expected = None
 
-        request = webapp2.Request.blank(
+        request = Request.blank(
             '/api/regex/test/?%s' % urllib.urlencode(params))
         response = request.get_response(app)
         json_body = self.get_json_response(response)
