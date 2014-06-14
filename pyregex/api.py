@@ -8,11 +8,15 @@ app.secret_key = '\x0f0%T\xd3\xd5\x11\xca\xaa\xf5,\x02Zp,"\x83\x94\x1b\x9e|6\xd7
 
 def setup_logging(app):
     import logging
-    from os.path import join, dirname, abspath
+    import os
+    from os.path import join, dirname, abspath, exists
 
     log_path = join(dirname(__file__), '..', 'tmp')
     log_path = abspath(log_path)
     log_file = join(log_path, 'pyregex.log')
+    if not exists(log_path):
+        os.makedirs(log_path, 0o755)
+
     file_handler = logging.FileHandler(log_file)
     file_handler.setLevel(logging.DEBUG)
     app.logger.addHandler(file_handler)
@@ -38,7 +42,7 @@ def test_regex():
 
     try:
         service = RegexService(regex, match_type, flags)
-    except ValueError, e:
+    except ValueError as e:
         fmt = 'Invalid value for {}: "{}"'
         if len(e.args) > 2:
             fmt += ". Acceptable values are {}"

@@ -1,5 +1,4 @@
-WebOb==1.2.3
-distribute==0.6.34
-uWSGI==1.9.14
-webapp2==2.5.2
-wsgiref==0.1.2
+WebOb==1.4
+distribute==0.7.3
+uWSGI==2.0.5.1
+Flask==0.10.1

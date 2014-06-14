@@ -1,5 +1,5 @@
 import unittest
-import urllib
+from urllib.parse import urlencode
 from pyregex.api import app
 import re
 import json
@@ -11,7 +11,7 @@ def regex_params(regex, test_string, flags=0, match_type='match'):
 
 def build_request(url, query_dict=None, *args, **kwargs):
     if query_dict:
-        url = "%s?%s" % (url, urllib.urlencode(query_dict))
+        url = "%s?%s" % (url, urlencode(query_dict))
     r = Request.blank(url, *args, **kwargs)
     r.headers['Accept'] = '*/*'
     return r
@@ -76,7 +76,7 @@ class RegexHandlerTest(unittest.TestCase):
         expected = None
 
         request = Request.blank(
-            '/api/regex/test/?%s' % urllib.urlencode(params))
+            '/api/regex/test/?%s' % urlencode(params))
         response = request.get_response(app)
         json_body = self.get_json_response(response)
         self.assertEqual('match', json_body['result_type'])
@@ -175,7 +175,7 @@ class RegexHandlerTest(unittest.TestCase):
             json_body = self.get_json_response(response, 422)
             self.assertEqual('error', json_body['result_type'])
             self.assertEqual('This regular expression is unprocessible', json_body['message'])
-        except TimeoutException, e:
+        except TimeoutException as e:
             self.fail("Response took more than 5 seconds to execute")
         finally:
             signal.alarm(0)
@@ -187,5 +187,5 @@ class RegexHandlerTest(unittest.TestCase):
 
         self.assertIn(response.status_int, acceptable_statuses)
         self.assertEqual('application/json', response.content_type)
-        return json.loads(response.body)
+        return json.loads(response.body.decode('utf-8'))
 
