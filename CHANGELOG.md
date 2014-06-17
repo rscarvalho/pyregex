@@ -3,6 +3,7 @@
 ## 2014-06-17
 
 * [bugfix] Fixed broken menu links
+* [feature] Incorporated logo into the homepage
 
 ## 2014-06-14
 
