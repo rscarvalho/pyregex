@@ -1,9 +1,13 @@
 # PyRegex Changelog
 
+## 2014-06-17
+
+* [bugfix] Fixed broken menu links
+
 ## 2014-06-14
 
-* PyRegex is now running on Python 3.4. Read more at [my blog article](http://rscarvalho.github.io/blog/2014/06/14/pyregex-has-been-updated/)
-* Ported the web framework to Flask. Read more at [my blog article](http://rscarvalho.github.io/blog/2014/06/14/pyregex-has-been-updated/)
+* [feature] PyRegex is now running on Python 3.4. Read more at [my blog article](http://rscarvalho.github.io/blog/2014/06/14/pyregex-has-been-updated/)
+* [feature] Ported the web framework to Flask. Read more at [my blog article](http://rscarvalho.github.io/blog/2014/06/14/pyregex-has-been-updated/)
 
 ## 2014-05-22
 
