@@ -23,7 +23,7 @@ app.factory 'window', -> window
 app.factory 'templateUrl', -> (name) -> "/assets/templates/#{name}"
 
 # Base64 encode/decode functions
-app.factory 'atob', -> window.atob
-app.factory 'btoa', -> window.btoa
+app.factory 'base64_decode', -> window.atob
+app.factory 'base64_encode', -> window.btoa
 
 @PyRegex = -> angular.module('pyregex')
