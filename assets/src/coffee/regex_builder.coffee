@@ -42,7 +42,6 @@
     match_type: @matchType
     test_string: @testString
 
-
   clean: ->
     @flags = {}
     _.map @allFlags, (el) => @flags[el] = false

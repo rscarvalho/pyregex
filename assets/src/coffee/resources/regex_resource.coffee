@@ -1,12 +1,4 @@
-@PyRegex().factory('RegexResource', (apiUrl, $http, jQuery) ->
-  class RegexResource
-    constructor: (http, apiUrl) ->
-      @apiUrl = apiUrl
-      @http = http
+@PyRegex().service 'RegexResource', (apiUrl, $http, jQuery) ->
+  test: (data) ->
+    $http.get(apiUrl + '/regex/test/?' + jQuery.param(data))
 
-    test: (data) ->
-      @http.get(@apiUrl + '/regex/test/?' + jQuery.param(data))
-
-
-  new RegexResource($http, apiUrl)
-)
