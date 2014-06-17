@@ -216,6 +216,13 @@ module.exports = (grunt) ->
       development:
         endpoint: "http://localhost:5000/api"
 
+    gapi_loader:
+      production:
+        apiKey: ''
+
+      development:
+        apiKey: ''
+
     "s3-sync":
       options:
         key: "<%= aws.key %>"
@@ -260,13 +267,25 @@ module.exports = (grunt) ->
         "\"apiUrl\", \"#{@data.endpoint}\");\n}).call(this);\n"
     fs = require("fs")
     fs.writeFileSync "assets/build/api.js", contents
- 
+
+  grunt.registerMultiTask "gapi_loader", "Generate loader for gapi", ->
+    grunt.log.writeln "#{@target}: #{@data.endpoint}"
+    contents = "(function(){\n\t" +
+        "this.loadGapi = function () {\n\t\t" +
+        "gapi.client.setApiKey(\"#{@data.apiKey}\");\n\t\t" +
+        "gapi.client.load('urlshortener', 'v1');\n\t};\n" +
+        "}).call(this);\n"
+    fs = require("fs")
+    fs.writeFileSync "assets/build/gapi.js", contents
+
   # Custom tasks
-  
+
   common = ["coffeelint", "coffee", "less", "copy", "concat", "markdown"]
   c = (k, args...) -> common.clone().insertAfter(k, args...)
-  grunt.registerTask "build", c("copy", "gen_api:development")
-  grunt.registerTask "build:production", c("copy", "gen_api:production")
+  grunt.registerTask "build", c("copy", "gen_api:development",
+      "gapi_loader:development")
+  grunt.registerTask "build:production", c("copy", "gen_api:production",
+      "gapi_loader:production")
   grunt.registerTask "deploy", ["clean", "build:production", "s3-sync"]
   grunt.registerTask "test", ["karma"]
   grunt.registerTask "default", ["clean", "build", "watch"]

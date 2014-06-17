@@ -45,7 +45,13 @@ ctrl = (_, $log, RegexResource, RegexBuilder,
       if $scope.isError()
         $scope.permalinkUrl = null
       else
-        $scope.permalinkUrl = "/?id=#{$scope.re.encodedData()}"
+        long_url = window.location.origin + "/?id=#{$scope.re.encodedData()}"
+        request = gapi.client.urlshortener.url.insert(
+          resource:
+            longUrl: long_url
+        )
+        request.execute (response) ->
+          $scope.permalinkUrl = response.id
       pickTemplate('result')
 
     , (result) ->
