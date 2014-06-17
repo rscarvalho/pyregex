@@ -42,6 +42,8 @@ Just run `honcho start`
 
 It will start both uWSGI server and grunt. This will watch the filesystem for changes in the source folders and regenerate the client-side target files as needed.
 
+The API will be available on http://localhost:5000 (The port can be overridden by the `$PORT` environment variable). The web app is available at http://localhost:8082
+
 ### Testing the application
 
 To test the application, run `nosetests -c nose.cfg` from a terminal window.

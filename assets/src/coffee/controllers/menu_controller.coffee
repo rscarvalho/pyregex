@@ -1,4 +1,4 @@
-@PyRegex().controller 'MenuController', ($log, $scope) ->
+@PyRegex().controller 'MenuController', ($scope) ->
   $scope.menuItems = [
       id: "home"
       title: "Home",
@@ -8,9 +8,14 @@
       title: "Changelog",
       href: "/changelog"
     ,
-      id: "documentation",
-      title: "Documentation",
-      href: "http://docs.python.org/library/re.html"
+      id: "help",
+      title: "Help",
+      href: "#",
+      links: [
+          id: "documentation",
+          title: "Official Python Documentation",
+          href: "http://docs.python.org/library/re.html"
+      ]
     ,
       id: "contribute"
       title: "Contribute"
@@ -32,14 +37,13 @@
   ]
 
   $scope.hasLinks = (item) ->
-    $log.info item.links
     item.links && item.links.length
 
   $scope.currentUrl = '/'
 
   $scope.menuChanged = (item) ->
     $scope.currentUrl = item.href unless \
-        hasLinks(item) or /^.+:\/\//.test item.href
+        $scope.hasLinks(item) or /^.+:\/\//.test item.href
 
 @PyRegex().filter 'withLinks', ->
   (list) -> list.filter $scope.hasLinks

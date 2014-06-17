@@ -1,4 +1,4 @@
-ctrl = (_, $log, RegexResource, RegexBuilder,
+ctrl = (_, RegexResource, RegexBuilder,
         templateUrl, $scope, $routeParams, $rootScope) ->
 
   $scope.allFlags =

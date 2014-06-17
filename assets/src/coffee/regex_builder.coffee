@@ -1,4 +1,4 @@
-@PyRegex().factory 'RegexBuilder', (_, $log, atob, btoa, jQuery) ->
+@PyRegex().factory 'RegexBuilder', (_, atob, btoa, jQuery) ->
   class RegexBuilder
     I: 2
     L: 4
@@ -21,7 +21,6 @@
 
     setFlags: (flags) =>
       hasFlag = (f, i) =>
-        $log.info "Has Flag? #{f} & #{i} == #{f & i} (#{f & i != 0})"
         (f & i) != 0
 
       if _.isNumber(flags)
