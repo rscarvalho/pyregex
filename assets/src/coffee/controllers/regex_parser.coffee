@@ -1,4 +1,4 @@
-ctrl = (_, $log, RegexResource, RegexBuilder,
+ctrl = (_, $log, RegexResource, RegexBuilder, ShortenerService,
         templateUrl, $scope, $routeParams, $rootScope) ->
 
   $scope.allFlags =
@@ -18,6 +18,7 @@ ctrl = (_, $log, RegexResource, RegexBuilder,
   $scope.currentResult = {result_type: null}
   $scope.processing = false
   $scope.permalinkUrl = null
+  $scope.permalinkShortUrl = null
 
   $scope.re = RegexBuilder.clean()
 
@@ -44,14 +45,14 @@ ctrl = (_, $log, RegexResource, RegexBuilder,
       $scope.currentResult = result.data
       if $scope.isError()
         $scope.permalinkUrl = null
+        $scope.permalinkShortUrl = null
       else
-        long_url = window.location.origin + "/?id=#{$scope.re.encodedData()}"
-        request = gapi.client.urlshortener.url.insert(
-          resource:
-            longUrl: long_url
-        )
-        request.execute (response) ->
-          $scope.permalinkUrl = response.id
+        $scope.permalinkUrl = "/?id=#{$scope.re.encodedData()}"
+
+        longUrl = window.location.origin + $scope.permalinkUrl
+        ShortenerService.short(longUrl).then (result) ->
+          $scope.permalinkShortUrl = result
+
       pickTemplate('result')
 
     , (result) ->
