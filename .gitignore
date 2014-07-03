@@ -13,3 +13,4 @@ vendor
 aws_credentials.json
 .*.swp
 tmp
+tags
