@@ -22,8 +22,7 @@ class ValueMeta(type):
         return obj
 
 
-class Value(object):
-    __metaclass__ = ValueMeta
+class Value(object, metaclass=ValueMeta):
     def __init__(self, **kwargs):
         for key in kwargs:
             setattr(self, key, kwargs[key])

@@ -12,10 +12,22 @@ div.navbar {
     }
 }
 
+a.brand span.logo {
+    color: #ce4213;
+    background: white;
+    display: inline-block;
+    padding: 5px 0 5px 4px;
+    font-size: 0.9em;
+    line-height: 0.7em;
+    border-radius: 2px;
+    margin-bottom: -5px;
+    letter-spacing: 3px;
+}
+
 div.regex-parser-container {
     input[type='text'], label, span.quotes {
         font-family: monospace;
-    } 
+    }
 
     span.quotes {
         color: rgb(25, 197, 25);
@@ -98,11 +110,11 @@ have provided within the ngAnimate attribute.
     -ms-transition: 1s linear all; /* IE10 */
     -o-transition: 1s linear all; /* Opera */
     transition: 1s linear all; /* Future Browsers */
-     
+
     /* The animation preparation code */
     opacity: 0;
 }
- 
+
 /*
 Keep in mind that you want to combine both CSS
 classes together to avoid any CSS-specificity

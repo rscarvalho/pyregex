@@ -1,31 +1,31 @@
 import unittest
-import webapp2
-import urllib
-from pyregex.webapp import application as app
+from urllib.parse import urlencode
+from pyregex.api import app
 import re
 import json
 import signal
+from webob import Request
 
 def regex_params(regex, test_string, flags=0, match_type='match'):
     return dict(flags=flags, regex=regex, test_string=test_string, match_type=match_type)
 
 def build_request(url, query_dict=None, *args, **kwargs):
     if query_dict:
-        url = "%s?%s" % (url, urllib.urlencode(query_dict))
-    r = webapp2.Request.blank(url, *args, **kwargs)
+        url = "%s?%s" % (url, urlencode(query_dict))
+    r = Request.blank(url, *args, **kwargs)
     r.headers['Accept'] = '*/*'
     return r
 
 
 class RegexHandlerTest(unittest.TestCase):
     def test_index(self):
-        request = webapp2.Request.blank('/api/regex/')
+        request = Request.blank('/api/regex/')
         response = request.get_response(app)
         self.assertEqual(404, response.status_int)
 
 
     def test_regexTestFindall(self):
-        params = regex_params(r'\w+', u'Hello, World!', 
+        params = regex_params(r'\w+', u'Hello, World!',
             re.I | re.M, 'findall')
         request = build_request('/api/regex/test/', params)
         response = request.get_response(app)
@@ -36,14 +36,14 @@ class RegexHandlerTest(unittest.TestCase):
 
 
     def test_regexTestFindallNotAMatch(self):
-        params = regex_params(r'\d+', u'Hello, World!', 
+        params = regex_params(r'\d+', u'Hello, World!',
             re.I | re.M, 'findall')
         request = build_request('/api/regex/test/', params)
         response = request.get_response(app)
 
         json_body = self.get_json_response(response)
         self.assertEqual('findall', json_body['result_type'])
-        self.assertEqual(None, json_body['result'])    
+        self.assertEqual(None, json_body['result'])
 
 
     def test_regexTestMatch(self):
@@ -75,8 +75,8 @@ class RegexHandlerTest(unittest.TestCase):
 
         expected = None
 
-        request = webapp2.Request.blank(
-            '/api/regex/test/?%s' % urllib.urlencode(params))
+        request = Request.blank(
+            '/api/regex/test/?%s' % urlencode(params))
         response = request.get_response(app)
         json_body = self.get_json_response(response)
         self.assertEqual('match', json_body['result_type'])
@@ -175,7 +175,7 @@ class RegexHandlerTest(unittest.TestCase):
             json_body = self.get_json_response(response, 422)
             self.assertEqual('error', json_body['result_type'])
             self.assertEqual('This regular expression is unprocessible', json_body['message'])
-        except TimeoutException, e:
+        except TimeoutException as e:
             self.fail("Response took more than 5 seconds to execute")
         finally:
             signal.alarm(0)
@@ -187,5 +187,5 @@ class RegexHandlerTest(unittest.TestCase):
 
         self.assertIn(response.status_int, acceptable_statuses)
         self.assertEqual('application/json', response.content_type)
-        return json.loads(response.body)
+        return json.loads(response.body.decode('utf-8'))
 

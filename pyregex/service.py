@@ -1,17 +1,16 @@
 import re, sre_constants
-import exceptions
 from .util import Value, dict_from_object
 import signal
 import logging
 from multiprocessing import Process, Queue
 
-class InvalidRegexError(exceptions.Exception):
+class InvalidRegexError(Exception):
     def __init__(self, error=None, *args, **kwargs):
         super(InvalidRegexError, self).__init__(*args, **kwargs)
         self.error = error
 
 
-class UnprocessibleRegexError(exceptions.Exception):
+class UnprocessibleRegexError(Exception):
     def __init__(self, error=None, *args, **kwargs):
         super(UnprocessibleRegexError, self).__init__(*args, **kwargs)
         self.error = error
@@ -33,7 +32,7 @@ class RegexService(Value):
 
         try:
             re.compile(regex, flags)
-        except sre_constants.error, error:
+        except sre_constants.error as error:
             raise InvalidRegexError(error)
 
         super(RegexService, self).__init__(pattern=regex, match_type=match_type, flags=flags)

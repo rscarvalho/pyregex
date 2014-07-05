@@ -53,7 +53,7 @@ class ServiceTests(unittest.TestCase):
     def test_catastrophicBacktrace(self):
         input = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" + \
                 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-        
+
         def timeout_cb(signum, frame):
             raise TimeoutException("Timeout!")
 
@@ -64,7 +64,7 @@ class ServiceTests(unittest.TestCase):
             svc = RegexService(r'(a?a)+b', 'match', 0)
             with self.assertRaises(UnprocessibleRegexError):
                 svc.test(input)
-        except TimeoutException, e:
+        except TimeoutException as e:
             self.fail("Response took more than 5 seconds to execute")
         finally:
             signal.alarm(0)

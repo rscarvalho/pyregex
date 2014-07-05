@@ -30,12 +30,12 @@ module.exports = (grunt) ->
     aws_credentials = {key: "", secret: "", bucket: ""}
 
   pkg = grunt.file.readJSON("package.json")
-  
+
   # Configuration
   grunt.initConfig
     pkg: pkg
     aws: aws_credentials
-    
+
     # Coffee to JS compilation
     coffee:
       app:
@@ -56,7 +56,7 @@ module.exports = (grunt) ->
         ],
       options:
         template: 'grunt/templates/default_md.jst'
-    
+
     # Move other files to dist folder
     copy:
       css:
@@ -77,7 +77,7 @@ module.exports = (grunt) ->
 
       js:
         files: [
-          bowerComponent("jquery", "jquery.js"),
+          bowerComponent("jquery/dist", "jquery.js"),
           bowerComponent("angular", "angular.js"),
           bowerComponent("angular-ui-select2", "src/select2.js"),
           bowerComponent("select2", "select2.js"),
@@ -126,6 +126,14 @@ module.exports = (grunt) ->
           cwd: assetPath("lib/images")
           src: ["**.png", "**.jpg", "**.gif", "**.webp"]
           dest: publicPath("assets/")
+        ]
+
+      icons:
+        files: [
+          expand: true
+          cwd: assetPath("src/")
+          src: "*.ico"
+          dest: publicPath("/")
         ]
 
     concat:
@@ -240,7 +248,8 @@ module.exports = (grunt) ->
             "public/**/*.html",
             "public/**/*.css",
             "public/**/*.js",
-            "public/**.xml"
+            "public/**.xml",
+            "public/favicon.ico"
           ]
           dest: "/"
           gzip: true
@@ -251,7 +260,7 @@ module.exports = (grunt) ->
           gzip: false
         ]
 
-  
+
   # Load plugins
   m = (o) -> key for key, value of o
   tasks = [m(pkg.dependencies), m(pkg.devDependencies)].flatten()

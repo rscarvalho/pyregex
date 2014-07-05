@@ -1,4 +1,4 @@
-@PyRegex().directive 'a', ($log) ->
+@PyRegex().directive 'a', ->
   restrict: 'E'
   link: (scope, element, attr) ->
     update = ->
