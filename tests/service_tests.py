@@ -40,6 +40,13 @@ class ServiceTests(unittest.TestCase):
         result = svc.test("testing")
         self.assertIsNone(result)
 
+
+    def test_findall2(self):
+        svc = RegexService(r'[\w\']+', 'findall', 0)
+        result = svc.test('Hey, you - what are you doing here!?')
+        self.assertIsNotNone(result)
+        self.assertEqual(result, ['Hey', 'you', 'what', 'are', 'you', 'doing', 'here'])
+
     def test_search(self):
         svc = RegexService(r'\d+', 'search', 0)
         result = svc.test("1984")

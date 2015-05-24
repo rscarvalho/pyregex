@@ -47,7 +47,7 @@ describe "RegexParserController", ->
           $httpBackend = _$httpBackend_
           baseUrl = 'http://localhost:5000/api'
           $httpBackend.expectGET(baseUrl + '/regex/test/?' + data).
-            respond(result_type: 'success', match_type: 'search')
+            respond(result_type: 'search')
 
         expect($scope.processing).toBe false
         $scope.getResults()
@@ -57,16 +57,14 @@ describe "RegexParserController", ->
         expect($scope.processing).toBe false
 
         result = $scope.currentResult
-        expect(result.result_type).toBe 'success'
-        expect(result.match_type).toBe 'search'
+        expect(result.result_type).toBe 'search'
 
         $httpBackend.verifyNoOutstandingExpectation()
         $httpBackend.verifyNoOutstandingRequest()
 
       it "should have correct values for status functions", ->
         result = $scope.currentResult
-        result.result_type = 'success'
-        result.match_type = 'match'
+        result.result_type = 'match'
 
         expect($scope.isError()).toBe(false)
         expect($scope.isResult()).toBe(true)

@@ -34,6 +34,14 @@ class RegexHandlerTest(unittest.TestCase):
         self.assertEqual('findall', json_body['result_type'])
         self.assertEqual(['Hello', 'World'], json_body['result'])
 
+    def test_regexTestFindall2(self):
+        params = regex_params(r'[\w\']+', u'Hey, you - what are you doing here!?', 0, 'findall')
+        request = build_request('/api/regex/test/', params)
+        response = request.get_response(app)
+
+        json_body = self.get_json_response(response)
+        self.assertEqual('findall', json_body['result_type'])
+        self.assertEqual(['Hey', 'you', 'what', 'are', 'you', 'doing', 'here'], json_body['result'])
 
     def test_regexTestFindallNotAMatch(self):
         params = regex_params(r'\d+', u'Hello, World!',
