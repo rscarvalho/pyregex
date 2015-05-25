@@ -55,16 +55,13 @@ ctrl = (_, RegexResource, RegexBuilder,
       pickTemplate('error')
 
   $scope.hasResult = ->
-    $scope.isResult() and
-    $scope.currentResult.result != undefined and
-    $scope.currentResult.result != null
+    $scope.isResult() and $scope.currentResult.result?
 
   checkResultType = (type) ->
-    $scope.isResult() and $scope.currentResult.match_type == type
+    $scope.isResult() and $scope.currentResult.result_type == type
 
   $scope.isError = ->
-    $scope.currentResult != null and
-    $scope.currentResult.result_type == 'error'
+    $scope.currentResult?.result_type == 'error'
 
   $scope.isResult = -> not $scope.isError()
   $scope.isFindall = -> checkResultType('findall')

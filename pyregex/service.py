@@ -4,6 +4,8 @@ import signal
 import logging
 from multiprocessing import Process, Queue
 
+SINGLE_PROCESS = False
+
 class InvalidRegexError(Exception):
     def __init__(self, error=None, *args, **kwargs):
         super(InvalidRegexError, self).__init__(*args, **kwargs)
@@ -46,11 +48,15 @@ class RegexService(Value):
 
         queue = Queue()
         args = (self.pattern, self.match_type, self.flags, test_string, queue)
-        p = Process(target=x, args=args)
-        p.start()
-        p.join(self.REGEX_TIMEOUT)
-        if p.is_alive():
-            p.terminate()
-            raise UnprocessibleRegexError()
+
+        if SINGLE_PROCESS:
+            x(*args)
+        else:
+            p = Process(target=x, args=args)
+            p.start()
+            p.join(self.REGEX_TIMEOUT)
+            if p.is_alive():
+                p.terminate()
+                raise UnprocessibleRegexError()
         return queue.get()
 
