@@ -12,6 +12,14 @@ describe "RegexParserController", ->
         $scope: $scope
         RegexBuilder: RegexBuilder
       )
+
+
+    window.gapi = client:
+      urlshortener:
+        url:
+          insert: (obj) ->
+            execute: ->
+              console.log('Google API request executed.')
   )
 
   describe "$scope", ->

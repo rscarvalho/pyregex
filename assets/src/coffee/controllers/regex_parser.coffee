@@ -1,4 +1,4 @@
-ctrl = (_, RegexResource, RegexBuilder,
+ctrl = (_, $log, RegexResource, RegexBuilder, ShortenerService,
         templateUrl, $scope, $routeParams, $rootScope) ->
 
   $scope.allFlags =
@@ -18,6 +18,7 @@ ctrl = (_, RegexResource, RegexBuilder,
   $scope.currentResult = {result_type: null}
   $scope.processing = false
   $scope.permalinkUrl = null
+  $scope.permalinkShortUrl = null
 
   $scope.re = RegexBuilder.clean()
 
@@ -44,8 +45,14 @@ ctrl = (_, RegexResource, RegexBuilder,
       $scope.currentResult = result.data
       if $scope.isError()
         $scope.permalinkUrl = null
+        $scope.permalinkShortUrl = null
       else
         $scope.permalinkUrl = "/?id=#{$scope.re.encodedData()}"
+
+        longUrl = window.location.origin + $scope.permalinkUrl
+        ShortenerService.short(longUrl).then (result) ->
+          $scope.permalinkShortUrl = result
+
       pickTemplate('result')
 
     , (result) ->

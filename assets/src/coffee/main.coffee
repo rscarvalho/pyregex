@@ -21,6 +21,7 @@ app.factory '_', -> window._
 app.factory 'jQuery', -> window.jQuery
 app.factory 'window', -> window
 app.factory 'templateUrl', -> (name) -> "/assets/templates/#{name}"
+app.factory 'gapi', -> window.gapi
 
 # Base64 encode/decode functions
 app.factory 'atob', -> window.atob
