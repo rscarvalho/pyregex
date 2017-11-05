@@ -16,7 +16,7 @@ before_install:
 - sudo ln -s /run/shm /dev/shm
 
 install:
-- npm install -g grunt-cli
+- npm install
 # pip is not able to install distribute: "ImportError: No module named _markerlib"
 - easy_install distribute
 - pip install -r requirements.txt
@@ -26,4 +26,4 @@ install:
 
 script:
 - nosetests -c nose.cfg --verbosity=1
-- grunt test
+- ./node_modules/.bin/grunt test
