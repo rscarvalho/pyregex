@@ -20,7 +20,7 @@
       return flag
 
     setFlags: (flags) =>
-      hasFlag = (f, i) =>
+      hasFlag = (f, i) ->
         (f & i) != 0
 
       if _.isNumber(flags)
