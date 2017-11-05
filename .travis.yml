@@ -3,7 +3,7 @@ python:
 - '3.4'
 
 node_js:
-- 0.10.13
+- '8.6.0'
 
 ruby:
 - 1.9.3-p429
@@ -16,6 +16,7 @@ before_install:
 - sudo ln -s /run/shm /dev/shm
 
 install:
+- npm install -g grunt-cli
 # pip is not able to install distribute: "ImportError: No module named _markerlib"
 - easy_install distribute
 - pip install -r requirements.txt
