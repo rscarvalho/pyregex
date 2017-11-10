@@ -9,13 +9,16 @@
   },
   "scripts": {
     "postinstall": "./node_modules/.bin/bower install",
-    "test": "./node_modules/.bin/grunt test"
+    "test": "./node_modules/.bin/grunt test",
+    "clean": "./node_modules/.bin/grunt clean",
+    "build": "./node_modules/.bin/grunt build:production",
+    "build-dev": "./node_modules/.bin/grunt build"
   },
   "dependencies": {
     "grunt": "^1.0.1",
     "grunt-coffeelint": "0.0.16",
     "grunt-contrib-clean": "^1.1.0",
-    "grunt-contrib-coffee": "^2.0.0",
+    "grunt-contrib-coffee": "^1.0.0",
     "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-less": "^1.4.1",
