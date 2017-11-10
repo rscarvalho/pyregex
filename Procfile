@@ -1,3 +1,3 @@
-web: uwsgi uwsgi.ini
-grunt_watch: grunt
-grunt_server: grunt connect
+web: PYTHONPATH=. python pyregex/api.py
+grunt_watch: ./node_modules/.bin/grunt
+grunt_server: ./node_modules/.bin/grunt connect

@@ -1,7 +1,7 @@
-ctrl = (_, RegexResource, RegexBuilder,
-        templateUrl, $scope, $routeParams, $rootScope) ->
-
-  $scope.allFlags =
+ctrl = (
+  _, RegexResource, RegexBuilder, templateUrl, $scope, $routeParams, $rootScope
+) ->
+  $scope.allFlags = {
     I: 'Ignore Case'
     L: 'Make \\w, \\W, \\b, \\B, \\s and \\S dependent on the current locale.'
     M: 'Multi-line Regular Expression'
@@ -10,6 +10,7 @@ ctrl = (_, RegexResource, RegexBuilder,
     U: 'Make \\w, \\W, \\b, \\B, \\d, \\D, \\s and \\S dependent on the ' +
        'Unicode character properties database.'
     X: 'Verbose'
+  }
 
   pickTemplate = (name) ->
     $scope.resultTemplateUrl = templateUrl("regex/#{name}.html")
