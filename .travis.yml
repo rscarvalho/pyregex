@@ -26,8 +26,10 @@ install:
 - ls -la
 - cd ./ui
 - yarn install --frozen-lockfile
+- cd ..
 
 script:
 - nosetests -c nose.cfg --verbosity=1
 - cd ./ui
 - yarn test
+- cd ..
