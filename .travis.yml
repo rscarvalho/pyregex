@@ -5,9 +5,6 @@ python:
 node_js:
 - 8.6.0
 
-ruby:
-- 1.9.3-p429
-
 cache:
   yarn: true
   directories:
@@ -25,7 +22,7 @@ install:
 - easy_install distribute
 - pip install -qr requirements.txt
 - pip install -qr requirements-dev.txt
-- ./install_assets_deps.sh
+- ls -la
 - cd ui && yarn install
 
 script:
