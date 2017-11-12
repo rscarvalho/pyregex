@@ -14,6 +14,8 @@
     "redux-actions": "^2.2.1"
   },
   "devDependencies": {
+    "enzyme": "^3.1.1",
+    "enzyme-adapter-react-16": "^1.0.4",
     "eslint-config-react-app": "^2.0.1"
   },
   "scripts": {
