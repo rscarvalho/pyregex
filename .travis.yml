@@ -23,8 +23,8 @@ install:
 - pip install -qr requirements.txt
 - pip install -qr requirements-dev.txt
 - ls -la
-- cd ui && yarn install
+- yarn install --production --cwd=ui
 
 script:
 - nosetests -c nose.cfg --verbosity=1
-- cd ui && yarn test
+- yarn --cwd=ui test
