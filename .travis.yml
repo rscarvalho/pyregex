@@ -25,7 +25,7 @@ install:
 - pip install -qr requirements-dev.txt
 - ls -la
 - cd ./ui
-- yarn install --production
+- yarn install --frozen-lockfile
 
 script:
 - nosetests -c nose.cfg --verbosity=1
