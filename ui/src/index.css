@@ -1,5 +1,25 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: Ubuntu, sans-serif;
+
+  margin-bottom: 120px;
+}
+
+body > footer {
+  position: absolute;
+  bottom: 0;
+  height: 120px;
+  width: 100%;
+  text-align: center;
+  border-top: 1px solid #e5e5e5;
+  background-color: #f5f5f5;
+}
+
+body > footer .footer__featured-separator {
+  margin: 0 10px;
+}
+
+#root {
+  margin-top: 60px;
 }

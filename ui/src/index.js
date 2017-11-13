@@ -1,6 +1,7 @@
+import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 
-import App from './App';
+import App from './components/App';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import registerServiceWorker from './registerServiceWorker';

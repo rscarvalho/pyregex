@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "bootstrap": "^3.3.7",
     "key-mirror": "^1.0.1",
     "react": "^16.1.0",
+    "react-bootstrap": "^0.31.5",
     "react-dom": "^16.1.0",
     "react-redux": "^5.0.6",
     "react-scripts": "1.0.17",
@@ -12,6 +14,8 @@
     "redux-actions": "^2.2.1"
   },
   "devDependencies": {
+    "enzyme": "^3.1.1",
+    "enzyme-adapter-react-16": "^1.0.4",
     "eslint-config-react-app": "^2.0.1"
   },
   "scripts": {
