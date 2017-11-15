@@ -11,7 +11,7 @@ export default function NavBar() {
       <Navbar.Header>
         <Navbar.Brand>
           <a href="/">
-            <span class="logo">.*</span> PyRegex
+            <span className="logo">.*</span> PyRegex
           </a>
         </Navbar.Brand>
         <Navbar.Toggle />
@@ -25,15 +25,9 @@ export default function NavBar() {
             Changelog
           </NavItem>
           <NavDropdown eventKey="help" title="Help" id="topnav-dropdown-help">
-            <MenuItem eventKey="help-documentation">
-              Official Python Documentation
-            </MenuItem>
+            <MenuItem eventKey="help-documentation">Official Python Documentation</MenuItem>
           </NavDropdown>
-          <NavDropdown
-            eventKey="contribute"
-            title="Contribute"
-            id="topnav-dropdown-contribute"
-          >
+          <NavDropdown eventKey="contribute" title="Contribute" id="topnav-dropdown-contribute">
             <MenuItem eventKey="contribute-develop">Develop</MenuItem>
             <MenuItem eventKey="contribute-donate">Donate</MenuItem>
           </NavDropdown>

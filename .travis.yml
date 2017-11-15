@@ -31,5 +31,6 @@ install:
 script:
 - nosetests -c nose.cfg --verbosity=1
 - cd ./ui
+- yarn lint
 - yarn test
 - cd ..

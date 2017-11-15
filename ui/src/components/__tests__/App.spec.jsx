@@ -1,7 +1,7 @@
+import { shallow } from 'enzyme';
+import React from 'react';
 import App from '../App';
 import NavBar from '../NavBar';
-import React from 'react';
-import { shallow } from 'enzyme';
 
 describe('components/App', () => {
   it('renders the NavBar', () => {

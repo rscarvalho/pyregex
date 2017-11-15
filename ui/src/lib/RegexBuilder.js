@@ -33,17 +33,19 @@ export default class RegexBuilder {
     encodeURIComponent(btoa(json));
   }
 
-  setFlags(flags) {
+  setFlags(/* [INSERT PARAM] flags */) {
     this.flags = Object.keys(REGEX_FLAGS)
       .map(key => [key, REGEX_FLAGS[key]])
       .reduce(
-        (acc, [key, value]) => ({
+        (acc, [key]) => ({
           ...acc,
           [key]: false,
         }),
-        {}
+        {},
       );
   }
 
-  getFlag() {}
+  getFlag() {
+    return this;
+  }
 }

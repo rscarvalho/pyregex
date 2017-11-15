@@ -1,0 +1,4 @@
+build/
+src/registerServiceWorker.js
+__tests__/
+src/setupTests.js

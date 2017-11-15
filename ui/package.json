@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^3.3.7",
+    "eslint-config-airbnb": "^16.1.0",
     "key-mirror": "^1.0.1",
     "react": "^16.1.0",
     "react-bootstrap": "^0.31.5",
@@ -22,6 +23,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint ."
   }
 }
