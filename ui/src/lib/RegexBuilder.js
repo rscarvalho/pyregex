@@ -41,7 +41,7 @@ export default class RegexBuilder {
           ...acc,
           [key]: false,
         }),
-        {}
+        {},
       );
   }
 
