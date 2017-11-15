@@ -1,12 +1,12 @@
-import { REGEX_FLAGS } from '../constants';
+import { REGEX_FLAGS } from "../constants";
 
 export default class RegexBuilder {
   constructor(rawData) {
     const data = (() => {
-      if (typeof rawData === 'string') {
+      if (typeof rawData === "string") {
         const decoded = decodeURIComponent(atob(rawData));
         return JSON.parse(decoded);
-      } else if (typeof rawData === 'object' && rawData !== null) {
+      } else if (typeof rawData === "object" && rawData !== null) {
         return rawData;
       }
       return {};
@@ -15,7 +15,7 @@ export default class RegexBuilder {
     this.flags = {};
     this.source = data.regex || null;
     this.testString = data.test_string || null;
-    this.matchType = data.match_type || 'match';
+    this.matchType = data.match_type || "match";
     this.setFlags(data.flags);
   }
 
@@ -24,7 +24,7 @@ export default class RegexBuilder {
       regex: this.source,
       flags: this.getFlag(),
       match_type: this.matchType,
-      test_string: this.testString,
+      test_string: this.testString
     };
   }
 
@@ -39,11 +39,15 @@ export default class RegexBuilder {
       .reduce(
         (acc, [key, value]) => ({
           ...acc,
-          [key]: false,
+          [key]: false
         }),
         {}
       );
   }
 
-  getFlag() {}
+  getFlag() {
+    return Object.keys(this.flags)
+      .filter(key => this.flags[key])
+      .reduce((acc, cValue) => acc | REGEX_FLAGS[cValue], 0);
+  }
 }
