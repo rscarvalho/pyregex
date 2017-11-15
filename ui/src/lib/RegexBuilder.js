@@ -45,5 +45,9 @@ export default class RegexBuilder {
       );
   }
 
-  getFlag() {}
+  getFlag() {
+    return Object.keys(REGEX_FLAGS)
+      .filter(key => this.flags[key])
+      .reduce((acc, cValue) => acc | REGEX_FLAGS[cValue], 0);
+  }
 }
