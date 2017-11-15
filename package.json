@@ -2,8 +2,21 @@
   "name": "pyregex-assets",
   "version": "0.0.0",
   "author": "Rodolfo Carvalho",
-  "dependencies": {
-    "grunt": "~0.4.0",
+
+  "engines": {
+    "npm": "^2.15.0",
+    "node": "^0.12.0"
+  },
+
+  "scripts": {
+    "test": "grunt build test",
+    "build-dev": "grunt build",
+    "build": "grunt build:production",
+    "postinstall": "bower install"
+  },
+
+  "devDependencies": {
+    "grunt": "^0.4.0",
     "grunt-contrib-coffee": "~0.7.0",
     "grunt-contrib-copy": "~0.4.1",
     "grunt-contrib-watch": "~0.5.1",
@@ -11,13 +24,13 @@
     "grunt-coffeelint": "0.0.7",
     "grunt-contrib-clean": "~0.5.0",
     "grunt-contrib-less": "~0.7.0",
-    "grunt-s3-sync": "~0.2.1"
-  },
-  "devDependencies": {
+    "grunt-cli": "^1.2.0",
+    "grunt-contrib-connect": "~0.3.0",
+    "grunt-markdown": "~0.4.0",
     "grunt-notify": "~0.2.4",
-    "karma-script-launcher": "~0.1.0",
     "karma-chrome-launcher": "~0.1.0",
     "karma-firefox-launcher": "~0.1.0",
+    "karma-growl-reporter": "~0.1.0",
     "karma-html2js-preprocessor": "~0.1.0",
     "karma-jasmine": "~0.1.0",
     "karma-requirejs": "~0.2.0",
@@ -25,8 +38,6 @@
     "karma-phantomjs-launcher": "~0.1.0",
     "karma": "~0.10.1",
     "grunt-karma": "~0.6.1",
-    "karma-growl-reporter": "~0.1.0",
-    "grunt-contrib-connect": "~0.3.0",
-    "grunt-markdown": "~0.4.0"
+    "karma-script-launcher": "~0.1.0"
   }
 }

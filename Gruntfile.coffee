@@ -224,14 +224,14 @@ module.exports = (grunt) ->
       development:
         endpoint: "http://localhost:5000/api"
 
-    "s3-sync":
-      options:
-        key: "<%= aws.key %>"
-        secret: "<%= aws.secret %>"
-        bucket: "<%= aws.bucket %>"
-        access: "public-read"
-        concurrency: 20
-        gzip: false
+    # "s3-sync":
+    #   options:
+    #     key: "<%= aws.key %>"
+    #     secret: "<%= aws.secret %>"
+    #     bucket: "<%= aws.bucket %>"
+    #     access: "public-read"
+    #     concurrency: 20
+    #     gzip: false
 
       dist:
         files: [
@@ -276,8 +276,7 @@ module.exports = (grunt) ->
   c = (k, args...) -> common.clone().insertAfter(k, args...)
   grunt.registerTask "build", c("copy", "gen_api:development")
   grunt.registerTask "build:production", c("copy", "gen_api:production")
-  grunt.registerTask "deploy", ["clean", "build:production", "s3-sync"]
+  grunt.registerTask "deploy", ["clean", "build:production"] # , "s3-sync"]
   grunt.registerTask "test", ["karma"]
   grunt.registerTask "default", ["clean", "build", "watch"]
   grunt.registerTask "server", ["build", "connect"]
-
