@@ -8,6 +8,7 @@ nose = "*"
 python-termstyle = "*"
 rednose = "*"
 honcho = "*"
+autopep8 = "*"
 
 [packages]
 flask = "*"
@@ -17,3 +18,6 @@ webob = "*"
 
 [requires]
 python_version = "3.7"
+
+[scripts]
+tests = "nosetests -c nose.cfg"
