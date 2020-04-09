@@ -3,19 +3,24 @@ import re
 from pyregex.service import RegexService, InvalidRegexError, UnprocessibleRegexError
 import signal
 
+
 class TimeoutException(Exception):
     pass
 
+
 class ServiceTests(unittest.TestCase):
     def test_initialize(self):
-        svc = RegexService(r'\d+', 'match', re.I)
+        svc = RegexService(r'\d+', 'match', int(re.I))
 
     def test_invalidArgs(self):
         self.assertRaises(ValueError, lambda: RegexService(None, 'match', 2))
         self.assertRaises(ValueError, lambda: RegexService(r'\d+', None, 2))
-        self.assertRaises(ValueError, lambda: RegexService(r'\d+', 'findall', -1))
-        self.assertRaises(ValueError, lambda: RegexService(r'\d+', 'invalid', 2))
-        self.assertRaises(InvalidRegexError, lambda: RegexService('\\d+[', 'match', 2))
+        self.assertRaises(
+            ValueError, lambda: RegexService(r'\d+', 'findall', -1))
+        self.assertRaises(
+            ValueError, lambda: RegexService(r'\d+', 'invalid', 2))
+        self.assertRaises(InvalidRegexError,
+                          lambda: RegexService('\\d+[', 'match', 2))
 
     def test_immutability(self):
         svc = RegexService(r'\d+', 'match', 0)
@@ -40,12 +45,12 @@ class ServiceTests(unittest.TestCase):
         result = svc.test("testing")
         self.assertIsNone(result)
 
-
     def test_findall2(self):
         svc = RegexService(r'[\w\']+', 'findall', 0)
         result = svc.test('Hey, you - what are you doing here!?')
         self.assertIsNotNone(result)
-        self.assertEqual(result, ['Hey', 'you', 'what', 'are', 'you', 'doing', 'here'])
+        self.assertEqual(
+            result, ['Hey', 'you', 'what', 'are', 'you', 'doing', 'here'])
 
     def test_search(self):
         svc = RegexService(r'\d+', 'search', 0)
@@ -76,6 +81,3 @@ class ServiceTests(unittest.TestCase):
         finally:
             signal.alarm(0)
             signal.signal(signal.SIGALRM, old_handler)
-
-
-

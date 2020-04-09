@@ -7,7 +7,7 @@ import signal
 from webob import Request
 
 def regex_params(regex, test_string, flags=0, match_type='match'):
-    return dict(flags=flags, regex=regex, test_string=test_string, match_type=match_type)
+    return dict(flags=int(flags), regex=regex, test_string=test_string, match_type=match_type)
 
 def build_request(url, query_dict=None, *args, **kwargs):
     if query_dict:
@@ -196,4 +196,3 @@ class RegexHandlerTest(unittest.TestCase):
         self.assertIn(response.status_int, acceptable_statuses)
         self.assertEqual('application/json', response.content_type)
         return json.loads(response.body.decode('utf-8'))
-
