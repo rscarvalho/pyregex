@@ -1,0 +1,19 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+nose = "*"
+python-termstyle = "*"
+rednose = "*"
+honcho = "*"
+
+[packages]
+flask = "*"
+uwsgi = "*"
+distribute = "*"
+webob = "*"
+
+[requires]
+python_version = "3.7"
