@@ -9,7 +9,7 @@ ruby:
   - 1.9.3-p429
 
 install:
-  - pip install -qr pipenv
+  - pip install -q pipenv
   - pipenv install
   - ./install_assets_deps.sh
   - grunt clean build
