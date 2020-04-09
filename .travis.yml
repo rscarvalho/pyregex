@@ -1,19 +1,10 @@
 language: python
 python:
-  - "3.7.7"
-
-node_js:
-  - 0.10.13
-
-ruby:
-  - 1.9.3-p429
+  - "3.7"
 
 install:
   - pip install -q pipenv
   - pipenv install -d
-  - ./install_assets_deps.sh
-  - grunt clean build
 
 script:
   - pipenv run tests
-  - grunt test
