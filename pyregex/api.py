@@ -6,7 +6,7 @@ from flask import got_request_exception
 from pyregex.middleware import CORSMiddleware
 from pyregex.service import RegexService, InvalidRegexError, UnprocessibleRegexError
 import rollbar
-import rollbar.contrib.flas
+import rollbar.contrib.flask
 
 app = Flask('pyregex')
 app.secret_key = '\x0f0%T\xd3\xd5\x11\xca\xaa\xf5,\x02Zp,"\x83\x94\x1b\x9e|6\xd7<'
