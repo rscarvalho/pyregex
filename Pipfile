@@ -10,6 +10,7 @@ rednose = "*"
 honcho = "*"
 autopep8 = "*"
 isort = "*"
+pylint = "*"
 
 [packages]
 flask = "*"
