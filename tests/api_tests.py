@@ -6,8 +6,10 @@ import json
 import signal
 from webob import Request
 
+
 def regex_params(regex, test_string, flags=0, match_type='match'):
     return dict(flags=int(flags), regex=regex, test_string=test_string, match_type=match_type)
+
 
 def build_request(url, query_dict=None, *args, **kwargs):
     if query_dict:
@@ -23,10 +25,9 @@ class RegexHandlerTest(unittest.TestCase):
         response = request.get_response(app)
         self.assertEqual(404, response.status_int)
 
-
     def test_regexTestFindall(self):
         params = regex_params(r'\w+', u'Hello, World!',
-            re.I | re.M, 'findall')
+                              re.I | re.M, 'findall')
         request = build_request('/api/regex/test/', params)
         response = request.get_response(app)
 
@@ -35,24 +36,25 @@ class RegexHandlerTest(unittest.TestCase):
         self.assertEqual(['Hello', 'World'], json_body['result'])
 
     def test_regexTestFindall2(self):
-        params = regex_params(r'[\w\']+', u'Hey, you - what are you doing here!?', 0, 'findall')
+        params = regex_params(
+            r'[\w\']+', u'Hey, you - what are you doing here!?', 0, 'findall')
         request = build_request('/api/regex/test/', params)
         response = request.get_response(app)
 
         json_body = self.get_json_response(response)
         self.assertEqual('findall', json_body['result_type'])
-        self.assertEqual(['Hey', 'you', 'what', 'are', 'you', 'doing', 'here'], json_body['result'])
+        self.assertEqual(['Hey', 'you', 'what', 'are', 'you',
+                          'doing', 'here'], json_body['result'])
 
     def test_regexTestFindallNotAMatch(self):
         params = regex_params(r'\d+', u'Hello, World!',
-            re.I | re.M, 'findall')
+                              re.I | re.M, 'findall')
         request = build_request('/api/regex/test/', params)
         response = request.get_response(app)
 
         json_body = self.get_json_response(response)
         self.assertEqual('findall', json_body['result_type'])
         self.assertEqual(None, json_body['result'])
-
 
     def test_regexTestMatch(self):
         params = regex_params(
@@ -90,7 +92,6 @@ class RegexHandlerTest(unittest.TestCase):
         self.assertEqual('match', json_body['result_type'])
         self.assertEqual(expected, json_body['result'])
 
-
     def test_regexTestSearch(self):
         params = regex_params(
             r'^\[(\d{4,}-\d{2,}-\d{2})\] Testing beginning on server (.+)$',
@@ -114,7 +115,6 @@ class RegexHandlerTest(unittest.TestCase):
         self.assertEqual('search', json_body['result_type'])
         self.assertEqual(expected, json_body['result'])
 
-
     def test_regexTestInvalidRegex(self):
         params = regex_params('[Not balanced', '[Not balanced')
 
@@ -122,11 +122,12 @@ class RegexHandlerTest(unittest.TestCase):
         response = request.get_response(app)
         json_body = self.get_json_response(response, 400)
         self.assertEqual('error', json_body['result_type'])
-        self.assertEqual('Invalid regular expression: %s' % params['regex'], json_body['message'])
+        self.assertEqual('Invalid regular expression: %s' %
+                         params['regex'], json_body['message'])
 
     def test_regexTestUnknown(self):
         params = regex_params(r'\w+', 'Hello, World!',
-                            re.I | re.M, 'not_really_sure_about_it')
+                              re.I | re.M, 'not_really_sure_about_it')
 
         request = build_request('/api/regex/test/', params)
         response = request.get_response(app)
@@ -147,7 +148,8 @@ class RegexHandlerTest(unittest.TestCase):
 
     def test_regexTestMultilineFindallWithFlags(self):
         regex = '\\w+\n\\.\n\\d+'
-        params = regex_params(regex, "Hi\n.\n2013", match_type="findall", flags=re.X)
+        params = regex_params(regex, "Hi\n.\n2013",
+                              match_type="findall", flags=re.X)
 
         request = build_request('/api/regex/test/', params)
         response = request.get_response(app)
@@ -182,7 +184,8 @@ class RegexHandlerTest(unittest.TestCase):
             response = request.get_response(app)
             json_body = self.get_json_response(response, 422)
             self.assertEqual('error', json_body['result_type'])
-            self.assertEqual('This regular expression is unprocessible', json_body['message'])
+            self.assertEqual(
+                'This regular expression is unprocessible', json_body['message'])
         except TimeoutException as e:
             self.fail("Response took more than 5 seconds to execute")
         finally:

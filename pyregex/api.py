@@ -35,7 +35,8 @@ def init_rollbar():
         got_request_exception.connect(
             rollbar.contrib.flask.report_exception, app)
     else:
-        app.logger().info("Rollbar token not present. Skipping rollbar setup")
+        # pylint: disable=no-member
+        app.logger.info("Rollbar token not present. Skipping rollbar setup")
 
 
 if 'FLASK_SECRET_KEY' in os.environ:
