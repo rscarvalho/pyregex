@@ -11,6 +11,7 @@ honcho = "*"
 autopep8 = "*"
 isort = "*"
 pylint = "*"
+pylint-flask = "*"
 
 [packages]
 flask = "*"
