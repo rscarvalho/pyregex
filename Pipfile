@@ -9,15 +9,21 @@ python-termstyle = "*"
 rednose = "*"
 honcho = "*"
 autopep8 = "*"
+isort = "*"
+pylint = "*"
+pylint-flask = "*"
 
 [packages]
 flask = "*"
 uwsgi = "*"
 distribute = "*"
 webob = "*"
+rollbar = "*"
+flask-cors = "*"
 
 [requires]
 python_version = "3.7"
 
 [scripts]
 tests = "nosetests -c nose.cfg"
+start = "honcho start web"

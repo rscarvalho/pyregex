@@ -1,7 +1,8 @@
 import unittest
 import re
-from pyregex.service import RegexService, InvalidRegexError, UnprocessibleRegexError
 import signal
+
+from pyregex.service import RegexService, InvalidRegexError, UnprocessibleRegexError
 
 
 class TimeoutException(Exception):
@@ -11,6 +12,7 @@ class TimeoutException(Exception):
 class ServiceTests(unittest.TestCase):
     def test_initialize(self):
         svc = RegexService(r'\d+', 'match', int(re.I))
+        self.assertIsNotNone(svc)
 
     def test_invalidArgs(self):
         self.assertRaises(ValueError, lambda: RegexService(None, 'match', 2))

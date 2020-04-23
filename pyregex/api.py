@@ -1,25 +1,19 @@
-from flask import Flask, request, make_response
+import os
+from base64 import b64decode
+from os.path import dirname, realpath
+
+import rollbar
+import rollbar.contrib.flask
+from flask import Flask, got_request_exception, request
 from flask.json import jsonify
-from pyregex.middleware import CORSMiddleware
-from pyregex.service import RegexService, InvalidRegexError, UnprocessibleRegexError
+from flask_cors import CORS
 
+from pyregex.service import (InvalidRegexError, RegexService,
+                             UnprocessibleRegexError)
+
+# pylint: disable=invalid-name
 app = Flask('pyregex')
-app.secret_key = '\x0f0%T\xd3\xd5\x11\xca\xaa\xf5,\x02Zp,"\x83\x94\x1b\x9e|6\xd7<'
-
-def setup_logging(app):
-    import logging
-    import os
-    from os.path import join, dirname, abspath, exists
-
-    log_path = join(dirname(__file__), '..', 'tmp')
-    log_path = abspath(log_path)
-    log_file = join(log_path, 'pyregex.log')
-    if not exists(log_path):
-        os.makedirs(log_path, 0o755)
-
-    file_handler = logging.FileHandler(log_file)
-    file_handler.setLevel(logging.DEBUG)
-    app.logger.addHandler(file_handler)
+CORS(app)
 
 
 def api_error(message, *args, **kwargs):
@@ -29,10 +23,35 @@ def api_error(message, *args, **kwargs):
     return response
 
 
+@app.before_first_request
+def init_rollbar():
+    """Initializes the rollbar module
+    """
+    token = os.environ.get("ROLLBAR_TOKEN")
+    environment = os.environ.get("ROLLBAR_ENV", "development")
+    if token:
+        rollbar.init(token, environment, root=dirname(
+            realpath(__file__)), allow_logging_basic_config=False)
+        got_request_exception.connect(
+            rollbar.contrib.flask.report_exception, app)
+    else:
+        logger = app.logger
+
+        # pylint: disable=no-member
+        logger.info(
+            "Rollbar token not present. Skipping rollbar setup")
+
+
+if 'FLASK_SECRET_KEY' in os.environ:
+    app.secret_key = b64decode(os.environ['FLASK_SECRET_KEY'])
+else:
+    app.secret_key = '\x0f0%T\xd3\xd5\x11\xca\xaa\xf5,\x02Zp,"\x83\x94\x1b\x9e|6\xd7<'
+
+
 @app.route('/api/regex/test/', methods=['GET'])
 def test_regex():
-    match_type  = request.values.get('match_type', 'findall')
-    regex       = request.values.get('regex', '')
+    match_type = request.values.get('match_type', 'findall')
+    regex = request.values.get('regex', '')
     test_string = request.values.get('test_string', '')
 
     try:
@@ -42,12 +61,13 @@ def test_regex():
 
     try:
         service = RegexService(regex, match_type, flags)
-    except ValueError as e:
+    except ValueError as error:
         fmt = 'Invalid value for {}: "{}"'
-        if len(e.args) > 2:
+        if len(error.args) > 2:
             fmt += ". Acceptable values are {}"
 
-        args = [", ".join(a) if type(a) is tuple else a for a in e.args]
+        args = [", ".join(a) if isinstance(a, tuple)
+                else a for a in error.args]
         return api_error(fmt.format(*args))
     except InvalidRegexError:
         return api_error('Invalid regular expression: %s' % regex)
@@ -58,11 +78,3 @@ def test_regex():
         return api_error('This regular expression is unprocessible', status=422)
 
     return jsonify(result_type=match_type, result=result)
-
-setup_logging(app)
-app = CORSMiddleware(app)
-
-if __name__ == '__main__':
-    from werkzeug.serving import run_simple
-    app.app.debug = True
-    run_simple('localhost', 5000, app, use_reloader=True)
