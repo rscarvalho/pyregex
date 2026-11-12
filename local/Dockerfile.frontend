@@ -1,0 +1,18 @@
+FROM node:18.20.8-bookworm-slim@sha256:f9ab18e354e6855ae56ef2b290dd225c1e51a564f87584b9bd21dd651838830e
+WORKDIR /app
+COPY local/frontend-package.json /app/package.json
+COPY local/frontend-package-lock.json /app/package-lock.json
+RUN npm ci --ignore-scripts --no-audit --no-fund
+COPY assets /app/assets
+COPY public /app/public
+COPY grunt /app/grunt
+COPY tests/client /app/tests/client
+COPY Gruntfile.coffee CHANGELOG.md /app/
+COPY local/frontend-components.json local/frontend-components.js /app/local/
+RUN node local/frontend-components.js
+COPY local/frontend-build.js /app/local/
+RUN node local/frontend-build.js
+COPY local/frontend-server.js /app/local/
+COPY local/frontend-test.js /app/local/
+USER 65534:65534
+CMD ["node", "local/frontend-server.js"]

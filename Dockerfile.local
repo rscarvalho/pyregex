@@ -1,0 +1,14 @@
+FROM python:3.7.7-buster@sha256:940a1ddcfbb4411fade27ff9d1bf3985d6c4276da4ee4111deba5ab0788921c5
+
+WORKDIR /app
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PORT=5000
+COPY Pipfile.lock /app/Pipfile.lock
+COPY local/locked_requirements.py /app/local/locked_requirements.py
+RUN python local/locked_requirements.py > /tmp/requirements.lock \
+    && pip install --no-cache-dir --require-hashes -r /tmp/requirements.lock
+COPY pyregex /app/pyregex
+COPY tests /app/tests
+COPY nose.cfg uwsgi.ini /app/
+COPY local/smoke.py /app/local/smoke.py
+USER 65534:65534
+CMD ["uwsgi", "--ini", "uwsgi.ini", "--harakiri", "10"]

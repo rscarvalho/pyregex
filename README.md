@@ -10,6 +10,13 @@ The code is licensed under the [GNU General Public License v2](LICENSE)
 
 ## Development Environment
 
+### Isolated local baseline (recommended)
+
+See [local/README.md](local/README.md) for the Python 3.7 backend and isolated
+legacy frontend containers, loopback-only endpoints, tests and verification limits.
+The historical host-install instructions below reference requirements files that
+are no longer present; do not use them to install obsolete tools globally.
+
 ### Requirements
 
 * Server-side language
