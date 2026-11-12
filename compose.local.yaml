@@ -19,7 +19,7 @@ services:
   backend:
     build:
       context: .
-      dockerfile: Dockerfile.local
+      dockerfile: local/Dockerfile.backend
     ports:
       - "127.0.0.1:5000:5000"
     environment:

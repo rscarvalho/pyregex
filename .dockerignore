@@ -8,6 +8,7 @@
 !tests/*.py
 !local/
 !local/*.py
+!local/Dockerfile.backend
 !local/Dockerfile.frontend
 !local/frontend-*.js
 !local/frontend-*.json
