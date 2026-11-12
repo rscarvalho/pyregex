@@ -1,0 +1,52 @@
+{
+  "angular": {
+    "version": "1.0.7",
+    "url": "https://codeload.github.com/angular/bower-angular/tar.gz/6c0e81da2073f3831e32ed486d5aabe17bfc915f",
+    "sha256": "29b65320ce82b0db81973467d3fa086520901cc598c196df68c155a78926a656"
+  },
+  "angular-mocks": {
+    "version": "1.0.7",
+    "url": "https://codeload.github.com/angular/bower-angular-mocks/tar.gz/73ba0b247c919472906ac3fbbe8fa5cce6a853cd",
+    "sha256": "3409b0b344248b24cc72e9f7378e196f9fa9b89cb1d7091631c2991935812a40"
+  },
+  "angular-ui-select2": {
+    "version": "0.0.2",
+    "url": "https://codeload.github.com/angular-ui/ui-select2/tar.gz/117bbbc0408a5933f580c6fe7b8e977181d01199",
+    "sha256": "586aafe205a72e7738f7a8bcf15f74f6b932685577fa1c8725ca68afcdad44bb"
+  },
+  "base64": {
+    "version": "0.1.4",
+    "url": "https://codeload.github.com/davidchambers/Base64.js/tar.gz/546f83c6282187cfa8e35ef83b387ee6fc845bf3",
+    "sha256": "2a829484c9b2802b0955300cb1ec50748f92aa9a2072bbd27846b3a5e490ec52"
+  },
+  "bootstrap-css": {
+    "version": "2.3.2",
+    "url": "https://codeload.github.com/jozefizso/bower-bootstrap-css/tar.gz/99dba87c85c15b95e2be29fca1108119f68ffca7",
+    "sha256": "f86c58666b5610011e8fdb4635081a7d1baa8ad06925af4bcd087a0377ff5a19"
+  },
+  "jquery": {
+    "version": "1.11.3",
+    "url": "https://codeload.github.com/jquery/jquery-dist/tar.gz/1472290917f17af05e98007136096784f9051fab",
+    "sha256": "c55bc348faa43ec03d9c84ac1e0176fd48dcecbf157e98387ac4cb32412374ef"
+  },
+  "modernizr": {
+    "version": "2.6.3",
+    "url": "https://codeload.github.com/Modernizr/Modernizr/tar.gz/411c656e5b61b4545b1d360e1b8673a93acae1d4",
+    "sha256": "ff1acb02b9e582d5d91bf6f3170df44f04725c67bfc56a76015b2ed2262c8b37"
+  },
+  "normalize-css": {
+    "version": "2.1.3",
+    "url": "https://codeload.github.com/necolas/normalize.css/tar.gz/be14934fad255a01ed345de6ae59ff612adcf3b9",
+    "sha256": "73288b94c1d9135928a8a5124163a71a2771ce6dec3a2f3aad4d4bca03045c37"
+  },
+  "select2": {
+    "version": "3.4.8",
+    "url": "https://codeload.github.com/ivaynberg/select2/tar.gz/ee0f36a47e2133b23330fbec740b2d3a17a0d9c2",
+    "sha256": "2b46cff177d598d9c60fdde55546a8724c0a4be5b3a77f5af7271e27730809ec"
+  },
+  "underscore": {
+    "version": "1.5.2",
+    "url": "https://codeload.github.com/jashkenas/underscore/tar.gz/101c10a60019fe870d21868835f65c25d64968fc",
+    "sha256": "4c3def1deba16e3d6ae8f00770964acda0f88fba2f9f30853ed6d6146bbd12e6"
+  }
+}
