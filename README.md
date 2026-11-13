@@ -4,6 +4,11 @@
 
 PyRegex is an online Regular Expression tester for python dialect.
 
+## Architecture decisions
+
+See the [decision records](docs/adr/README.md) for why PyRegex keeps server-side
+Python regex evaluation for now.
+
 ## License
 
 The code is licensed under the [GNU General Public License v2](LICENSE)
