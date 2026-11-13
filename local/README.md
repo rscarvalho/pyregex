@@ -156,6 +156,14 @@ The proposed Pyodide experiment remains future work; none is implemented here.
 
 ## Automated smoke CI
 
+The backend suite also loads a [portable JSON characterization corpus](../tests/fixtures/README.md):
+27 pure Python regex cases and 28 separate legacy service/API cases. It covers
+result shapes, empty/no-match/zero-length behavior, exposed flags, Unicode
+code-point offsets and categorized errors without changing application behavior.
+Issue-linked adapter quirks are explicitly separated from engine expectations;
+this is a regression baseline for later same-version native/WASM comparison,
+not a Pyodide implementation or completion of #47.
+
 `.github/workflows/smoke.yml` builds both baseline images, runs the backend
 suite and four API checks, the supplemental frontend specs, and a real Chromium
 form-to-Python-result smoke test. The browser enforces the existing CSP and fails
@@ -203,3 +211,11 @@ reported no CSP violations, console errors, page exceptions or failed requests.
 The existing jsdom canvas warning remains. Builds used available Docker cache.
 Smoke containers/network were removed; development services remained on
 127.0.0.1:5000 and 127.0.0.1:8082.
+
+The characterization extension was verified with
+`SMOKE_PROJECT=pyregex-ci-smoke-fixtures bash ci/smoke.sh`: all **23 backend
+tests** passed (including 27 engine + 28 service + 28 API fixture subcases),
+all four HTTP checks, jQuery probe checks, 17 frontend specs / 51 assertions,
+and the strict Chromium smoke passed. The existing jsdom canvas warning remains.
+The smoke project cleaned up successfully; the pre-existing development
+containers retained their IDs and loopback port mappings on 5000/8082.
