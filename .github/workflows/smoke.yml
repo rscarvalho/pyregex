@@ -1,0 +1,33 @@
+name: Local baseline smoke
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22.14.0'
+      - name: Install locked browser tooling
+        run: npm ci --ignore-scripts --no-audit --no-fund --prefix ci/browser
+      - name: Build and test isolated baseline
+        run: bash ci/smoke.sh
+      - name: Retain browser failure evidence
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: browser-smoke-failure
+          path: ci/browser/test-results/
+          if-no-files-found: ignore
+          retention-days: 7

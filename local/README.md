@@ -153,3 +153,53 @@ Verified on Linux x86_64, 2026-11-12:
   exhaustive visual, accessibility or cross-browser verification.
 
 The proposed Pyodide experiment remains future work; none is implemented here.
+
+## Automated smoke CI
+
+`.github/workflows/smoke.yml` builds both baseline images, runs the backend
+suite and four API checks, the supplemental frontend specs, and a real Chromium
+form-to-Python-result smoke test. The browser enforces the existing CSP and fails
+on policy violations, console errors, page exceptions or failed requests.
+Failure screenshots/traces are retained for seven days in Actions.
+
+To run the same path locally, install Node 22 and a current Docker Compose with
+support for the `!reset` merge tag, then from the repository root:
+
+```sh
+npm ci --ignore-scripts --no-audit --no-fund --prefix ci/browser
+bash ci/smoke.sh
+```
+
+The explicit `pyregex-ci-smoke` Compose project uses `compose.smoke.yaml` to
+remove **all** published ports. Frontend and the version-matched Playwright
+container share the smoke backend's network namespace, so their loopback URLs
+remain unchanged. Existing development containers on 8082/5000 are untouched.
+The script removes only its own project's containers/network on exit, including
+failure; images remain cached. Do not use that project name for development.
+For simultaneous smoke runs, set a distinct `SMOKE_PROJECT` for each invocation,
+using `pyregex-ci-smoke-` followed by lowercase alphanumeric, hyphen-separated
+suffixes. Other project names are rejected before Docker is invoked to avoid
+accidentally cleaning up a development project.
+Browser tooling is separate from the historical root/frontend manifests, locked
+with npm integrity hashes; keep its exact Playwright version and Docker image
+tag/digest in sync. The first run needs npm, Docker Hub, GitHub codeload, PyPI and
+Microsoft Container Registry access. The browser container mounts only
+`ci/browser` (including test outputs), not the Docker socket or credentials.
+Following Playwright's Docker guidance, it runs trusted local test content as
+container root without Chromium's sandbox and shares host IPC for browser
+memory; it is not a sandbox for untrusted websites. Outputs may be root-owned.
+
+This is deliberately a narrow regression gate related to #42, #41 and #50,
+not completion of those issues or the broader modernization in #50. It does not
+upgrade the app, replace legacy tooling, implement Pyodide, audit dependency
+security, or provide exhaustive visual/cross-browser coverage. CI still runs
+obsolete backend/frontend dependencies; use synthetic inputs only.
+
+Verified against merged #54 (`89e0c59`) on Linux x86_64, 2026-11-12, with
+`SMOKE_PROJECT=pyregex-ci-smoke-resume bash ci/smoke.sh`: both images built,
+20 backend tests, four API checks, jQuery probe regression checks, 17 frontend
+specs / 51 assertions, and the strict Chromium smoke all passed. The browser
+reported no CSP violations, console errors, page exceptions or failed requests.
+The existing jsdom canvas warning remains. Builds used available Docker cache.
+Smoke containers/network were removed; development services remained on
+127.0.0.1:5000 and 127.0.0.1:8082.
