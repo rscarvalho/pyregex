@@ -1,0 +1,905 @@
+{
+  "scope": "issue42-final-bounded-diagnostics-not-production",
+  "measuredAt": "2026-11-13T13:43:20.492Z",
+  "baseCommit": "9a9854aa9b201978827b1e3aa4a83088abaf9186",
+  "sourceSha256": {
+    "final-gates.mjs": "780d0834bfdbc6e81cc59dea5bdb9f6633d40a2b6c510e0c6319083c48f85188",
+    "performance.html": "77be8c3ba520be0af7cb40c41a14d526726eaf7830e54f35364bf0a559131168",
+    "performance-page.mjs": "9bb1c26c497579811af2e2a30ec65705d6fa58d9e6350e603b84b60801e4dee1",
+    "performance-stats.mjs": "ad0908de6148d7df04d07b94558dd7bcd3d197665520de7f01df2a098c844cc6",
+    "controller.mjs": "6c07ba7dda01533deb38f3d677ce24df867e371e565d60781cfb1afb3c59b7d7",
+    "limits.mjs": "022e599b66e0fb812505de676b58143370c650160e44321ba1ced3e974556997",
+    "worker.mjs": "f37ee75f54bca4d437f5fb23cf0858af519bb8e266ae7296abc8746978f3a81c",
+    "runtime.json": "9393395da3ff6d327aa802fdda9f690705588a10e4dd1e8de5d136bd0cba2fca",
+    "evaluator.py": "e4caf2928a0830467e64ff18cbd64b4dac5356a74069e4eeba611431d410e5c6",
+    "package-lock.json": "f3fe3338a19192e92b7f56b0163368eda44ef047781e051d0afbb2a55dee5053"
+  },
+  "versions": {
+    "pyodide": "314.0.7",
+    "python": "3.14.2",
+    "indexURL": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/",
+    "nativeImage": "python:3.14.2-slim-bookworm@sha256:e87711ef5c86aaeaa7031718a69db79d334d94c545c709583f651b8185870941",
+    "chromium": "158.0.8127.18",
+    "playwright": "1.65.0",
+    "node": "v26.13.0"
+  },
+  "device": {
+    "cpu": "11th Gen Intel(R) Core(TM) i7-11800H @ 2.30GHz",
+    "logicalCpus": 16,
+    "platform": "linux",
+    "release": "7.2.15-1-omarchy",
+    "architecture": "x64",
+    "hostRAMBytes": 33345769472
+  },
+  "definitions": {
+    "ready": "Unchanged performance-page navigation time origin through successful a+ probe",
+    "samples": "Two cold/warm pairs per profile, fresh browser per pair; no outlier removal; nearest-rank p95=max at n=2",
+    "network": "CDP Network.emulateNetworkConditionsByRule global rule on page and explicitly paused worker; separate per-target throughput caps, live CDN and host link can be slower; not a physical shared-link simulation",
+    "cpu": "CDP Emulation.setCPUThrottlingRate on page; worker attempt and actual support recorded, never assumed inherited",
+    "memory": "Two sequential API requests with 12 s browser watchdog each; 240 s host watchdog overall; no forced GC or browser security flags",
+    "isolation": "COOP same-origin and COEP require-corp only on separate memory-harness allowlisted responses; no CSP changes anywhere",
+    "limitations": "No real mobile, no mobile thermal/ARM/power model; unsupported-host Playwright Ubuntu fallback; host CPU/load/power and uplink uncontrolled; emulation instrumentation adds startup overhead; no SLA or total/peak memory pass"
+  },
+  "memory": {
+    "ready": {
+      "versions": {
+        "pyodide": "314.0.7",
+        "python": "3.14.2"
+      },
+      "navigationToUsableMs": 2064.264999985695,
+      "moduleStartMs": 28.41499999165535,
+      "controllerStartupMs": 2034.0750000178814,
+      "readinessProbeMs": 1.774999976158142,
+      "transfer": {
+        "resources": [
+          {
+            "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.mjs",
+            "duration": 89.2800000011921,
+            "startTime": 13.909999996423721,
+            "responseEnd": 103.18999999761581,
+            "transferSize": 7599,
+            "encodedBodySize": 7299,
+            "decodedBodySize": 17931
+          },
+          {
+            "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide-lock.json",
+            "duration": 24.104999989271164,
+            "startTime": 106.05000001192093,
+            "responseEnd": 130.1550000011921,
+            "transferSize": 25008,
+            "encodedBodySize": 24708,
+            "decodedBodySize": 119077
+          },
+          {
+            "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/python_stdlib.zip",
+            "duration": 351.02000001072884,
+            "startTime": 106.40000000596046,
+            "responseEnd": 457.4200000166893,
+            "transferSize": 2505613,
+            "encodedBodySize": 2505313,
+            "decodedBodySize": 2545637
+          },
+          {
+            "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.asm.wasm",
+            "duration": 565.4000000059605,
+            "startTime": 106.5450000166893,
+            "responseEnd": 671.9450000226498,
+            "transferSize": 3438816,
+            "encodedBodySize": 3438516,
+            "decodedBodySize": 9598218
+          },
+          {
+            "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.asm.mjs",
+            "duration": 413.3349999785423,
+            "startTime": 106.66500002145767,
+            "responseEnd": 520,
+            "transferSize": 262341,
+            "encodedBodySize": 262041,
+            "decodedBodySize": 1250344
+          }
+        ],
+        "missing": [],
+        "measurable": true,
+        "encodedBodyBytes": 6237877,
+        "reportedTransferBytes": 6239377,
+        "allLocalCache": false
+      }
+    },
+    "cdnResponses": [
+      {
+        "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.mjs",
+        "status": 200,
+        "accessControlAllowOrigin": "*",
+        "crossOriginResourcePolicy": "cross-origin"
+      },
+      {
+        "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide-lock.json",
+        "status": 200,
+        "accessControlAllowOrigin": "*",
+        "crossOriginResourcePolicy": "cross-origin"
+      },
+      {
+        "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/python_stdlib.zip",
+        "status": 200,
+        "accessControlAllowOrigin": "*",
+        "crossOriginResourcePolicy": "cross-origin"
+      },
+      {
+        "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.asm.wasm",
+        "status": 200,
+        "accessControlAllowOrigin": "*",
+        "crossOriginResourcePolicy": "cross-origin"
+      },
+      {
+        "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.asm.mjs",
+        "status": 200,
+        "accessControlAllowOrigin": "*",
+        "crossOriginResourcePolicy": "cross-origin"
+      }
+    ],
+    "samples": [
+      {
+        "phase": "after-ready",
+        "secureContext": true,
+        "crossOriginIsolated": true,
+        "available": true,
+        "status": "failed",
+        "error": "SecurityError: Failed to execute 'measureUserAgentSpecificMemory' on 'Performance': performance.measureUserAgentSpecificMemory is not available.",
+        "elapsedMs": 0.7150000035762787
+      },
+      {
+        "phase": "after-100-probes",
+        "secureContext": true,
+        "crossOriginIsolated": true,
+        "available": true,
+        "status": "failed",
+        "error": "SecurityError: Failed to execute 'measureUserAgentSpecificMemory' on 'Performance': performance.measureUserAgentSpecificMemory is not available.",
+        "elapsedMs": 0.050000011920928955
+      }
+    ],
+    "targetBytes": 268435456,
+    "gateStatus": "inconclusive",
+    "meaning": "Implementation-specific whole-web-app estimates including worker; not process RSS, peak usage, allocation limit, or production isolation validation"
+  },
+  "networkProfiles": [
+    {
+      "profile": {
+        "id": "controlled-desktop",
+        "cpuRate": 1,
+        "latency": 40,
+        "downloadThroughput": 2500000,
+        "uploadThroughput": 625000,
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "isMobile": false,
+        "hasTouch": false,
+        "targets": {
+          "coldMs": 5000,
+          "warmMs": 2000
+        }
+      },
+      "pairs": [
+        {
+          "pair": 1,
+          "cold": {
+            "versions": {
+              "pyodide": "314.0.7",
+              "python": "3.14.2"
+            },
+            "navigationToUsableMs": 4362.700000017881,
+            "moduleStartMs": 185,
+            "controllerStartupMs": 4175.600000023842,
+            "readinessProbeMs": 2.0999999940395355,
+            "transfer": {
+              "resources": [
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.mjs",
+                  "duration": 96.2000000178814,
+                  "startTime": 89.69999998807907,
+                  "responseEnd": 185.90000000596046,
+                  "transferSize": 7599,
+                  "encodedBodySize": 7299,
+                  "decodedBodySize": 17931
+                },
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide-lock.json",
+                  "duration": 62.79999998211861,
+                  "startTime": 188,
+                  "responseEnd": 250.7999999821186,
+                  "transferSize": 25008,
+                  "encodedBodySize": 24708,
+                  "decodedBodySize": 119077
+                },
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/python_stdlib.zip",
+                  "duration": 2144.7999999821186,
+                  "startTime": 188.40000000596046,
+                  "responseEnd": 2333.199999988079,
+                  "transferSize": 2505613,
+                  "encodedBodySize": 2505313,
+                  "decodedBodySize": 2545637
+                },
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.asm.wasm",
+                  "duration": 2546.699999988079,
+                  "startTime": 188.40000000596046,
+                  "responseEnd": 2735.0999999940395,
+                  "transferSize": 3438816,
+                  "encodedBodySize": 3438516,
+                  "decodedBodySize": 9598218
+                },
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.asm.mjs",
+                  "duration": 490.59999999403954,
+                  "startTime": 188.59999999403954,
+                  "responseEnd": 679.1999999880791,
+                  "transferSize": 262341,
+                  "encodedBodySize": 262041,
+                  "decodedBodySize": 1250344
+                }
+              ],
+              "missing": [],
+              "measurable": true,
+              "encodedBodyBytes": 6237877,
+              "reportedTransferBytes": 6239377,
+              "allLocalCache": false
+            },
+            "workerConfiguration": [
+              {
+                "type": "worker",
+                "network": {
+                  "status": "accepted"
+                },
+                "cpu": {
+                  "status": "unsupported-or-failed",
+                  "error": "Error: {\"code\":-32000,\"message\":\"Operation is only supported for pages, not workers\"}"
+                }
+              }
+            ]
+          },
+          "warm": {
+            "versions": {
+              "pyodide": "314.0.7",
+              "python": "3.14.2"
+            },
+            "navigationToUsableMs": 1797.699999988079,
+            "moduleStartMs": 176.09999999403954,
+            "controllerStartupMs": 1619.800000011921,
+            "readinessProbeMs": 1.7999999821186066,
+            "transfer": {
+              "resources": [
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.mjs",
+                  "duration": 0.5,
+                  "startTime": 88.40000000596046,
+                  "responseEnd": 88.90000000596046,
+                  "transferSize": 0,
+                  "encodedBodySize": 7299,
+                  "decodedBodySize": 17931
+                },
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide-lock.json",
+                  "duration": 0.5,
+                  "startTime": 90.90000000596046,
+                  "responseEnd": 91.40000000596046,
+                  "transferSize": 0,
+                  "encodedBodySize": 24708,
+                  "decodedBodySize": 119077
+                },
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/python_stdlib.zip",
+                  "duration": 16.799999982118607,
+                  "startTime": 91.30000001192093,
+                  "responseEnd": 108.09999999403954,
+                  "transferSize": 0,
+                  "encodedBodySize": 2505313,
+                  "decodedBodySize": 2545637
+                },
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.asm.wasm",
+                  "duration": 94.40000000596046,
+                  "startTime": 91.40000000596046,
+                  "responseEnd": 185.80000001192093,
+                  "transferSize": 0,
+                  "encodedBodySize": 3438516,
+                  "decodedBodySize": 9598218
+                },
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.asm.mjs",
+                  "duration": 14.900000005960464,
+                  "startTime": 91.5,
+                  "responseEnd": 106.40000000596046,
+                  "transferSize": 0,
+                  "encodedBodySize": 262041,
+                  "decodedBodySize": 1250344
+                }
+              ],
+              "missing": [],
+              "measurable": true,
+              "encodedBodyBytes": 6237877,
+              "reportedTransferBytes": 0,
+              "allLocalCache": true
+            },
+            "workerConfiguration": [
+              {
+                "type": "worker",
+                "network": {
+                  "status": "accepted"
+                },
+                "cpu": {
+                  "status": "unsupported-or-failed",
+                  "error": "Error: {\"code\":-32000,\"message\":\"Operation is only supported for pages, not workers\"}"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "pair": 2,
+          "cold": {
+            "versions": {
+              "pyodide": "314.0.7",
+              "python": "3.14.2"
+            },
+            "navigationToUsableMs": 4314.700000017881,
+            "moduleStartMs": 177.59999999403954,
+            "controllerStartupMs": 4135.5,
+            "readinessProbeMs": 1.600000023841858,
+            "transfer": {
+              "resources": [
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.mjs",
+                  "duration": 101.2000000178814,
+                  "startTime": 93.09999999403954,
+                  "responseEnd": 194.30000001192093,
+                  "transferSize": 7599,
+                  "encodedBodySize": 7299,
+                  "decodedBodySize": 17931
+                },
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide-lock.json",
+                  "duration": 80.69999998807907,
+                  "startTime": 196.40000000596046,
+                  "responseEnd": 277.09999999403954,
+                  "transferSize": 25008,
+                  "encodedBodySize": 24708,
+                  "decodedBodySize": 119077
+                },
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/python_stdlib.zip",
+                  "duration": 2162.199999988079,
+                  "startTime": 196.7000000178814,
+                  "responseEnd": 2358.9000000059605,
+                  "transferSize": 2505613,
+                  "encodedBodySize": 2505313,
+                  "decodedBodySize": 2545637
+                },
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.asm.wasm",
+                  "duration": 2547.199999988079,
+                  "startTime": 196.80000001192093,
+                  "responseEnd": 2744,
+                  "transferSize": 3438816,
+                  "encodedBodySize": 3438516,
+                  "decodedBodySize": 9598218
+                },
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.asm.mjs",
+                  "duration": 454.90000000596046,
+                  "startTime": 197,
+                  "responseEnd": 651.9000000059605,
+                  "transferSize": 262341,
+                  "encodedBodySize": 262041,
+                  "decodedBodySize": 1250344
+                }
+              ],
+              "missing": [],
+              "measurable": true,
+              "encodedBodyBytes": 6237877,
+              "reportedTransferBytes": 6239377,
+              "allLocalCache": false
+            },
+            "workerConfiguration": [
+              {
+                "type": "worker",
+                "network": {
+                  "status": "accepted"
+                },
+                "cpu": {
+                  "status": "unsupported-or-failed",
+                  "error": "Error: {\"code\":-32000,\"message\":\"Operation is only supported for pages, not workers\"}"
+                }
+              }
+            ]
+          },
+          "warm": {
+            "versions": {
+              "pyodide": "314.0.7",
+              "python": "3.14.2"
+            },
+            "navigationToUsableMs": 1810.7000000178814,
+            "moduleStartMs": 179.40000000596046,
+            "controllerStartupMs": 1629.699999988079,
+            "readinessProbeMs": 1.600000023841858,
+            "transfer": {
+              "resources": [
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.mjs",
+                  "duration": 1.199999988079071,
+                  "startTime": 92.5,
+                  "responseEnd": 93.69999998807907,
+                  "transferSize": 0,
+                  "encodedBodySize": 7299,
+                  "decodedBodySize": 17931
+                },
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide-lock.json",
+                  "duration": 0.5999999940395355,
+                  "startTime": 99,
+                  "responseEnd": 99.59999999403954,
+                  "transferSize": 0,
+                  "encodedBodySize": 24708,
+                  "decodedBodySize": 119077
+                },
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/python_stdlib.zip",
+                  "duration": 16.899999976158142,
+                  "startTime": 99.30000001192093,
+                  "responseEnd": 116.19999998807907,
+                  "transferSize": 0,
+                  "encodedBodySize": 2505313,
+                  "decodedBodySize": 2545637
+                },
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.asm.wasm",
+                  "duration": 94.69999998807907,
+                  "startTime": 99.5,
+                  "responseEnd": 194.19999998807907,
+                  "transferSize": 0,
+                  "encodedBodySize": 3438516,
+                  "decodedBodySize": 9598218
+                },
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.asm.mjs",
+                  "duration": 15,
+                  "startTime": 99.69999998807907,
+                  "responseEnd": 114.69999998807907,
+                  "transferSize": 0,
+                  "encodedBodySize": 262041,
+                  "decodedBodySize": 1250344
+                }
+              ],
+              "missing": [],
+              "measurable": true,
+              "encodedBodyBytes": 6237877,
+              "reportedTransferBytes": 0,
+              "allLocalCache": true
+            },
+            "workerConfiguration": [
+              {
+                "type": "worker",
+                "network": {
+                  "status": "accepted"
+                },
+                "cpu": {
+                  "status": "unsupported-or-failed",
+                  "error": "Error: {\"code\":-32000,\"message\":\"Operation is only supported for pages, not workers\"}"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "summary": {
+        "cold": {
+          "milliseconds": {
+            "n": 2,
+            "min": 4314.700000017881,
+            "median": 4314.700000017881,
+            "p95": 4362.700000017881,
+            "max": 4362.700000017881,
+            "samples": [
+              4362.700000017881,
+              4314.700000017881
+            ]
+          },
+          "targetMs": 5000,
+          "cacheVerified": true,
+          "networkConfigured": true,
+          "workerCPUConfigured": false,
+          "status": "pass-in-sample"
+        },
+        "warm": {
+          "milliseconds": {
+            "n": 2,
+            "min": 1797.699999988079,
+            "median": 1797.699999988079,
+            "p95": 1810.7000000178814,
+            "max": 1810.7000000178814,
+            "samples": [
+              1797.699999988079,
+              1810.7000000178814
+            ]
+          },
+          "targetMs": 2000,
+          "cacheVerified": true,
+          "networkConfigured": true,
+          "workerCPUConfigured": false,
+          "status": "pass-in-sample"
+        }
+      }
+    },
+    {
+      "profile": {
+        "id": "mobile-emulated-not-real-device",
+        "cpuRate": 4,
+        "latency": 100,
+        "downloadThroughput": 500000,
+        "uploadThroughput": 125000,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "isMobile": true,
+        "hasTouch": true,
+        "targets": {
+          "coldMs": 10000,
+          "warmMs": 4000
+        }
+      },
+      "pairs": [
+        {
+          "pair": 1,
+          "cold": {
+            "versions": {
+              "pyodide": "314.0.7",
+              "python": "3.14.2"
+            },
+            "navigationToUsableMs": 15022.299999982119,
+            "moduleStartMs": 460.69999998807907,
+            "controllerStartupMs": 14559.200000017881,
+            "readinessProbeMs": 2.399999976158142,
+            "transfer": {
+              "resources": [
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.mjs",
+                  "duration": 173.69999998807907,
+                  "startTime": 215.2000000178814,
+                  "responseEnd": 388.90000000596046,
+                  "transferSize": 7599,
+                  "encodedBodySize": 7299,
+                  "decodedBodySize": 17931
+                },
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide-lock.json",
+                  "duration": 294.5,
+                  "startTime": 391.40000000596046,
+                  "responseEnd": 685.9000000059605,
+                  "transferSize": 25008,
+                  "encodedBodySize": 24708,
+                  "decodedBodySize": 119077
+                },
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/python_stdlib.zip",
+                  "duration": 10697.5,
+                  "startTime": 391.90000000596046,
+                  "responseEnd": 11089.40000000596,
+                  "transferSize": 2505613,
+                  "encodedBodySize": 2505313,
+                  "decodedBodySize": 2545637
+                },
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.asm.mjs",
+                  "duration": 1723.9000000059605,
+                  "startTime": 392.2000000178814,
+                  "responseEnd": 2116.100000023842,
+                  "transferSize": 262341,
+                  "encodedBodySize": 262041,
+                  "decodedBodySize": 1250344
+                },
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.asm.wasm",
+                  "duration": 12566.199999988079,
+                  "startTime": 392.2000000178814,
+                  "responseEnd": 12958.40000000596,
+                  "transferSize": 3438816,
+                  "encodedBodySize": 3438516,
+                  "decodedBodySize": 9598218
+                }
+              ],
+              "missing": [],
+              "measurable": true,
+              "encodedBodyBytes": 6237877,
+              "reportedTransferBytes": 6239377,
+              "allLocalCache": false
+            },
+            "workerConfiguration": [
+              {
+                "type": "worker",
+                "network": {
+                  "status": "accepted"
+                },
+                "cpu": {
+                  "status": "unsupported-or-failed",
+                  "error": "Error: {\"code\":-32000,\"message\":\"Operation is only supported for pages, not workers\"}"
+                }
+              }
+            ]
+          },
+          "warm": {
+            "versions": {
+              "pyodide": "314.0.7",
+              "python": "3.14.2"
+            },
+            "navigationToUsableMs": 2352.199999988079,
+            "moduleStartMs": 443.59999999403954,
+            "controllerStartupMs": 1905.9000000059605,
+            "readinessProbeMs": 2.699999988079071,
+            "transfer": {
+              "resources": [
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.mjs",
+                  "duration": 0.4000000059604645,
+                  "startTime": 216.19999998807907,
+                  "responseEnd": 216.59999999403954,
+                  "transferSize": 0,
+                  "encodedBodySize": 7299,
+                  "decodedBodySize": 17931
+                },
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide-lock.json",
+                  "duration": 0.5,
+                  "startTime": 219.39999997615814,
+                  "responseEnd": 219.89999997615814,
+                  "transferSize": 0,
+                  "encodedBodySize": 24708,
+                  "decodedBodySize": 119077
+                },
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/python_stdlib.zip",
+                  "duration": 11,
+                  "startTime": 219.69999998807907,
+                  "responseEnd": 230.69999998807907,
+                  "transferSize": 0,
+                  "encodedBodySize": 2505313,
+                  "decodedBodySize": 2545637
+                },
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.asm.wasm",
+                  "duration": 102.30000001192093,
+                  "startTime": 219.89999997615814,
+                  "responseEnd": 322.19999998807907,
+                  "transferSize": 0,
+                  "encodedBodySize": 3438516,
+                  "decodedBodySize": 9598218
+                },
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.asm.mjs",
+                  "duration": 13.799999982118607,
+                  "startTime": 220.09999999403954,
+                  "responseEnd": 233.89999997615814,
+                  "transferSize": 0,
+                  "encodedBodySize": 262041,
+                  "decodedBodySize": 1250344
+                }
+              ],
+              "missing": [],
+              "measurable": true,
+              "encodedBodyBytes": 6237877,
+              "reportedTransferBytes": 0,
+              "allLocalCache": true
+            },
+            "workerConfiguration": [
+              {
+                "type": "worker",
+                "network": {
+                  "status": "accepted"
+                },
+                "cpu": {
+                  "status": "unsupported-or-failed",
+                  "error": "Error: {\"code\":-32000,\"message\":\"Operation is only supported for pages, not workers\"}"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "pair": 2,
+          "cold": {
+            "versions": {
+              "pyodide": "314.0.7",
+              "python": "3.14.2"
+            },
+            "navigationToUsableMs": 15073.399999976158,
+            "moduleStartMs": 449.69999998807907,
+            "controllerStartupMs": 14621.40000000596,
+            "readinessProbeMs": 2.2999999821186066,
+            "transfer": {
+              "resources": [
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.mjs",
+                  "duration": 212.7000000178814,
+                  "startTime": 215.40000000596046,
+                  "responseEnd": 428.10000002384186,
+                  "transferSize": 7599,
+                  "encodedBodySize": 7299,
+                  "decodedBodySize": 17931
+                },
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide-lock.json",
+                  "duration": 290.90000000596046,
+                  "startTime": 430.5,
+                  "responseEnd": 721.4000000059605,
+                  "transferSize": 25008,
+                  "encodedBodySize": 24708,
+                  "decodedBodySize": 119077
+                },
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/python_stdlib.zip",
+                  "duration": 10701.200000017881,
+                  "startTime": 430.90000000596046,
+                  "responseEnd": 11132.100000023842,
+                  "transferSize": 2505613,
+                  "encodedBodySize": 2505313,
+                  "decodedBodySize": 2545637
+                },
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.asm.wasm",
+                  "duration": 12566.40000000596,
+                  "startTime": 431,
+                  "responseEnd": 12997.40000000596,
+                  "transferSize": 3438816,
+                  "encodedBodySize": 3438516,
+                  "decodedBodySize": 9598218
+                },
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.asm.mjs",
+                  "duration": 1727.699999988079,
+                  "startTime": 431.10000002384186,
+                  "responseEnd": 2158.800000011921,
+                  "transferSize": 262341,
+                  "encodedBodySize": 262041,
+                  "decodedBodySize": 1250344
+                }
+              ],
+              "missing": [],
+              "measurable": true,
+              "encodedBodyBytes": 6237877,
+              "reportedTransferBytes": 6239377,
+              "allLocalCache": false
+            },
+            "workerConfiguration": [
+              {
+                "type": "worker",
+                "network": {
+                  "status": "accepted"
+                },
+                "cpu": {
+                  "status": "unsupported-or-failed",
+                  "error": "Error: {\"code\":-32000,\"message\":\"Operation is only supported for pages, not workers\"}"
+                }
+              }
+            ]
+          },
+          "warm": {
+            "versions": {
+              "pyodide": "314.0.7",
+              "python": "3.14.2"
+            },
+            "navigationToUsableMs": 2304.800000011921,
+            "moduleStartMs": 446.7000000178814,
+            "controllerStartupMs": 1855,
+            "readinessProbeMs": 3.0999999940395355,
+            "transfer": {
+              "resources": [
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.mjs",
+                  "duration": 0.4000000059604645,
+                  "startTime": 215.2000000178814,
+                  "responseEnd": 215.60000002384186,
+                  "transferSize": 0,
+                  "encodedBodySize": 7299,
+                  "decodedBodySize": 17931
+                },
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide-lock.json",
+                  "duration": 0.5,
+                  "startTime": 217.60000002384186,
+                  "responseEnd": 218.10000002384186,
+                  "transferSize": 0,
+                  "encodedBodySize": 24708,
+                  "decodedBodySize": 119077
+                },
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/python_stdlib.zip",
+                  "duration": 17.600000023841858,
+                  "startTime": 218,
+                  "responseEnd": 235.60000002384186,
+                  "transferSize": 0,
+                  "encodedBodySize": 2505313,
+                  "decodedBodySize": 2545637
+                },
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.asm.wasm",
+                  "duration": 97,
+                  "startTime": 218.10000002384186,
+                  "responseEnd": 315.10000002384186,
+                  "transferSize": 0,
+                  "encodedBodySize": 3438516,
+                  "decodedBodySize": 9598218
+                },
+                {
+                  "name": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.asm.mjs",
+                  "duration": 15.5,
+                  "startTime": 218.30000001192093,
+                  "responseEnd": 233.80000001192093,
+                  "transferSize": 0,
+                  "encodedBodySize": 262041,
+                  "decodedBodySize": 1250344
+                }
+              ],
+              "missing": [],
+              "measurable": true,
+              "encodedBodyBytes": 6237877,
+              "reportedTransferBytes": 0,
+              "allLocalCache": true
+            },
+            "workerConfiguration": [
+              {
+                "type": "worker",
+                "network": {
+                  "status": "accepted"
+                },
+                "cpu": {
+                  "status": "unsupported-or-failed",
+                  "error": "Error: {\"code\":-32000,\"message\":\"Operation is only supported for pages, not workers\"}"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "summary": {
+        "cold": {
+          "milliseconds": {
+            "n": 2,
+            "min": 15022.299999982119,
+            "median": 15022.299999982119,
+            "p95": 15073.399999976158,
+            "max": 15073.399999976158,
+            "samples": [
+              15022.299999982119,
+              15073.399999976158
+            ]
+          },
+          "targetMs": 10000,
+          "cacheVerified": true,
+          "networkConfigured": true,
+          "workerCPUConfigured": false,
+          "status": "fail-in-sample"
+        },
+        "warm": {
+          "milliseconds": {
+            "n": 2,
+            "min": 2304.800000011921,
+            "median": 2304.800000011921,
+            "p95": 2352.199999988079,
+            "max": 2352.199999988079,
+            "samples": [
+              2352.199999988079,
+              2304.800000011921
+            ]
+          },
+          "targetMs": 4000,
+          "cacheVerified": true,
+          "networkConfigured": true,
+          "workerCPUConfigured": false,
+          "status": "pass-in-sample"
+        }
+      }
+    }
+  ],
+  "pageErrors": []
+}

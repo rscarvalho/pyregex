@@ -49,7 +49,32 @@ export async function runRecovery(page) {
         nextEvaluationMs: result.ms, maxHeartbeatGapMs });
     }
   }
-  return { initialStartupMs: (await state()).events[0].ms, cycles,
+  // Bounded amplification: 8,193 zero-width matches with 32 tiny captures,
+  // roughly 1.3 MiB serialized, not an unbounded allocation stress test.
+  const overflow = { id: 'output-overflow', operation: 'findall', flags: [],
+    pattern: `(?=${'(a?)'.repeat(32)})`, input: 'a'.repeat(8192) };
+  const outputOverflow = await page.evaluate(async row => {
+    const { RegexController } = await import('./controller.mjs');
+    const controller = new RegexController();
+    try {
+      await controller.start();
+      const start = performance.now();
+      let failure;
+      try { await controller.evaluate([row]); }
+      catch (error) { failure = error.message; }
+      const elapsedMs = performance.now() - start;
+      const discarded = controller.worker === null && !controller.ready && !controller.pending;
+      await controller.start();
+      const result = await controller.evaluate([
+        { id: 'after-overflow', operation: 'search', flags: [], pattern: 'a+', input: 'baaa' }
+      ]);
+      return { failure, elapsedMs, discarded, nextGroup: result.results[0].result.group };
+    } finally { controller.close(); }
+  }, overflow);
+  assert.equal(outputOverflow.failure, 'Error: Output limit exceeded');
+  assert.equal(outputOverflow.discarded, true);
+  assert.equal(outputOverflow.nextGroup, 'aaa');
+  return { initialStartupMs: (await state()).events[0].ms, cycles, outputOverflow,
     pathological: { pattern: pathological.pattern, input: '128 ASCII a followed by !' },
     acknowledgementTargetMs: 250, heartbeatIntervalMs: 20,
     limitations: ['Single headless desktop Chromium on this host; no mobile/performance verdict',
