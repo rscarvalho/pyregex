@@ -1,0 +1,6 @@
+{
+  "pyodide": "314.0.7",
+  "python": "3.14.2",
+  "indexURL": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/",
+  "nativeImage": "python:3.14.2-slim-bookworm@sha256:e87711ef5c86aaeaa7031718a69db79d334d94c545c709583f651b8185870941"
+}

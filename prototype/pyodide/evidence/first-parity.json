@@ -1,0 +1,20 @@
+{
+  "scope": "issue42-first-unit-engine-parity-only",
+  "pyodide": "314.0.7",
+  "python": "3.14.2",
+  "browser": "158.0.8127.18",
+  "node": "v26.13.0",
+  "nativeImage": "python:3.14.2-slim-bookworm@sha256:e87711ef5c86aaeaa7031718a69db79d334d94c545c709583f651b8185870941",
+  "fixtureSha256": "396efcd2ec2dccafa0f73841fe981a805b99e500e58ea84a79bb68bec306d8a5",
+  "evaluatorSha256": "e4caf2928a0830467e64ff18cbd64b4dac5356a74069e4eeba611431d410e5c6",
+  "cases": 27,
+  "mismatches": [],
+  "legacyEngineDifferences": [],
+  "unicodeDisplay": "é😀é",
+  "limitations": [
+    "No production integration",
+    "No cancellation/recovery evidence",
+    "No desktop/mobile performance or memory verdict",
+    "Bounded corpus, not exhaustive regex equivalence"
+  ]
+}
