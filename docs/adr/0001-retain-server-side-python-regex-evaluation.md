@@ -11,72 +11,62 @@ PyRegex tests Python regular expressions, so its results should reflect CPython'
 Pyodide experiment explored running CPython in a browser worker instead. That is
 still Python regex evaluation, not a switch to JavaScript's regex engine.
 
-The experiment had a five-engineer-day limit and agreed gates for compatibility,
-startup, execution, transfer size, memory, and recovery on desktop and actual
-mobile devices. It produced useful evidence, but did not establish a production
-replacement that meets those gates.
+We gave the experiment five days to check compatibility, loading time, download
+size, memory use, and recovery from slow expressions. The main question was
+whether we could remove the backend without making the app worse to use.
 
 ## What we decided
 
-Keep server-side Python regex evaluation for now. Do not adopt the Pyodide
-prototype as the application's runtime. This accepts the experiment's provisional
-**NO-GO now under the unchanged gates**, not a permanent rejection of Pyodide.
+Keep running expressions on the Python backend. We don't have enough confidence
+in Pyodide's loading time and mobile performance to replace it yet.
 
-This is a runtime direction, not permission to change production infrastructure
-or implement backend remediation in [#49](https://github.com/rscarvalho/pyregex/issues/49).
-It also does not certify the existing backend as safe.
+The backend still needs the security and maintenance work listed in
+[#41](https://github.com/rscarvalho/pyregex/issues/41). Keeping it doesn't mean
+leaving it as it is.
 
 ## Why
 
-Compatibility and execution were encouraging: all 27 same-version native/WASM
-fixtures agreed, ordinary requests were fast, and the tested timeout,
-cancel/recreate, and overflow recovery checks passed. Those results cover the
-tested cases, not every regex or production integration.
+The regex results looked good. All 27 test cases produced the same results in
+Pyodide and native CPython at the same version. Ordinary requests were fast. We
+could stop a stuck expression, restart the worker, and run another request
+without freezing the page.
 
-Startup was not consistently within budget. Some desktop warm samples met the
-two-second target; repeated independent samples missed it. Cold desktop results
-also varied. This is evidence of insufficient reliable margin, not proof of an
-unavoidable startup floor. The startup diagnosis did not establish a measured
-fix that reliably meets the target.
+Loading Python was the problem. We wanted the app ready within five seconds on
+desktop, or two seconds with the runtime already cached. Some runs passed and
+others didn't. Serving the runtime locally helped cold loads but didn't reliably
+get cached loads below two seconds. We didn't find a fix within the experiment's
+time limit; that doesn't mean one is impossible.
 
-Partial mobile emulation took about 15 seconds cold against a ten-second target.
-The worker's requested CPU slowdown was not applied, so this was not a completed
-mobile gate or an actual-device failure. Actual-mobile results remain unknown.
-Total and peak memory are also inconclusive; the available page-only heap sample
-does not measure the live Pyodide worker or establish a memory-budget pass.
+With a slower network and a mobile-sized page, cold loading took about 15 seconds,
+above our ten-second mobile target. That wasn't a real phone test, and the browser
+wouldn't apply CPU throttling to the worker. We still don't know how it performs
+on an actual phone.
 
-The pinned runtime met the transfer-size budget, but that and fast execution do
-not resolve the startup misses or the open mobile, memory, and deployment checks.
+The runtime download was 5.95 MiB, below our 15 MiB limit. We couldn't get a useful
+total-memory measurement: the browser rejected the memory API calls, and its
+page-only heap figures left out the Python worker.
+
+Fast matching and a reasonable download size weren't enough to offset uncertain
+loading times and the missing phone and memory measurements.
 
 ## What next
 
-Stop runtime adoption work at this decision. Keep the experiment and its evidence
-linked below; there is no need to merge prototype code into the application.
-The user plans to close draft PR #56 separately. Closing it leaves the PR
-discussion available and commit links generally accessible, but is not an
-archival guarantee.
+Close the experiment without merging its prototype into the app. The results are
+linked below so we can use them if we try this again.
 
-Any backend remediation, including #49, needs separate approval and its own
-scope and review. This record does not implement that work, authorize production
-changes, or close any issue.
+Plan the backend work separately in
+[#49](https://github.com/rscarvalho/pyregex/issues/49).
 
 ## Revisit
 
-Revisit if new evidence supports the unchanged gates, or if the user explicitly
-approves different requirements or a different startup experience. A new proposal
-should address reproducible startup margin, actual-device mobile checks, total
-and peak memory, app integration, and security/deployment review. Keep the
-compatibility and recovery checks, with explicit runtime versions; do not quietly
-substitute JavaScript regex semantics.
+Try again if a newer runtime or a different loading approach looks likely to meet
+our targets. Before switching, we'd still need repeatable loading times, tests on
+real phones, and useful memory measurements, alongside the compatibility and
+recovery tests we already have.
 
-Record a replacement decision here if that changes the chosen direction.
+If we decide to switch later, add another ADR explaining what changed.
 
 ## References
-
-The experiment links below use commit
-`f7360bd22cd4efaf7815e3ba10eb285eaf46f9b5`, not its moving branch. The experiment
-documents include historical workflow notes; this record captures the accepted
-runtime decision.
 
 - [Final recommendation and gate evidence](https://github.com/rscarvalho/pyregex/blob/f7360bd22cd4efaf7815e3ba10eb285eaf46f9b5/prototype/pyodide/DECISION.md)
 - [Startup diagnosis and limitations](https://github.com/rscarvalho/pyregex/blob/f7360bd22cd4efaf7815e3ba10eb285eaf46f9b5/prototype/pyodide/STARTUP.md)
@@ -85,4 +75,4 @@ runtime decision.
 - [Memory observations](https://github.com/rscarvalho/pyregex/blob/f7360bd22cd4efaf7815e3ba10eb285eaf46f9b5/prototype/pyodide/evidence/memory-cdp.json)
 - [Runtime investigation #42](https://github.com/rscarvalho/pyregex/issues/42)
 - [Draft experiment PR #56](https://github.com/rscarvalho/pyregex/pull/56)
-- [Backend remediation #49 — separate approval required](https://github.com/rscarvalho/pyregex/issues/49)
+- [Backend modernization #49](https://github.com/rscarvalho/pyregex/issues/49)
