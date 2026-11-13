@@ -1,0 +1,104 @@
+{
+  "scope": "issue42-bounded-worker-recovery",
+  "pyodide": "314.0.7",
+  "python": "3.14.2",
+  "browser": "158.0.8127.18",
+  "node": "v26.13.0",
+  "nativeImage": "python:3.14.2-slim-bookworm@sha256:e87711ef5c86aaeaa7031718a69db79d334d94c545c709583f651b8185870941",
+  "fixtureSha256": "396efcd2ec2dccafa0f73841fe981a805b99e500e58ea84a79bb68bec306d8a5",
+  "evaluatorSha256": "e4caf2928a0830467e64ff18cbd64b4dac5356a74069e4eeba611431d410e5c6",
+  "cases": 27,
+  "mismatches": [],
+  "legacyEngineDifferences": [],
+  "unicodeDisplay": "é😀é",
+  "recovery": {
+    "initialStartupMs": 2142.199999988079,
+    "cycles": [
+      {
+        "cycle": 1,
+        "mode": "timeout",
+        "evaluationMs": 2000.5,
+        "acknowledgementMs": 0.5,
+        "recreatedGeneration": 2,
+        "startupMs": 1875.9000000059605,
+        "nextEvaluationMs": 13.400000005960464,
+        "maxHeartbeatGapMs": 32.400000005960464
+      },
+      {
+        "cycle": 1,
+        "mode": "cancel",
+        "evaluationMs": 182.59999999403954,
+        "acknowledgementMs": 0.09999999403953552,
+        "recreatedGeneration": 3,
+        "startupMs": 1884.5999999940395,
+        "nextEvaluationMs": 14.599999994039536,
+        "maxHeartbeatGapMs": 32.29999998211861
+      },
+      {
+        "cycle": 2,
+        "mode": "timeout",
+        "evaluationMs": 2000.4000000059605,
+        "acknowledgementMs": 0.4000000059604645,
+        "recreatedGeneration": 4,
+        "startupMs": 1889.4000000059605,
+        "nextEvaluationMs": 14.099999994039536,
+        "maxHeartbeatGapMs": 28.799999982118607
+      },
+      {
+        "cycle": 2,
+        "mode": "cancel",
+        "evaluationMs": 166.09999999403954,
+        "acknowledgementMs": 0.20000001788139343,
+        "recreatedGeneration": 5,
+        "startupMs": 1852.2999999821186,
+        "nextEvaluationMs": 13.799999982118607,
+        "maxHeartbeatGapMs": 32
+      },
+      {
+        "cycle": 3,
+        "mode": "timeout",
+        "evaluationMs": 2000.300000011921,
+        "acknowledgementMs": 0.30000001192092896,
+        "recreatedGeneration": 6,
+        "startupMs": 1898,
+        "nextEvaluationMs": 12.799999982118607,
+        "maxHeartbeatGapMs": 28.299999982118607
+      },
+      {
+        "cycle": 3,
+        "mode": "cancel",
+        "evaluationMs": 180.59999999403954,
+        "acknowledgementMs": 0.20000001788139343,
+        "recreatedGeneration": 7,
+        "startupMs": 1845.5999999940395,
+        "nextEvaluationMs": 13.900000005960464,
+        "maxHeartbeatGapMs": 20.099999994039536
+      }
+    ],
+    "outputOverflow": {
+      "failure": "Error: Output limit exceeded",
+      "elapsedMs": 89.40000000596046,
+      "discarded": true,
+      "nextGroup": "aaa"
+    },
+    "pathological": {
+      "pattern": "(a+)+$",
+      "input": "128 ASCII a followed by !"
+    },
+    "acknowledgementTargetMs": 250,
+    "heartbeatIntervalMs": 20,
+    "limitations": [
+      "Single headless desktop Chromium on this host; no mobile/performance verdict",
+      "Heartbeat measures main-thread timer/DOM updates, not compositor paint or physical input latency",
+      "Cancellation acknowledgement starts at DOM click handler, not external input delivery",
+      "Startup/recreation is measured separately and is not required to finish within 250 ms",
+      "No deterministic real compile hang exercised; compile containment tested with fake worker silence",
+      "Output cap applies after Python result allocation; not a hard memory sandbox"
+    ]
+  },
+  "limitations": [
+    "No production integration",
+    "No desktop/mobile performance or memory verdict",
+    "Bounded corpus, not exhaustive regex equivalence"
+  ]
+}

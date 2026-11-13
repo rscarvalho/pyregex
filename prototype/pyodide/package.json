@@ -1,0 +1,13 @@
+{
+  "name": "pyregex-pyodide-prototype",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "test": "node --test parity.test.mjs controller.test.mjs performance.test.mjs",
+    "parity": "node run.mjs",
+    "recovery": "node run.mjs --recovery",
+    "performance": "node performance.mjs"
+  },
+  "devDependencies": { "playwright": "1.65.0" }
+}

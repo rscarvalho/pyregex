@@ -14,6 +14,8 @@ The code is licensed under the [GNU General Public License v2](LICENSE)
 
 See [local/README.md](local/README.md) for the Python 3.7 backend and isolated
 legacy frontend containers, loopback-only endpoints, tests and verification limits.
+For the standalone same-version native/WASM engine experiment (not app integration),
+see [prototype/pyodide/README.md](prototype/pyodide/README.md).
 The historical host-install instructions below reference requirements files that
 are no longer present; do not use them to install obsolete tools globally.
 

@@ -1,0 +1,59 @@
+{
+  "scope": "issue42-bounded-worker-recovery-not-runtime-verdict",
+  "baseCommit": "8ea05c74ac58314f53c429735bd0cbc0a1c20f38",
+  "sourceState": "Uncommitted next-unit prototype on feat/pyodide-prototype; requires independent review",
+  "commands": ["npm test", "npm run recovery", "digest-pinned CPython 3.14.2 unittest discover -p test_evaluator.py"],
+  "nodeTests": { "passed": 7, "failed": 0 },
+  "pythonTests": { "passed": 2, "fixtureSubcases": 27, "failed": 0 },
+  "environment": {
+    "platform": "Linux host, headless Playwright Chromium; host OS not officially supported by Playwright",
+    "browser": "158.0.8127.18",
+    "playwright": "1.65.0",
+    "node": "v26.13.0",
+    "pyodide": "314.0.7",
+    "python": "3.14.2",
+    "nativeImage": "python:3.14.2-slim-bookworm@sha256:e87711ef5c86aaeaa7031718a69db79d334d94c545c709583f651b8185870941",
+    "cacheAndNetwork": "Uncontrolled CDN/network and browser cache; parity loads runtime before UI recovery test; not cold/warm startup evidence"
+  },
+  "parity": {
+    "cases": 27,
+    "fixtureSha256": "396efcd2ec2dccafa0f73841fe981a805b99e500e58ea84a79bb68bec306d8a5",
+    "evaluatorSha256": "e4caf2928a0830467e64ff18cbd64b4dac5356a74069e4eeba611431d410e5c6",
+    "mismatches": [],
+    "legacyEngineDifferences": [],
+    "unicodeDisplay": "é😀é"
+  },
+  "recovery": {
+    "method": "Playwright locator fill/click of real harness controls; actual pathological regex matching, not source injection",
+    "pattern": "(a+)+$",
+    "input": "128 ASCII a followed by !",
+    "deadlineMs": 2000,
+    "acknowledgementTargetMs": 250,
+    "startupSafetyBoundMs": 30000,
+    "heartbeatIntervalMs": 20,
+    "initialUiStartupMs": 1445.6,
+    "units": "milliseconds, rounded to 3 decimals; startup measured separately",
+    "columns": ["cycle", "mode", "evaluationMs", "acknowledgementMs", "newGeneration", "startupMs", "nextNormalEvaluationMs", "maxHeartbeatGapMs"],
+    "cycles": [
+      [1, "timeout", 2000.8, 0.8, 2, 1271.5, 14.7, 33.4],
+      [1, "cancel", 166.9, 0.2, 3, 1283.4, 13.9, 23.2],
+      [2, "timeout", 2000.3, 0.3, 4, 1265.4, 14.4, 23.2],
+      [2, "cancel", 182.8, 0.2, 5, 1283.3, 14.4, 29.6],
+      [3, "timeout", 2005.2, 5.2, 6, 1242.2, 14.3, 32.9],
+      [3, "cancel", 166.8, 0.1, 7, 1302.8, 14.7, 26.2]
+    ],
+    "successfulNormalRequestsAfterRecreation": 6,
+    "normalCase": { "operation": "search", "pattern": "a+", "input": "baaa", "assertedGroup": "aaa" },
+    "uncaughtPageErrors": 0
+  },
+  "limitations": [
+    "Single headless desktop Chromium on this host; no actual mobile, transfer, memory or ordinary workload percentile verdict",
+    "Heartbeat measures main-thread timer/DOM updates, not compositor paint or physical input latency",
+    "Timeout acknowledgement is promise/UI error handling minus 2000 ms; cancel acknowledgement starts at DOM click handler, not external input delivery",
+    "Worker recreation/startup takes longer than 250 ms; the target here is acknowledgement/responsive UI, not completed runtime restart",
+    "Browser scheduling/background throttling can delay the main-thread deadline; not a hard real-time guarantee",
+    "No deterministic real compile hang exercised; compile containment tested by silent fake worker and shared whole-evaluation deadline",
+    "Output cap applies after Python result allocation; bounded inputs do not constitute a hard memory sandbox",
+    "No production changes, no CSP weakening, no full runtime verdict; issue42 remains open"
+  ]
+}

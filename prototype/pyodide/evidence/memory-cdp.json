@@ -1,0 +1,45 @@
+{
+  "scope": "issue42-page-isolate-only-not-total-memory",
+  "measuredAt": "2026-11-13T13:45:10.977Z",
+  "sourceSha256": {
+    "performance.html": "77be8c3ba520be0af7cb40c41a14d526726eaf7830e54f35364bf0a559131168",
+    "performance-page.mjs": "9bb1c26c497579811af2e2a30ec65705d6fa58d9e6350e603b84b60801e4dee1",
+    "controller.mjs": "6c07ba7dda01533deb38f3d677ce24df867e371e565d60781cfb1afb3c59b7d7",
+    "limits.mjs": "022e599b66e0fb812505de676b58143370c650160e44321ba1ced3e974556997",
+    "worker.mjs": "f37ee75f54bca4d437f5fb23cf0858af519bb8e266ae7296abc8746978f3a81c",
+    "runtime.json": "9393395da3ff6d327aa802fdda9f690705588a10e4dd1e8de5d136bd0cba2fca",
+    "evaluator.py": "e4caf2928a0830467e64ff18cbd64b4dac5356a74069e4eeba611431d410e5c6",
+    "memory-cdp.mjs": "6014895265a76c45acb6dc98c68dbf5768022f0446cdce3cdbebce568ad40cd5"
+  },
+  "chromium": "158.0.8127.18",
+  "node": "v26.13.0",
+  "playwright": "1.65.0",
+  "ready": {
+    "versions": {
+      "pyodide": "314.0.7",
+      "python": "3.14.2"
+    },
+    "navigationToUsableMs": 2073.3499999940395,
+    "moduleStartMs": 27.19999998807907,
+    "controllerStartupMs": 2044.4200000166893,
+    "readinessProbeMs": 1.729999989271164
+  },
+  "method": "CDP Runtime.getHeapUsage",
+  "sample": {
+    "status": "measured-partial",
+    "value": {
+      "usedSize": 1452152,
+      "totalSize": 2428928,
+      "embedderHeapUsedSize": 1383392,
+      "backingStorageSize": 6530
+    }
+  },
+  "targetBytes": 268435456,
+  "gateStatus": "inconclusive",
+  "limitations": [
+    "One isolate-level page JS heap sample; live Pyodide worker is NOT included",
+    "usedSize and totalSize are JS heap usage/allocation, not total memory or RSS",
+    "embedderHeapUsedSize and backingStorageSize are separate protocol fields; no invented sum or peak bound",
+    "Separate isolated diagnostic, unchanged controller/worker; not production security validation"
+  ]
+}
