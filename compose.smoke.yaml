@@ -1,0 +1,7 @@
+# Merge after compose.local.yaml; never publish smoke-stack ports.
+services:
+  backend:
+    ports: !reset []
+  frontend:
+    ports: !reset []
+    network_mode: service:backend

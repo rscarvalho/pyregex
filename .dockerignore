@@ -6,6 +6,8 @@
 !pyregex/*.py
 !tests/
 !tests/*.py
+!tests/fixtures/
+!tests/fixtures/*.json
 !local/
 !local/*.py
 !local/Dockerfile.backend
