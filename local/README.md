@@ -102,6 +102,30 @@ constraints, retaining Angular 1.0.7. Root manifests, Gruntfile and application
 sources remain unchanged. Never run `grunt deploy` or production tasks.
 
 Only container-generated output changes: the API host becomes IPv4 loopback;
+the jQuery 1.11.3 bubbling probe's inline-handler fallback runs only when
+`document.addEventListener` is absent. That fallback tests old IE's attribute
+`expando` behavior; modern event-model browsers retain the `onEVENT in window`
+result without creating inline event attributes. A false result still selects
+jQuery's existing submit/change/focusin shims, rather than assuming support.
+Old event-model browsers keep the original fallback (and are not claimed to be
+CSP-compatible). This local harness targets modern browsers, not legacy IE.
+`jquery-csp-compat.js` guards the exact generated probe and fails on drift or
+reapplication; immutable component archives and hashes remain unchanged.
+`frontend-test.js` includes guard and simulated modern/legacy probe tests.
+No CSP directive is weakened and no browser CSP bypass is used.
+
+Compatibility correction verified on Linux x86_64, 2026-11-12, using an isolated
+copy of this tree plus the separate CI worktree's unchanged smoke harness:
+`SMOKE_PROJECT=pyregex-jquery-csp-validation bash ci/smoke.sh`. All 20 backend
+tests, four HTTP checks, probe regression tests, and 17 frontend specs / 51
+assertions passed. The strict Playwright Chromium smoke passed with zero
+`securitypolicyviolation` events, console errors, page errors or failed requests;
+it checked a real named-group Python regex result under the original CSP.
+The pre-existing jsdom canvas warning remains. The validation project's
+containers/network were removed; the development services were not recreated.
+This is not cross-browser or real legacy-IE verification.
+
+Other generated-output changes:
 analytics, external stylesheet links and remote images are removed. The static
 server adds a CSP allowing connections only to itself and the local backend,
 with local scripts/styles/images. Its local-only `unsafe-eval` exception is

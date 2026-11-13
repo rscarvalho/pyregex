@@ -10,9 +10,9 @@ COPY tests/client /app/tests/client
 COPY Gruntfile.coffee CHANGELOG.md /app/
 COPY local/frontend-components.json local/frontend-components.js /app/local/
 RUN node local/frontend-components.js
-COPY local/frontend-build.js /app/local/
+COPY local/frontend-build.js local/jquery-csp-compat.js /app/local/
 RUN node local/frontend-build.js
 COPY local/frontend-server.js /app/local/
-COPY local/frontend-test.js /app/local/
+COPY local/frontend-test.js local/jquery-csp-compat-test.js /app/local/
 USER 65534:65534
 CMD ["node", "local/frontend-server.js"]

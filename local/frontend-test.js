@@ -1,5 +1,6 @@
 // Supplemental DOM-emulated unit tests, NOT browser/UI verification.
 const fs = require('fs');
+require('./jquery-csp-compat-test');
 const {JSDOM} = require('jsdom');
 const coffee = require('coffee-script');
 const window = new JSDOM('<html><body></body></html>', {
