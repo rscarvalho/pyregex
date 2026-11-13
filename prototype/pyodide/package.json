@@ -4,8 +4,9 @@
   "type": "module",
   "engines": { "node": ">=22" },
   "scripts": {
-    "test": "node --test parity.test.mjs",
-    "parity": "node run.mjs"
+    "test": "node --test parity.test.mjs controller.test.mjs",
+    "parity": "node run.mjs",
+    "recovery": "node run.mjs --recovery"
   },
   "devDependencies": { "playwright": "1.65.0" }
 }

@@ -3,6 +3,15 @@
 <meta charset="utf-8">
 <title>PyRegex engine parity prototype (not the application)</title>
 <h1>Standalone engine parity harness</h1>
-<p>Run with <code>npm run parity</code>. Trusted bounded fixtures only.</p>
+<p>Isolated prototype only. One batch at a time, 2 s evaluation deadline;
+startup is separate (30 s). Timeout/cancel discards and recreates the worker.</p>
+<label>Fixture-style JSON <textarea aria-label="Cases" maxlength="65536" rows="6" cols="80"></textarea></label>
+<button id="start">Start / retry</button>
+<button id="run">Evaluate</button>
+<button id="cancel">Cancel</button>
+<p>Status: <span id="status" role="status">idle</span>;
+UI heartbeat: <span id="heartbeat">0</span></p>
+<pre id="result"></pre>
 <output aria-label="Unicode span sample"></output>
+<script type="module" src="./ui.mjs"></script>
 </html>

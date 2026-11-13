@@ -7,6 +7,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
 import { compare, legacyDifferences } from './parity.mjs';
+import { runRecovery } from './recovery.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '../..');
@@ -26,7 +27,7 @@ assert.equal(native.evaluatorSha256, sha256(await readFile(resolve(here, 'evalua
 // Ephemeral loopback port; no interaction with legacy ports 5000 or 8082.
 const files = new Map([
   ['/', ['index.html', 'text/html']],
-  ...['browser.mjs', 'worker.mjs', 'parity.mjs'].map(name => [`/${name}`, [name, 'text/javascript']]),
+  ...['browser.mjs', 'worker.mjs', 'parity.mjs', 'controller.mjs', 'limits.mjs', 'ui.mjs'].map(name => [`/${name}`, [name, 'text/javascript']]),
   ['/runtime.json', ['runtime.json', 'application/json']],
   ['/evaluator.py', ['evaluator.py', 'text/plain']]
 ]);
@@ -45,6 +46,8 @@ let browser;
 try {
   browser = await chromium.launch();
   const page = await browser.newPage();
+  const pageErrors = [];
+  page.on('pageerror', error => pageErrors.push(String(error)));
   page.setDefaultTimeout(70000);
   await page.goto(`http://127.0.0.1:${server.address().port}/`);
   const { versions, wasm, highlighted } = await page.evaluate(async cases => {
@@ -53,18 +56,21 @@ try {
   }, cases);
   const mismatches = compare(native, wasm, cases, config.python);
   const legacy = legacyDifferences(native, cases);
+  const recovery = process.argv.includes('--recovery') ? await runRecovery(page) : null;
   console.log(JSON.stringify({
-    scope: 'issue42-first-unit-engine-parity-only',
+    scope: recovery ? 'issue42-bounded-worker-recovery' : 'issue42-first-unit-engine-parity-only',
     ...versions, browser: browser.version(), node: process.version,
     nativeImage: config.nativeImage,
     fixtureSha256: native.fixtureSha256, evaluatorSha256: native.evaluatorSha256,
     cases: cases.length, mismatches, legacyEngineDifferences: legacy,
     unicodeDisplay: highlighted,
-    limitations: ['No production integration', 'No cancellation/recovery evidence',
+    ...(recovery ? { recovery } : {}),
+    limitations: ['No production integration',
       'No desktop/mobile performance or memory verdict', 'Bounded corpus, not exhaustive regex equivalence']
   }, null, 2));
   assert.deepEqual(mismatches, [], 'Native/WASM parity failed');
   assert.deepEqual(legacy, [], 'Review new differences from the 3.7 engine fixture expectations');
+  assert.deepEqual(pageErrors, [], 'Unexpected uncaught browser errors');
 } finally {
   await browser?.close();
   await new Promise(resolve => server.close(resolve));

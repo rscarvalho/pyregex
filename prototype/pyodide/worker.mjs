@@ -1,4 +1,5 @@
 // Module worker: initialization, compilation and matching never run on the UI thread.
+import { LIMITS, validateCases } from './limits.mjs';
 let runtime;
 let ready;
 
@@ -18,18 +19,19 @@ async function initialize() {
 }
 
 self.onmessage = async ({ data }) => {
-  const { id, type, cases } = data;
+  const { id, generation, type, cases } = data;
   try {
     ready ??= initialize();
     const versions = await ready;
     if (type === 'init') {
-      self.postMessage({ id, value: versions });
+      self.postMessage({ id, generation, value: versions });
     } else if (type === 'evaluate') {
       // JSON is data, not interpolated Python source. Return a string, not PyProxy.
-      runtime.globals.set('cases_json', JSON.stringify(cases));
+      runtime.globals.set('cases_json', JSON.stringify(validateCases(cases)));
       try {
-        const value = JSON.parse(runtime.runPython('evaluate_json(cases_json)'));
-        self.postMessage({ id, value });
+        const output = runtime.runPython('evaluate_json(cases_json)');
+        if (output.length > LIMITS.output) throw new Error('Output limit exceeded');
+        self.postMessage({ id, generation, value: JSON.parse(output) });
       } finally {
         runtime.globals.delete('cases_json');
       }
@@ -38,6 +40,6 @@ self.onmessage = async ({ data }) => {
     }
   } catch (error) {
     // Infrastructure failures must not masquerade as regex error categories.
-    self.postMessage({ id, failure: String(error) });
+    self.postMessage({ id, generation, failure: String(error) });
   }
 };
